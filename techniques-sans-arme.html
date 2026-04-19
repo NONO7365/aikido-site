@@ -27,19 +27,49 @@
 </head>
 <body class="bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100 min-h-screen transition-colors duration-300">
 
-  <nav class="border-b border-gray-200 dark:border-gray-800 px-6 py-4 flex items-center justify-between">
-    <a href="index.html" class="text-xl font-bold tracking-wide">合気道 <span class="text-red-600">Aïkido</span></a>
-    <ul class="flex gap-6 text-sm font-medium">
-      <li><a href="index.html"                class="hover:text-red-500 transition-colors">Accueil</a></li>
-      <li><a href="techniques-sans-arme.html" class="hover:text-red-500 transition-colors">Sans arme</a></li>
-      <li><a href="techniques-avec-arme.html" class="hover:text-red-500 transition-colors">Avec arme</a></li>
-      <li><a href="contact.html"              class="hover:text-red-500 transition-colors">Contact</a></li>
-      <li><a href="a-propos.html"             class="hover:text-red-500 transition-colors">À propos</a></li>
-    </ul>
+<nav class="border-b border-gray-200 dark:border-gray-800 px-6 py-4 flex items-center justify-between relative">
+  
+  <!-- Logo -->
+  <a href="index.html" class="text-xl font-bold tracking-wide z-10">
+    合気道 <span class="text-red-600">Aïkido</span>
+  </a>
+
+  <!-- Liens desktop (cachés sur mobile) -->
+  <ul class="hidden md:flex gap-6 text-sm font-medium">
+    <li><a href="index.html"                class="hover:text-red-500 transition-colors">Accueil</a></li>
+    <li><a href="techniques-sans-arme.html" class="hover:text-red-500 transition-colors">Sans arme</a></li>
+    <li><a href="techniques-avec-arme.html" class="hover:text-red-500 transition-colors">Avec arme</a></li>
+    <li><a href="contact.html"              class="hover:text-red-500 transition-colors">Contact</a></li>
+    <li><a href="a-propos.html"             class="hover:text-red-500 transition-colors">À propos</a></li>
+  </ul>
+
+  <!-- Droite : toggle + burger -->
+  <div class="flex items-center gap-3 z-10">
     <button id="theme-toggle" class="p-2 rounded-full border border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
       <span id="theme-icon">☀️</span>
     </button>
-  </nav>
+    <!-- Burger (visible sur mobile uniquement) -->
+    <button id="burger-btn" class="md:hidden p-2 rounded-lg border border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <line x1="2" y1="5"  x2="18" y2="5"/>
+        <line x1="2" y1="10" x2="18" y2="10"/>
+        <line x1="2" y1="15" x2="18" y2="15"/>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Menu mobile dropdown -->
+  <div id="burger-menu" class="hidden md:hidden absolute top-full left-0 right-0 bg-white dark:bg-gray-950 border-b border-gray-200 dark:border-gray-800 shadow-lg z-50 px-6 py-4">
+    <ul class="flex flex-col gap-4 text-sm font-medium">
+      <li><a href="index.html"                class="block hover:text-red-500 transition-colors py-1">Accueil</a></li>
+      <li><a href="techniques-sans-arme.html" class="block hover:text-red-500 transition-colors py-1">Sans arme</a></li>
+      <li><a href="techniques-avec-arme.html" class="block hover:text-red-500 transition-colors py-1">Avec arme</a></li>
+      <li><a href="contact.html"              class="block hover:text-red-500 transition-colors py-1">Contact</a></li>
+      <li><a href="a-propos.html"             class="block hover:text-red-500 transition-colors py-1">À propos</a></li>
+    </ul>
+  </div>
+
+</nav>
 
   <div class="sticky top-0 z-10 bg-white dark:bg-gray-950 border-b border-gray-200 dark:border-gray-800 px-6 py-3 flex gap-6 text-sm overflow-x-auto">
     <a href="#katame" class="whitespace-nowrap font-semibold text-red-500">Katame Waza</a>
@@ -79,7 +109,8 @@
       </div>
 
       <!-- ── IKKYO ── -->
-      <div class="border border-gray-200 dark:border-gray-800 rounded-2xl overflow-hidden mb-8">
+       <div class="tech-card border border-gray-200 dark:border-gray-800 rounded-2xl overflow-hidden mb-8" data-tech="ikkyo"></div>
+      <!-- <div class="border border-gray-200 dark:border-gray-800 rounded-2xl overflow-hidden mb-8"> -->
         <div class="px-6 pt-5 pb-3">
           <div class="flex items-baseline gap-3 mb-1">
             <h3 class="text-xl font-bold">Ikkyo</h3><span class="text-red-500">一教</span><span class="text-gray-500 text-sm">Première éducation</span>
@@ -206,7 +237,8 @@
       </div>
 
       <!-- ── NIKYO ── -->
-      <div class="border border-gray-200 dark:border-gray-800 rounded-2xl overflow-hidden mb-8">
+      <!-- <div class="border border-gray-200 dark:border-gray-800 rounded-2xl overflow-hidden mb-8"> -->
+    <div class="tech-card border border-gray-200 dark:border-gray-800 rounded-2xl overflow-hidden mb-8" data-tech="nikkyo"></div>
         <div class="px-6 pt-5 pb-3">
           <div class="flex items-baseline gap-3 mb-1">
             <h3 class="text-xl font-bold">Nikyo</h3><span class="text-red-500">二教</span><span class="text-gray-500 text-sm">Deuxième éducation</span>
@@ -300,7 +332,8 @@
       <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-4">
 
         <!-- SANKYO -->
-        <div class="border border-gray-200 dark:border-gray-800 rounded-2xl overflow-hidden">
+        <!-- <div class="border border-gray-200 dark:border-gray-800 rounded-2xl overflow-hidden"> -->
+        <div class="tech-card border border-gray-200 dark:border-gray-800 rounded-2xl overflow-hidden mb-8" data-tech="sankyo"></div>
           <div class="px-4 pt-4 pb-2">
             <h3 class="font-bold">Sankyo <span class="text-red-500 font-normal text-sm">三教</span></h3>
             <p class="text-gray-500 text-xs mt-1">Rotation du poignet vers le haut — vissage de l'épaule. Uke sur la pointe des pieds.</p>
@@ -368,7 +401,8 @@
         </div>
 
         <!-- YONKYO -->
-        <div class="border border-gray-200 dark:border-gray-800 rounded-2xl overflow-hidden">
+        <!-- <div class="border border-gray-200 dark:border-gray-800 rounded-2xl overflow-hidden"> -->
+        <div class="tech-card border border-gray-200 dark:border-gray-800 rounded-2xl overflow-hidden mb-8" data-tech="yonkyo"></div>
           <div class="px-4 pt-4 pb-2">
             <h3 class="font-bold">Yonkyo <span class="text-red-500 font-normal text-sm">四教</span></h3>
             <p class="text-gray-500 text-xs mt-1">Pression de l'os de l'index sur le nerf radial. Douleur neurologique intense.</p>
@@ -436,7 +470,8 @@
         </div>
 
         <!-- GOKYO -->
-        <div class="border border-gray-200 dark:border-gray-800 rounded-2xl overflow-hidden">
+        <!-- <div class="border border-gray-200 dark:border-gray-800 rounded-2xl overflow-hidden"> -->
+        <div class="tech-card border border-gray-200 dark:border-gray-800 rounded-2xl overflow-hidden mb-8" data-tech="gokyo"></div>
           <div class="px-4 pt-4 pb-2">
             <h3 class="font-bold">Gokyo <span class="text-red-500 font-normal text-sm">五教</span></h3>
             <p class="text-gray-500 text-xs mt-1">Variante d'Ikkyo pour désarmer un adversaire au tanto. Contrôle du bras armé.</p>
@@ -513,7 +548,9 @@
       </div>
 
       <!-- ── IRIMI NAGE ── -->
-      <div class="border border-gray-200 dark:border-gray-800 rounded-2xl overflow-hidden mb-8">
+      <!-- <div class="border border-gray-200 dark:border-gray-800 rounded-2xl overflow-hidden mb-8"> -->
+    <div class="tech-card border border-gray-200 dark:border-gray-800 rounded-2xl overflow-hidden mb-8" data-tech="irimi"></div>
+    
         <div class="px-6 pt-5 pb-3">
           <div class="flex items-baseline gap-3 mb-1">
             <h3 class="text-xl font-bold">Irimi Nage</h3><span class="text-red-500">入り身投げ</span><span class="text-gray-500 text-sm">Projection par entrée</span>
@@ -611,7 +648,8 @@
       <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-8">
 
         <!-- KOTE GAESHI -->
-        <div class="border border-gray-200 dark:border-gray-800 rounded-2xl overflow-hidden">
+        <!-- <div class="border border-gray-200 dark:border-gray-800 rounded-2xl overflow-hidden"> -->
+        <div class="tech-card border border-gray-200 dark:border-gray-800 rounded-2xl overflow-hidden mb-8" data-tech="kote"></div>
           <div class="px-4 pt-4 pb-2">
             <h3 class="font-bold">Kote Gaeshi <span class="text-red-500 font-normal text-sm">小手返し</span></h3>
             <p class="text-gray-500 text-xs mt-1">Retournement externe du poignet. Projection en roulade.</p>
@@ -676,7 +714,8 @@
         </div>
 
         <!-- SHIHO NAGE -->
-        <div class="border border-gray-200 dark:border-gray-800 rounded-2xl overflow-hidden">
+        <!-- <div class="border border-gray-200 dark:border-gray-800 rounded-2xl overflow-hidden"> -->
+        <div class="tech-card border border-gray-200 dark:border-gray-800 rounded-2xl overflow-hidden mb-8" data-tech="shiho"></div>
           <div class="px-4 pt-4 pb-2">
             <h3 class="font-bold">Shiho Nage <span class="text-red-500 font-normal text-sm">四方投げ</span></h3>
             <p class="text-gray-500 text-xs mt-1">4 directions. Pivot 180° avec bras de uke levé au-dessus.</p>
@@ -743,7 +782,8 @@
         </div>
 
         <!-- KAITEN NAGE -->
-        <div class="border border-gray-200 dark:border-gray-800 rounded-2xl overflow-hidden">
+        <!-- <div class="border border-gray-200 dark:border-gray-800 rounded-2xl overflow-hidden"> -->
+        <div class="tech-card border border-gray-200 dark:border-gray-800 rounded-2xl overflow-hidden mb-8" data-tech="kaiten"></div>
           <div class="px-4 pt-4 pb-2">
             <h3 class="font-bold">Kaiten Nage <span class="text-red-500 font-normal text-sm">回転投げ</span></h3>
             <p class="text-gray-500 text-xs mt-1">Rotation axiale. Uke pivote sur son propre axe et est projeté.</p>
@@ -871,42 +911,65 @@
   </footer>
 
   <script src="js/theme.js"></script>
-  <script>
-  const techs = {
-    ikkyo:  { total:4, timer:null, playing:true },
-    nikyo:  { total:3, timer:null, playing:true },
-    sankyo: { total:2, timer:null, playing:true },
-    yonkyo: { total:2, timer:null, playing:true },
-    gokyo:  { total:2, timer:null, playing:true },
-    irimi:  { total:3, timer:null, playing:true },
-    kote:   { total:2, timer:null, playing:true },
-    shiho:  { total:2, timer:null, playing:true },
-    kaiten: { total:2, timer:null, playing:true },
-  };
-  const cursors = {};
-  Object.keys(techs).forEach(k => cursors[k] = 0);
+<script>
+const techs = {
+  ikkyo:  { total:4, timer:null, playing:false },
+  nikyo:  { total:3, timer:null, playing:false },
+  sankyo: { total:2, timer:null, playing:false },
+  yonkyo: { total:2, timer:null, playing:false },
+  gokyo:  { total:2, timer:null, playing:false },
+  irimi:  { total:3, timer:null, playing:false },
+  kote:   { total:2, timer:null, playing:false },
+  shiho:  { total:2, timer:null, playing:false },
+  kaiten: { total:2, timer:null, playing:false },
+};
+const cursors = {};
+Object.keys(techs).forEach(k => cursors[k] = 0);
 
-  function showStep(name, n) {
-    const t = techs[name];
-    n = ((n % t.total) + t.total) % t.total;
-    cursors[name] = n;
-    document.querySelectorAll('.steps-'+name+' .step-panel').forEach((p,i) => p.classList.toggle('active', i===n));
-    document.querySelectorAll('.dots-'+name+' .dot').forEach((d,i) => d.classList.toggle('active', i===n));
-    const lbl = document.querySelector('.step-lbl-'+name);
-    if (lbl) lbl.textContent = 'Étape '+(n+1)+' / '+t.total;
-  }
-  function next(name) { showStep(name, cursors[name]+1); }
-  function prev(name) { showStep(name, cursors[name]-1); }
-  function togglePlay(name) {
-    const t = techs[name];
-    t.playing = !t.playing;
-    document.querySelector('.play-'+name).textContent = t.playing ? '⏸' : '▶';
-    if (t.playing) { clearInterval(t.timer); t.timer = setInterval(() => next(name), 2300); }
-    else clearInterval(t.timer);
-  }
-  Object.keys(techs).forEach(name => {
-    techs[name].timer = setInterval(() => next(name), 2300);
-  });
-  </script>
+function showStep(name, n) {
+  const t = techs[name];
+  n = ((n % t.total) + t.total) % t.total;
+  cursors[name] = n;
+  document.querySelectorAll('.steps-'+name+' .step-panel').forEach((p,i) => p.classList.toggle('active', i===n));
+  document.querySelectorAll('.dots-'+name+' .dot').forEach((d,i) => d.classList.toggle('active', i===n));
+  const lbl = document.querySelector('.step-lbl-'+name);
+  if (lbl) lbl.textContent = 'Étape '+(n+1)+' / '+t.total;
+}
+
+function next(name) { showStep(name, cursors[name]+1); }
+function prev(name) { showStep(name, cursors[name]-1); }
+
+function startAnim(name) {
+  const t = techs[name];
+  if (t.timer) return;
+  t.playing = true;
+  const btn = document.querySelector('.play-'+name);
+  if (btn) btn.textContent = '⏸';
+  t.timer = setInterval(() => next(name), 2300);
+}
+
+function stopAnim(name) {
+  const t = techs[name];
+  clearInterval(t.timer);
+  t.timer = null;
+  t.playing = false;
+  const btn = document.querySelector('.play-'+name);
+  if (btn) btn.textContent = '▶';
+}
+
+function togglePlay(name) {
+  const t = techs[name];
+  if (t.playing) stopAnim(name);
+  else startAnim(name);
+}
+
+// Survol : démarrer/arrêter par carte
+document.querySelectorAll('.tech-card').forEach(card => {
+  const name = card.dataset.tech;
+  if (!name) return;
+  card.addEventListener('mouseenter', () => startAnim(name));
+  card.addEventListener('mouseleave', () => stopAnim(name));
+});
+</script>
 </body>
 </html>

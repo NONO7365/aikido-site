@@ -1,21 +1,35 @@
+// ─── Thème : dark / light ───────────────────────────────
+const html = document.documentElement;
 const toggle = document.getElementById("theme-toggle");
 const icon = document.getElementById("theme-icon");
-const html = document.documentElement;
 
-// Au chargement : lire la préférence sauvegardée
-if (localStorage.getItem("theme") === "light") {
+// Appliquer le thème sauvegardé DÈS le chargement
+const savedTheme = localStorage.getItem("theme") || "dark";
+if (savedTheme === "light") {
   html.classList.remove("dark");
-  icon.textContent = "🌙";
+} else {
+  html.classList.add("dark");
 }
 
-// Au clic : basculer
-toggle.addEventListener("click", () => {
-  const isDark = html.classList.toggle("dark");
-  icon.textContent = isDark ? "☀️" : "🌙";
-  localStorage.setItem("theme", isDark ? "dark" : "light");
-});
+// Mettre à jour l'icône selon le thème actuel
+function updateIcon() {
+  if (icon) icon.textContent = html.classList.contains("dark") ? "☀️" : "🌙";
+}
+updateIcon();
 
-// Validation formulaire contact
+// Basculer au clic
+if (toggle) {
+  toggle.addEventListener("click", () => {
+    html.classList.toggle("dark");
+    localStorage.setItem(
+      "theme",
+      html.classList.contains("dark") ? "dark" : "light",
+    );
+    updateIcon();
+  });
+}
+
+// ─── Formulaire contact ──────────────────────────────────
 const btnEnvoyer = document.getElementById("btn-envoyer");
 if (btnEnvoyer) {
   btnEnvoyer.addEventListener("click", () => {
@@ -28,7 +42,6 @@ if (btnEnvoyer) {
       return;
     }
 
-    // Simulation d'envoi (pas de backend pour l'instant)
     document.getElementById("confirmation").classList.remove("hidden");
     btnEnvoyer.disabled = true;
     btnEnvoyer.textContent = "Message envoyé ✓";

@@ -1,454 +1,827 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="fr" class="dark">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Aïkido — Techniques avec arme</title>
-    <link rel="stylesheet" href="dist/output.css" />
-  </head>
-  <body
-    class="bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100 min-h-screen transition-colors duration-300"
-  >
-    <nav
-      class="border-b border-gray-200 dark:border-gray-800 px-6 py-4 flex items-center justify-between"
-    >
-      <a href="index.html" class="text-xl font-bold tracking-wide">
-        合気道 <span class="text-red-600">Aïkido</span>
-      </a>
-      <ul class="flex gap-6 text-sm font-medium">
-        <li>
-          <a href="index.html" class="hover:text-red-500 transition-colors"
-            >Accueil</a
-          >
-        </li>
-        <li>
-          <a
-            href="techniques-sans-arme.html"
-            class="hover:text-red-500 transition-colors"
-            >Sans arme</a
-          >
-        </li>
-        <li>
-          <a
-            href="techniques-avec-arme.html"
-            class="hover:text-red-500 transition-colors"
-            >Avec arme</a
-          >
-        </li>
-        <li>
-          <a href="contact.html" class="hover:text-red-500 transition-colors"
-            >Contact</a
-          >
-        </li>
-        <li><a href="a-propos.html" class="hover:text-red-500 transition-colors">À propos</a></li>
-      </ul>
-      <button
-        id="theme-toggle"
-        class="p-2 rounded-full border border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-      >
-        <span id="theme-icon">☀️</span>
-      </button>
-    </nav>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aïkido — Techniques avec arme</title>
+  <link rel="stylesheet" href="dist/output.css" />
+  <style>
+    html { scroll-behavior: smooth; }
+    .step-panel { display: none; }
+    .step-panel.active { display: block; }
+    .dot { width: 8px; height: 8px; border-radius: 50%; background: #4b5563; display: inline-block; transition: background 0.2s; }
+    .dot.active { background: #dc2626; }
+    .btn-ctrl { background: transparent; border: 1px solid #4b5563; border-radius: 8px; padding: 5px 14px; font-size: 12px; cursor: pointer; transition: background 0.15s; color: inherit; }
+    .btn-ctrl:hover { background: rgba(128,128,128,0.12); }
+    .btn-play { background: #dc2626; color: white; border-color: #dc2626; }
+    .btn-play:hover { background: #b91c1c; }
+    @keyframes fadeIn { from{opacity:0} to{opacity:1} }
+    .step-panel.active svg { animation: fadeIn 0.3s ease; }
+    @keyframes pulse { 0%,100%{opacity:0.6} 50%{opacity:1} }
+    .pulse { animation: pulse 1s ease-in-out infinite; }
+    @keyframes bounce-x { 0%,100%{transform:translateX(0)} 50%{transform:translateX(6px)} }
+    .bounce-x { animation: bounce-x 0.9s ease-in-out infinite; }
+    @keyframes bounce-y { 0%,100%{transform:translateY(0)} 50%{transform:translateY(5px)} }
+    .bounce-y { animation: bounce-y 0.9s ease-in-out infinite; }
+  </style>
+</head>
+<body class="bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100 min-h-screen transition-colors duration-300">
 
-    <main class="max-w-4xl mx-auto px-6 py-16">
-      <h1 class="text-4xl font-bold mb-2">Techniques avec arme</h1>
-      <p class="text-gray-600 dark:text-gray-400 mb-12">
-        Pratique du
-        <strong class="text-gray-900 dark:text-gray-100">Jo</strong> (bâton), du
-        <strong class="text-gray-900 dark:text-gray-100">Bokken</strong> (sabre
-        en bois) et du
-        <strong class="text-gray-900 dark:text-gray-100">Tanto</strong>
-        (couteau).
+  <nav class="border-b border-gray-200 dark:border-gray-800 px-6 py-4 flex items-center justify-between">
+    <a href="index.html" class="text-xl font-bold tracking-wide">合気道 <span class="text-red-600">Aïkido</span></a>
+    <ul class="flex gap-6 text-sm font-medium">
+      <li><a href="index.html"                class="hover:text-red-500 transition-colors">Accueil</a></li>
+      <li><a href="techniques-sans-arme.html" class="hover:text-red-500 transition-colors">Sans arme</a></li>
+      <li><a href="techniques-avec-arme.html" class="hover:text-red-500 transition-colors">Avec arme</a></li>
+      <li><a href="contact.html"              class="hover:text-red-500 transition-colors">Contact</a></li>
+      <li><a href="a-propos.html"             class="hover:text-red-500 transition-colors">À propos</a></li>
+    </ul>
+    <button id="theme-toggle" class="p-2 rounded-full border border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+      <span id="theme-icon">☀️</span>
+    </button>
+  </nav>
+
+  <!-- NAV INTERNE -->
+  <div class="sticky top-0 z-10 bg-white dark:bg-gray-950 border-b border-gray-200 dark:border-gray-800 px-6 py-3 flex gap-6 text-sm overflow-x-auto">
+    <a href="#jo"     class="whitespace-nowrap font-semibold text-red-500">Jo 杖</a>
+    <span class="text-gray-300 dark:text-gray-700">|</span>
+    <a href="#bokken" class="whitespace-nowrap hover:text-red-500 transition-colors">Bokken 木刀</a>
+    <span class="text-gray-300 dark:text-gray-700">|</span>
+    <a href="#tanto"  class="whitespace-nowrap hover:text-red-500 transition-colors">Tanto 短刀</a>
+  </div>
+
+  <main class="max-w-4xl mx-auto px-6 py-16">
+
+    <h1 class="text-4xl font-bold mb-2">Techniques avec arme</h1>
+    <p class="text-gray-600 dark:text-gray-400 mb-12">
+      Pratique du <strong class="text-gray-900 dark:text-gray-100">Jo</strong> (bâton 128 cm),
+      du <strong class="text-gray-900 dark:text-gray-100">Bokken</strong> (sabre en bois)
+      et du <strong class="text-gray-900 dark:text-gray-100">Tanto</strong> (couteau en bois).
+    </p>
+
+    <!-- ═══════════════════════════
+         JO
+    ═══════════════════════════ -->
+    <section id="jo" class="mb-24">
+      <div class="flex items-baseline gap-4 mb-8">
+        <h2 class="text-3xl font-bold">Jo</h2>
+        <span class="text-red-500 text-xl">杖</span>
+        <span class="text-gray-500 text-sm">— Bâton court (128 cm)</span>
+      </div>
+      <p class="text-gray-600 dark:text-gray-400 text-sm mb-10">
+        Le Jo est un bâton de 128 cm introduit dans l'aïkido par Morihei Ueshiba. 
+        Sa pratique développe la coordination, la fluidité et la compréhension des distances.
       </p>
 
-      <!-- JO : TSUKI -->
-      <div
-        class="flex flex-col md:flex-row items-center gap-8 mb-16 pb-16 border-b border-gray-200 dark:border-gray-800"
-      >
-        <div class="flex-shrink-0">
-          <svg
-            viewBox="0 0 160 160"
-            width="160"
-            height="160"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <!-- Tori avec Jo -->
-            <circle
-              cx="50"
-              cy="30"
-              r="12"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-            />
-            <line
-              x1="50"
-              y1="42"
-              x2="50"
-              y2="90"
-              stroke="currentColor"
-              stroke-width="2"
-            />
-            <line
-              x1="50"
-              y1="90"
-              x2="35"
-              y2="118"
-              stroke="currentColor"
-              stroke-width="2"
-            />
-            <line
-              x1="50"
-              y1="90"
-              x2="65"
-              y2="118"
-              stroke="currentColor"
-              stroke-width="2"
-            />
-            <!-- Jo (bâton) horizontal -->
-            <line
-              x1="50"
-              y1="58"
-              x2="130"
-              y2="58"
-              stroke="currentColor"
-              stroke-width="4"
-              stroke-linecap="round"
-            />
-            <line
-              x1="50"
-              y1="58"
-              x2="70"
-              y2="70"
-              stroke="currentColor"
-              stroke-width="2"
-            />
-            <!-- Flèche poussée -->
-            <line
-              x1="115"
-              y1="45"
-              x2="140"
-              y2="45"
-              stroke="#dc2626"
-              stroke-width="2"
-              marker-end="url(#arr)"
-            />
-            <defs>
-              <marker
-                id="arr"
-                markerWidth="8"
-                markerHeight="8"
-                refX="6"
-                refY="3"
-                orient="auto"
-              >
-                <path d="M0,0 L0,6 L8,3 z" fill="#dc2626" />
-              </marker>
-            </defs>
-            <text
-              x="80"
-              y="148"
-              text-anchor="middle"
-              font-size="11"
-              fill="currentColor"
-              opacity="0.6"
-            >
-              Jo Tsuki
-            </text>
-          </svg>
+      <!-- JO TSUKI ANIMÉ -->
+      <div class="border border-gray-200 dark:border-gray-800 rounded-2xl overflow-hidden mb-10">
+        <div class="px-6 pt-5 pb-3">
+          <div class="flex items-baseline gap-3 mb-1">
+            <h3 class="text-xl font-bold">Jo Tsuki</h3>
+            <span class="text-red-500">杖突き</span>
+            <span class="text-gray-500 text-sm">Poussée au bâton</span>
+          </div>
+          <p class="text-gray-600 dark:text-gray-400 text-sm">Technique fondamentale : poussée horizontale du Jo vers le centre adverse. La puissance vient des hanches et des jambes, pas des bras.</p>
         </div>
-        <div>
-          <h2 class="text-2xl font-bold mb-1">
-            Jo Tsuki
-            <span class="text-red-500 text-lg font-normal">杖突き</span>
-          </h2>
-          <p class="text-sm text-red-400 mb-3">Arme : Jo (bâton 128 cm)</p>
-          <p class="text-gray-600 dark:text-gray-400 mb-3">
-            <strong class="text-gray-900 dark:text-gray-100"
-              >La poussée au bâton.</strong
-            >
-            Technique fondamentale du Jo où tori pousse le bâton horizontalement
-            vers le centre du corps adverse, en alignant les hanches et les
-            épaules.
-          </p>
-          <p class="text-sm text-gray-500 dark:text-gray-500">
-            Principe clé : la puissance vient des jambes et du centre, pas des
-            bras.
-          </p>
+        <div class="bg-gray-50 dark:bg-gray-900 px-4 py-3">
+          <div class="flex gap-4 items-center mb-2">
+            <div style="display:flex;gap:5px;" class="dots-jotsuki"><span class="dot active"></span><span class="dot"></span><span class="dot"></span></div>
+            <span class="text-xs text-gray-500 step-lbl-jotsuki">Étape 1 / 3</span>
+            <div style="margin-left:auto;display:flex;gap:6px;">
+              <button class="btn-ctrl" onclick="prev('jotsuki')">←</button>
+              <button class="btn-ctrl btn-play play-jotsuki" onclick="togglePlay('jotsuki')">⏸</button>
+              <button class="btn-ctrl" onclick="next('jotsuki')">→</button>
+            </div>
+          </div>
+          <div class="steps-jotsuki">
+            <!-- Étape 1 : Position de garde -->
+            <div class="step-panel active">
+              <svg viewBox="0 0 380 175" width="100%">
+                <defs><marker id="jt1" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#dc2626"/></marker></defs>
+                <!-- Tori en garde avec Jo -->
+                <circle cx="140" cy="35" r="14" fill="none" stroke="currentColor" stroke-width="2"/>
+                <line x1="140" y1="49" x2="140" y2="108" stroke="currentColor" stroke-width="2"/>
+                <line x1="140" y1="108" x2="118" y2="145" stroke="currentColor" stroke-width="2"/>
+                <line x1="140" y1="108" x2="162" y2="145" stroke="currentColor" stroke-width="2"/>
+                <polygon points="118,108 162,108 168,145 112,145" fill="#1a1a1a" opacity="0.85"/>
+                <!-- Jo horizontal tenu des deux mains -->
+                <line x1="60" y1="65" x2="230" y2="65" stroke="currentColor" stroke-width="5" stroke-linecap="round"/>
+                <!-- Mains sur le Jo -->
+                <line x1="140" y1="49" x2="115" y2="65" stroke="currentColor" stroke-width="2"/>
+                <line x1="140" y1="49" x2="165" y2="65" stroke="currentColor" stroke-width="2"/>
+                <circle cx="115" cy="65" r="5" fill="currentColor" opacity="0.4"/>
+                <circle cx="165" cy="65" r="5" fill="currentColor" opacity="0.4"/>
+                <!-- Label Jo -->
+                <text x="145" y="55" font-size="10" fill="currentColor" opacity="0.5">Jo</text>
+                <text x="140" y="165" text-anchor="middle" font-size="10" fill="currentColor" opacity="0.45">Position de garde — Honte no kamae</text>
+              </svg>
+            </div>
+            <!-- Étape 2 : Préparation poussée -->
+            <div class="step-panel">
+              <svg viewBox="0 0 380 175" width="100%">
+                <defs><marker id="jt2" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#dc2626"/></marker></defs>
+                <circle cx="120" cy="35" r="14" fill="none" stroke="currentColor" stroke-width="2"/>
+                <line x1="120" y1="49" x2="120" y2="108" stroke="currentColor" stroke-width="2"/>
+                <line x1="120" y1="108" x2="95"  y2="145" stroke="currentColor" stroke-width="2"/>
+                <line x1="120" y1="108" x2="145" y2="145" stroke="currentColor" stroke-width="2"/>
+                <polygon points="95,108 145,108 150,145 90,145" fill="#1a1a1a" opacity="0.85"/>
+                <!-- Jo tiré en arrière -->
+                <line x1="40" y1="62" x2="210" y2="62" stroke="currentColor" stroke-width="5" stroke-linecap="round"/>
+                <line x1="120" y1="49" x2="95"  y2="62" stroke="currentColor" stroke-width="2"/>
+                <line x1="120" y1="49" x2="145" y2="62" stroke="currentColor" stroke-width="2"/>
+                <circle cx="95"  cy="62" r="5" fill="currentColor" opacity="0.4"/>
+                <circle cx="145" cy="62" r="5" fill="currentColor" opacity="0.4"/>
+                <!-- Flèche prép -->
+                <g class="bounce-x" style="transform-origin:210px 62px; transform:scaleX(-1);">
+                  <line x1="210" y1="55" x2="240" y2="55" stroke="#dc2626" stroke-width="1.5" marker-end="url(#jt2)"/>
+                </g>
+                <text x="190" y="165" text-anchor="middle" font-size="10" fill="currentColor" opacity="0.45">Préparation — Jo tiré en arrière</text>
+              </svg>
+            </div>
+            <!-- Étape 3 : Tsuki — poussée -->
+            <div class="step-panel">
+              <svg viewBox="0 0 380 175" width="100%">
+                <defs><marker id="jt3" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#dc2626"/></marker></defs>
+                <circle cx="110" cy="35" r="14" fill="none" stroke="currentColor" stroke-width="2"/>
+                <line x1="110" y1="49" x2="110" y2="108" stroke="currentColor" stroke-width="2"/>
+                <line x1="110" y1="108" x2="88"  y2="145" stroke="currentColor" stroke-width="2"/>
+                <line x1="110" y1="108" x2="132" y2="145" stroke="currentColor" stroke-width="2"/>
+                <polygon points="88,108 132,108 138,145 82,145" fill="#1a1a1a" opacity="0.85"/>
+                <!-- Jo poussé vers l'avant -->
+                <line x1="55" y1="62" x2="285" y2="62" stroke="currentColor" stroke-width="5" stroke-linecap="round"/>
+                <line x1="110" y1="49" x2="88"  y2="62" stroke="currentColor" stroke-width="2"/>
+                <line x1="110" y1="49" x2="132" y2="62" stroke="currentColor" stroke-width="2"/>
+                <circle cx="88"  cy="62" r="5" fill="currentColor" opacity="0.4"/>
+                <circle cx="132" cy="62" r="5" fill="currentColor" opacity="0.4"/>
+                <!-- Pointe du Jo -->
+                <polygon points="285,56 300,62 285,68" fill="currentColor"/>
+                <!-- Flèche poussée -->
+                <g class="bounce-x">
+                  <line x1="285" y1="48" x2="315" y2="48" stroke="#dc2626" stroke-width="2" marker-end="url(#jt3)"/>
+                </g>
+                <circle cx="285" cy="62" r="7" fill="#dc2626" opacity="0.7" class="pulse"/>
+                <text x="190" y="165" text-anchor="middle" font-size="11" fill="#dc2626" font-weight="bold">✓ Tsuki — poussée vers le centre</text>
+              </svg>
+            </div>
+          </div>
         </div>
       </div>
 
-      <!-- BOKKEN : SHOMEN UCHI -->
-      <div
-        class="flex flex-col md:flex-row items-center gap-8 mb-16 pb-16 border-b border-gray-200 dark:border-gray-800"
-      >
-        <div class="flex-shrink-0">
-          <svg
-            viewBox="0 0 160 160"
-            width="160"
-            height="160"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <!-- Tori -->
-            <circle
-              cx="80"
-              cy="30"
-              r="12"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-            />
-            <line
-              x1="80"
-              y1="42"
-              x2="80"
-              y2="90"
-              stroke="currentColor"
-              stroke-width="2"
-            />
-            <line
-              x1="80"
-              y1="90"
-              x2="60"
-              y2="118"
-              stroke="currentColor"
-              stroke-width="2"
-            />
-            <line
-              x1="80"
-              y1="90"
-              x2="100"
-              y2="118"
-              stroke="currentColor"
-              stroke-width="2"
-            />
-            <!-- Bras levés -->
-            <line
-              x1="80"
-              y1="58"
-              x2="55"
-              y2="35"
-              stroke="currentColor"
-              stroke-width="2"
-            />
-            <line
-              x1="80"
-              y1="58"
-              x2="105"
-              y2="35"
-              stroke="currentColor"
-              stroke-width="2"
-            />
-            <!-- Bokken (sabre) levé -->
-            <line
-              x1="80"
-              y1="10"
-              x2="80"
-              y2="55"
-              stroke="currentColor"
-              stroke-width="5"
-              stroke-linecap="round"
-            />
-            <line
-              x1="72"
-              y1="42"
-              x2="88"
-              y2="42"
-              stroke="currentColor"
-              stroke-width="2"
-            />
-            <!-- Flèche frappe vers le bas -->
-            <path
-              d="M 100 20 Q 118 55 100 80"
-              fill="none"
-              stroke="#dc2626"
-              stroke-width="2"
-              stroke-dasharray="4,3"
-            />
-            <polygon points="100,80 92,70 108,70" fill="#dc2626" />
-            <text
-              x="80"
-              y="148"
-              text-anchor="middle"
-              font-size="11"
-              fill="currentColor"
-              opacity="0.6"
-            >
-              Shomen Uchi
-            </text>
-          </svg>
-        </div>
-        <div>
-          <h2 class="text-2xl font-bold mb-1">
-            Shomen Uchi
-            <span class="text-red-500 text-lg font-normal">正面打ち</span>
-          </h2>
-          <p class="text-sm text-red-400 mb-3">Arme : Bokken (sabre en bois)</p>
-          <p class="text-gray-600 dark:text-gray-400 mb-3">
-            <strong class="text-gray-900 dark:text-gray-100"
-              >La frappe frontale.</strong
-            >
-            Le bokken est levé au-dessus de la tête puis abaissé verticalement
-            sur le centre du crâne adverse, en un mouvement fluide du haut vers
-            le bas.
-          </p>
-          <p class="text-sm text-gray-500 dark:text-gray-500">
-            Principe clé : relâchement total des épaules pour une coupe nette et
-            précise.
-          </p>
+      <!-- SUBURI JO -->
+      <div class="mb-10">
+        <h3 class="text-xl font-bold mb-1">Suburi <span class="text-red-500 font-normal text-base">素振り</span></h3>
+        <p class="text-gray-600 dark:text-gray-400 text-sm mb-6">Les 20 suburi au Jo sont les frappes et mouvements fondamentaux pratiqués seul pour développer la maîtrise du bâton.</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+
+          <div class="border border-gray-200 dark:border-gray-800 rounded-xl p-4 flex gap-4 items-start">
+            <svg viewBox="0 0 80 90" width="70" height="80" class="flex-shrink-0">
+              <!-- Tori Jo vertical levé -->
+              <circle cx="40" cy="18" r="10" fill="none" stroke="currentColor" stroke-width="2"/>
+              <line x1="40" y1="28" x2="40" y2="70" stroke="currentColor" stroke-width="2"/>
+              <line x1="40" y1="42" x2="25" y2="32" stroke="currentColor" stroke-width="2"/>
+              <line x1="40" y1="42" x2="55" y2="32" stroke="currentColor" stroke-width="2"/>
+              <line x1="40" y1="70" x2="28" y2="86" stroke="currentColor" stroke-width="2"/>
+              <line x1="40" y1="70" x2="52" y2="86" stroke="currentColor" stroke-width="2"/>
+              <polygon points="28,70 52,70 55,86 25,86" fill="#1a1a1a" opacity="0.85"/>
+              <!-- Jo vertical -->
+              <line x1="40" y1="8" x2="40" y2="30" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+              <line x1="25" y1="32" x2="40" y2="8" stroke="currentColor" stroke-width="2"/>
+            </svg>
+            <div>
+              <p class="font-semibold text-sm mb-1">Choku tsuki <span class="text-red-400 text-xs">直突き</span></p>
+              <p class="text-gray-500 text-xs">Poussée directe. Le Jo est poussé horizontalement vers l'avant depuis la hanche. Base de toute la pratique au Jo.</p>
+            </div>
+          </div>
+
+          <div class="border border-gray-200 dark:border-gray-800 rounded-xl p-4 flex gap-4 items-start">
+            <svg viewBox="0 0 80 90" width="70" height="80" class="flex-shrink-0">
+              <circle cx="40" cy="18" r="10" fill="none" stroke="currentColor" stroke-width="2"/>
+              <line x1="40" y1="28" x2="40" y2="70" stroke="currentColor" stroke-width="2"/>
+              <line x1="40" y1="42" x2="22" y2="35" stroke="currentColor" stroke-width="2"/>
+              <line x1="40" y1="42" x2="58" y2="48" stroke="currentColor" stroke-width="2"/>
+              <line x1="40" y1="70" x2="28" y2="86" stroke="currentColor" stroke-width="2"/>
+              <line x1="40" y1="70" x2="52" y2="86" stroke="currentColor" stroke-width="2"/>
+              <polygon points="28,70 52,70 55,86 25,86" fill="#1a1a1a" opacity="0.85"/>
+              <!-- Jo diagonal -->
+              <line x1="15" y1="55" x2="65" y2="15" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+              <circle cx="65" cy="15" r="3" fill="#dc2626" opacity="0.7"/>
+            </svg>
+            <div>
+              <p class="font-semibold text-sm mb-1">Kaeshi tsuki <span class="text-red-400 text-xs">返し突き</span></p>
+              <p class="text-gray-500 text-xs">Poussée en retour. Après un blocage, le Jo pivote et pousse en direction opposée d'un mouvement continu.</p>
+            </div>
+          </div>
+
+          <div class="border border-gray-200 dark:border-gray-800 rounded-xl p-4 flex gap-4 items-start">
+            <svg viewBox="0 0 80 90" width="70" height="80" class="flex-shrink-0">
+              <circle cx="40" cy="22" r="10" fill="none" stroke="currentColor" stroke-width="2"/>
+              <line x1="40" y1="32" x2="40" y2="72" stroke="currentColor" stroke-width="2"/>
+              <line x1="40" y1="72" x2="28" y2="86" stroke="currentColor" stroke-width="2"/>
+              <line x1="40" y1="72" x2="52" y2="86" stroke="currentColor" stroke-width="2"/>
+              <polygon points="28,72 52,72 55,86 25,86" fill="#1a1a1a" opacity="0.85"/>
+              <!-- Bras levés -->
+              <line x1="40" y1="44" x2="20" y2="25" stroke="currentColor" stroke-width="2"/>
+              <line x1="40" y1="44" x2="60" y2="25" stroke="currentColor" stroke-width="2"/>
+              <!-- Jo levé au dessus -->
+              <line x1="18" y1="12" x2="62" y2="12" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+              <path d="M40 44 Q40 20 40 12" fill="none" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="3,2"/>
+            </svg>
+            <div>
+              <p class="font-semibold text-sm mb-1">Shomen uchi <span class="text-red-400 text-xs">正面打ち</span></p>
+              <p class="text-gray-500 text-xs">Frappe frontale. Le Jo est levé au-dessus de la tête et abattu verticalement sur la ligne centrale.</p>
+            </div>
+          </div>
+
+          <div class="border border-gray-200 dark:border-gray-800 rounded-xl p-4 flex gap-4 items-start">
+            <svg viewBox="0 0 80 90" width="70" height="80" class="flex-shrink-0">
+              <circle cx="40" cy="22" r="10" fill="none" stroke="currentColor" stroke-width="2"/>
+              <line x1="40" y1="32" x2="40" y2="72" stroke="currentColor" stroke-width="2"/>
+              <line x1="40" y1="72" x2="28" y2="86" stroke="currentColor" stroke-width="2"/>
+              <line x1="40" y1="72" x2="52" y2="86" stroke="currentColor" stroke-width="2"/>
+              <polygon points="28,72 52,72 55,86 25,86" fill="#1a1a1a" opacity="0.85"/>
+              <!-- Bras asymétriques -->
+              <line x1="40" y1="44" x2="15" y2="38" stroke="currentColor" stroke-width="2"/>
+              <line x1="40" y1="44" x2="62" y2="30" stroke="currentColor" stroke-width="2"/>
+              <!-- Jo diagonal frappe côté -->
+              <line x1="10" y1="50" x2="68" y2="18" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+              <circle cx="10" cy="50" r="3" fill="#dc2626" opacity="0.7"/>
+            </svg>
+            <div>
+              <p class="font-semibold text-sm mb-1">Yokomen uchi <span class="text-red-400 text-xs">横面打ち</span></p>
+              <p class="text-gray-500 text-xs">Frappe latérale de la tempe. Le Jo est amené diagonalement sur le côté de la tête adverse.</p>
+            </div>
+          </div>
+
         </div>
       </div>
 
-      <!-- TANTO : DEFENSE -->
-      <div class="flex flex-col md:flex-row items-center gap-8 mb-16">
-        <div class="flex-shrink-0">
-          <svg
-            viewBox="0 0 160 160"
-            width="160"
-            height="160"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <!-- Uke avec tanto -->
-            <circle
-              cx="35"
-              cy="35"
-              r="12"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-            />
-            <line
-              x1="35"
-              y1="47"
-              x2="35"
-              y2="90"
-              stroke="currentColor"
-              stroke-width="2"
-            />
-            <line
-              x1="35"
-              y1="90"
-              x2="20"
-              y2="118"
-              stroke="currentColor"
-              stroke-width="2"
-            />
-            <line
-              x1="35"
-              y1="90"
-              x2="50"
-              y2="118"
-              stroke="currentColor"
-              stroke-width="2"
-            />
-            <!-- Bras avec tanto -->
-            <line
-              x1="35"
-              y1="60"
-              x2="80"
-              y2="70"
-              stroke="currentColor"
-              stroke-width="2"
-            />
-            <!-- Tanto -->
-            <line
-              x1="80"
-              y1="70"
-              x2="105"
-              y2="65"
-              stroke="currentColor"
-              stroke-width="4"
-              stroke-linecap="round"
-            />
-            <polygon points="105,65 115,62 108,70" fill="currentColor" />
-            <!-- Tori défenseur -->
-            <circle
-              cx="120"
-              cy="35"
-              r="12"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-            />
-            <line
-              x1="120"
-              y1="47"
-              x2="120"
-              y2="90"
-              stroke="currentColor"
-              stroke-width="2"
-            />
-            <line
-              x1="120"
-              y1="90"
-              x2="105"
-              y2="118"
-              stroke="currentColor"
-              stroke-width="2"
-            />
-            <line
-              x1="120"
-              y1="90"
-              x2="135"
-              y2="118"
-              stroke="currentColor"
-              stroke-width="2"
-            />
-            <line
-              x1="120"
-              y1="60"
-              x2="95"
-              y2="75"
-              stroke="currentColor"
-              stroke-width="2"
-            />
-            <!-- Déviation -->
-            <path
-              d="M 95 75 Q 90 55 105 65"
-              fill="none"
-              stroke="#dc2626"
-              stroke-width="2"
-            />
-            <polygon points="105,65 96,58 108,54" fill="#dc2626" />
-            <text
-              x="80"
-              y="148"
-              text-anchor="middle"
-              font-size="11"
-              fill="currentColor"
-              opacity="0.6"
-            >
-              Tanto Dori
-            </text>
-          </svg>
-        </div>
-        <div>
-          <h2 class="text-2xl font-bold mb-1">
-            Tanto Dori
-            <span class="text-red-500 text-lg font-normal">短刀取り</span>
-          </h2>
-          <p class="text-sm text-red-400 mb-3">Arme : Tanto (couteau)</p>
-          <p class="text-gray-600 dark:text-gray-400 mb-3">
-            <strong class="text-gray-900 dark:text-gray-100"
-              >La défense contre le couteau.</strong
-            >
-            Tori dévie l'attaque au tanto de uke en entrant dans son angle mort,
-            puis contrôle le poignet armé pour désarmer en toute sécurité.
-          </p>
-          <p class="text-sm text-gray-500 dark:text-gray-500">
-            Principe clé : ne jamais affronter la lame, toujours se déplacer
-            hors de sa trajectoire.
-          </p>
+      <!-- KATA JO 13 COUPS -->
+      <div class="mb-10">
+        <h3 class="text-xl font-bold mb-1">Jusan no Jo <span class="text-red-500 font-normal text-base">十三の杖</span></h3>
+        <p class="text-gray-400 text-xs font-semibold uppercase tracking-wider mb-4">Kata 13 coups</p>
+        <p class="text-gray-600 dark:text-gray-400 text-sm mb-6">Le kata des 13 coups est le premier kata codifié du Jo en aïkido. Il enchaîne 13 mouvements fondamentaux en une séquence continue, pratiquée seul ou en miroir face à un partenaire.</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="p-4 rounded-xl border border-gray-200 dark:border-gray-800 flex gap-4">
+            <svg viewBox="0 0 60 75" width="52" height="65" class="flex-shrink-0">
+              <circle cx="30" cy="14" r="9" fill="none" stroke="currentColor" stroke-width="1.8"/>
+              <line x1="30" y1="23" x2="30" y2="58" stroke="currentColor" stroke-width="1.8"/>
+              <line x1="30" y1="58" x2="20" y2="72" stroke="currentColor" stroke-width="1.8"/>
+              <line x1="30" y1="58" x2="40" y2="72" stroke="currentColor" stroke-width="1.8"/>
+              <polygon points="20,58 40,58 43,72 17,72" fill="#1a1a1a" opacity="0.85"/>
+              <line x1="5" y1="35" x2="55" y2="35" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/>
+              <line x1="30" y1="23" x2="15" y2="35" stroke="currentColor" stroke-width="1.8"/>
+              <line x1="30" y1="23" x2="45" y2="35" stroke="currentColor" stroke-width="1.8"/>
+            </svg>
+            <div>
+              <p class="font-semibold text-xs text-red-500 mb-0.5">Mouvements 1-4</p>
+              <p class="text-gray-600 dark:text-gray-400 text-xs">Tsuki (poussée) · Gedan gaeshi (retour bas) · Furikaburi (lever) · Shomen uchi (frappe frontale)</p>
+            </div>
+          </div>
+          <div class="p-4 rounded-xl border border-gray-200 dark:border-gray-800 flex gap-4">
+            <svg viewBox="0 0 60 75" width="52" height="65" class="flex-shrink-0">
+              <circle cx="30" cy="14" r="9" fill="none" stroke="currentColor" stroke-width="1.8"/>
+              <line x1="30" y1="23" x2="30" y2="58" stroke="currentColor" stroke-width="1.8"/>
+              <line x1="30" y1="58" x2="20" y2="72" stroke="currentColor" stroke-width="1.8"/>
+              <line x1="30" y1="58" x2="40" y2="72" stroke="currentColor" stroke-width="1.8"/>
+              <polygon points="20,58 40,58 43,72 17,72" fill="#1a1a1a" opacity="0.85"/>
+              <!-- Jo vertical levé -->
+              <line x1="30" y1="5" x2="30" y2="23" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/>
+              <line x1="18" y1="32" x2="30" y2="5" stroke="currentColor" stroke-width="1.8"/>
+              <line x1="42" y1="32" x2="30" y2="5" stroke="currentColor" stroke-width="1.8"/>
+            </svg>
+            <div>
+              <p class="font-semibold text-xs text-red-500 mb-0.5">Mouvements 5-8</p>
+              <p class="text-gray-600 dark:text-gray-400 text-xs">Irimi (entrée) · Yokomen uchi (frappe latérale) · Hasso gaeshi (retour épaule) · Gedan gaeshi</p>
+            </div>
+          </div>
+          <div class="p-4 rounded-xl border border-gray-200 dark:border-gray-800 flex gap-4">
+            <svg viewBox="0 0 60 75" width="52" height="65" class="flex-shrink-0">
+              <circle cx="30" cy="14" r="9" fill="none" stroke="currentColor" stroke-width="1.8"/>
+              <line x1="30" y1="23" x2="30" y2="58" stroke="currentColor" stroke-width="1.8"/>
+              <line x1="30" y1="58" x2="20" y2="72" stroke="currentColor" stroke-width="1.8"/>
+              <line x1="30" y1="58" x2="40" y2="72" stroke="currentColor" stroke-width="1.8"/>
+              <polygon points="20,58 40,58 43,72 17,72" fill="#1a1a1a" opacity="0.85"/>
+              <!-- Jo diagonal bas -->
+              <line x1="8" y1="45" x2="52" y2="25" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/>
+              <line x1="18" y1="32" x2="8" y2="45" stroke="currentColor" stroke-width="1.8"/>
+              <line x1="42" y1="30" x2="52" y2="25" stroke="currentColor" stroke-width="1.8"/>
+            </svg>
+            <div>
+              <p class="font-semibold text-xs text-red-500 mb-0.5">Mouvements 9-11</p>
+              <p class="text-gray-600 dark:text-gray-400 text-xs">Tsuki · Gedan gaeshi · Furikaburi — le kata pivote et revient dans la direction initiale</p>
+            </div>
+          </div>
+          <div class="p-4 rounded-xl border border-gray-200 dark:border-gray-800 flex gap-4">
+            <svg viewBox="0 0 60 75" width="52" height="65" class="flex-shrink-0">
+              <circle cx="30" cy="14" r="9" fill="none" stroke="currentColor" stroke-width="1.8"/>
+              <line x1="30" y1="23" x2="30" y2="58" stroke="currentColor" stroke-width="1.8"/>
+              <line x1="30" y1="58" x2="20" y2="72" stroke="currentColor" stroke-width="1.8"/>
+              <line x1="30" y1="58" x2="40" y2="72" stroke="currentColor" stroke-width="1.8"/>
+              <polygon points="20,58 40,58 43,72 17,72" fill="#1a1a1a" opacity="0.85"/>
+              <!-- Jo horizontal final -->
+              <line x1="5" y1="30" x2="55" y2="30" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/>
+              <line x1="18" y1="32" x2="10" y2="30" stroke="currentColor" stroke-width="1.8"/>
+              <line x1="42" y1="32" x2="50" y2="30" stroke="currentColor" stroke-width="1.8"/>
+              <circle cx="55" cy="30" r="4" fill="#dc2626" opacity="0.7"/>
+            </svg>
+            <div>
+              <p class="font-semibold text-xs text-red-500 mb-0.5">Mouvements 12-13</p>
+              <p class="text-gray-600 dark:text-gray-400 text-xs">Shomen uchi final · Tsuki de conclusion — retour à la posture initiale, musubi (connexion)</p>
+            </div>
+          </div>
         </div>
       </div>
-    </main>
 
-    <footer
-      class="border-t border-gray-200 dark:border-gray-800 text-center text-sm text-gray-500 py-6"
-    >
-      © 2025 Aïkido Dojo — Tous droits réservés
-    </footer>
+      <!-- KATA JO 31 COUPS -->
+      <div class="mb-4">
+        <h3 class="text-xl font-bold mb-1">Sanjuichi no Jo <span class="text-red-500 font-normal text-base">三十一の杖</span></h3>
+        <p class="text-gray-400 text-xs font-semibold uppercase tracking-wider mb-4">Kata 31 coups</p>
+        <p class="text-gray-600 dark:text-gray-400 text-sm mb-6">Le kata des 31 coups est le kata majeur du Jo en aïkido, directement transmis par Ō-Sensei. Il intègre les 20 suburi dans une séquence complexe couvrant les 8 directions, pratiquée seul ou en miroir.</p>
+        <div class="space-y-3">
+          <div class="p-4 rounded-xl border border-gray-200 dark:border-gray-800">
+            <div class="flex items-center gap-3 mb-1">
+              <span class="w-8 h-8 rounded-full bg-red-600 text-white text-xs font-bold flex items-center justify-center flex-shrink-0">1</span>
+              <p class="font-semibold text-sm">Mouvements 1-8 — Attaque frontale et retrait</p>
+            </div>
+            <p class="text-gray-500 text-xs ml-11">Tsuki · Gedan gaeshi · Furikaburi · Shomen uchi · Irimi tsuki · Gedan gaeshi · Furikaburi · Yokomen uchi</p>
+          </div>
+          <div class="p-4 rounded-xl border border-gray-200 dark:border-gray-800">
+            <div class="flex items-center gap-3 mb-1">
+              <span class="w-8 h-8 rounded-full bg-red-600 text-white text-xs font-bold flex items-center justify-center flex-shrink-0">2</span>
+              <p class="font-semibold text-sm">Mouvements 9-16 — Déplacements en diagonale</p>
+            </div>
+            <p class="text-gray-500 text-xs ml-11">Irimi · Ushiro tsuki · Gedan gaeshi · Furikaburi · Shomen uchi · Hasso gaeshi · Yokomen uchi · Gedan gaeshi</p>
+          </div>
+          <div class="p-4 rounded-xl border border-gray-200 dark:border-gray-800">
+            <div class="flex items-center gap-3 mb-1">
+              <span class="w-8 h-8 rounded-full bg-red-600 text-white text-xs font-bold flex items-center justify-center flex-shrink-0">3</span>
+              <p class="font-semibold text-sm">Mouvements 17-24 — Séquence centrale</p>
+            </div>
+            <p class="text-gray-500 text-xs ml-11">Tsuki · Gedan gaeshi · Furikaburi · Yokomen uchi · Irimi · Ushiro tsuki · Gedan gaeshi · Furikaburi</p>
+          </div>
+          <div class="p-4 rounded-xl border border-gray-200 dark:border-gray-800">
+            <div class="flex items-center gap-3 mb-1">
+              <span class="w-8 h-8 rounded-full bg-red-600 text-white text-xs font-bold flex items-center justify-center flex-shrink-0">4</span>
+              <p class="font-semibold text-sm">Mouvements 25-31 — Conclusion sur 8 directions</p>
+            </div>
+            <p class="text-gray-500 text-xs ml-11">Shomen uchi · Hasso gaeshi · Yokomen uchi · Gedan gaeshi · Tsuki · Gedan gaeshi · Tsuki final (musubi)</p>
+          </div>
+        </div>
+      </div>
+    </section>
 
-    <script src="js/theme.js"></script>
-  </body>
+    <!-- ═══════════════════════════
+         BOKKEN
+    ═══════════════════════════ -->
+    <section id="bokken" class="mb-24">
+      <div class="flex items-baseline gap-4 mb-8">
+        <h2 class="text-3xl font-bold">Bokken</h2>
+        <span class="text-red-500 text-xl">木刀</span>
+        <span class="text-gray-500 text-sm">— Sabre en bois</span>
+      </div>
+      <p class="text-gray-600 dark:text-gray-400 text-sm mb-10">
+        Le Bokken (ou Bokuto) est un sabre en bois reproduisant le katana. Sa pratique en aïkido est directement liée au Kenjutsu et développe la précision, la coupe et l'engagement du centre.
+      </p>
+
+      <!-- SHOMEN UCHI ANIMÉ -->
+      <div class="border border-gray-200 dark:border-gray-800 rounded-2xl overflow-hidden mb-10">
+        <div class="px-6 pt-5 pb-3">
+          <div class="flex items-baseline gap-3 mb-1">
+            <h3 class="text-xl font-bold">Shomen Uchi</h3>
+            <span class="text-red-500">正面打ち</span>
+            <span class="text-gray-500 text-sm">Frappe frontale au Bokken</span>
+          </div>
+          <p class="text-gray-600 dark:text-gray-400 text-sm">Frappe verticale fondamentale du Bokken sur la ligne centrale. Le sabre est levé au-dessus de la tête et abattu d'un mouvement fluide. La puissance naît du relâchement des épaules.</p>
+        </div>
+        <div class="bg-gray-50 dark:bg-gray-900 px-4 py-3">
+          <div class="flex gap-4 items-center mb-2">
+            <div style="display:flex;gap:5px;" class="dots-shomen"><span class="dot active"></span><span class="dot"></span><span class="dot"></span></div>
+            <span class="text-xs text-gray-500 step-lbl-shomen">Étape 1 / 3</span>
+            <div style="margin-left:auto;display:flex;gap:6px;">
+              <button class="btn-ctrl" onclick="prev('shomen')">←</button>
+              <button class="btn-ctrl btn-play play-shomen" onclick="togglePlay('shomen')">⏸</button>
+              <button class="btn-ctrl" onclick="next('shomen')">→</button>
+            </div>
+          </div>
+          <div class="steps-shomen">
+            <div class="step-panel active">
+              <svg viewBox="0 0 380 185" width="100%">
+                <!-- Garde chudan -->
+                <circle cx="190" cy="40" r="14" fill="none" stroke="currentColor" stroke-width="2"/>
+                <line x1="190" y1="54" x2="190" y2="113" stroke="currentColor" stroke-width="2"/>
+                <line x1="190" y1="113" x2="168" y2="150" stroke="currentColor" stroke-width="2"/>
+                <line x1="190" y1="113" x2="212" y2="150" stroke="currentColor" stroke-width="2"/>
+                <polygon points="168,113 212,113 218,150 162,150" fill="#1a1a1a" opacity="0.85"/>
+                <!-- Bras en garde -->
+                <line x1="190" y1="68" x2="160" y2="55" stroke="currentColor" stroke-width="2"/>
+                <line x1="190" y1="68" x2="220" y2="55" stroke="currentColor" stroke-width="2"/>
+                <!-- Bokken en garde (chudan) -->
+                <line x1="190" y1="30" x2="190" y2="90" stroke="currentColor" stroke-width="4.5" stroke-linecap="round"/>
+                <line x1="178" y1="60" x2="202" y2="60" stroke="currentColor" stroke-width="2"/>
+                <circle cx="190" cy="30" r="4" fill="currentColor" opacity="0.5"/>
+                <text x="190" y="172" text-anchor="middle" font-size="10" fill="currentColor" opacity="0.45">Chudan no kamae — garde centrale</text>
+              </svg>
+            </div>
+            <div class="step-panel">
+              <svg viewBox="0 0 380 185" width="100%">
+                <defs><marker id="sm2" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#dc2626"/></marker></defs>
+                <!-- Bokken levé -->
+                <circle cx="190" cy="45" r="14" fill="none" stroke="currentColor" stroke-width="2"/>
+                <line x1="190" y1="59" x2="190" y2="118" stroke="currentColor" stroke-width="2"/>
+                <line x1="190" y1="118" x2="168" y2="155" stroke="currentColor" stroke-width="2"/>
+                <line x1="190" y1="118" x2="212" y2="155" stroke="currentColor" stroke-width="2"/>
+                <polygon points="168,118 212,118 218,155 162,155" fill="#1a1a1a" opacity="0.85"/>
+                <line x1="190" y1="72" x2="155" y2="52" stroke="currentColor" stroke-width="2"/>
+                <line x1="190" y1="72" x2="225" y2="52" stroke="currentColor" stroke-width="2"/>
+                <!-- Bokken levé vertical -->
+                <line x1="190" y1="8" x2="190" y2="65" stroke="currentColor" stroke-width="4.5" stroke-linecap="round"/>
+                <line x1="178" y1="50" x2="202" y2="50" stroke="currentColor" stroke-width="2"/>
+                <!-- Flèche vers le haut -->
+                <g class="bounce-y" style="transform-origin:190px 8px;transform:rotate(180deg)">
+                  <line x1="190" y1="15" x2="190" y2="40" stroke="#dc2626" stroke-width="1.5" marker-end="url(#sm2)"/>
+                </g>
+                <text x="190" y="175" text-anchor="middle" font-size="10" fill="currentColor" opacity="0.45">Furikaburi — lever du sabre au-dessus</text>
+              </svg>
+            </div>
+            <div class="step-panel">
+              <svg viewBox="0 0 380 185" width="100%">
+                <defs><marker id="sm3" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#dc2626"/></marker></defs>
+                <circle cx="190" cy="42" r="14" fill="none" stroke="currentColor" stroke-width="2"/>
+                <line x1="190" y1="56" x2="190" y2="115" stroke="currentColor" stroke-width="2"/>
+                <line x1="190" y1="115" x2="168" y2="152" stroke="currentColor" stroke-width="2"/>
+                <line x1="190" y1="115" x2="212" y2="152" stroke="currentColor" stroke-width="2"/>
+                <polygon points="168,115 212,115 218,152 162,152" fill="#1a1a1a" opacity="0.85"/>
+                <line x1="190" y1="68" x2="158" y2="58" stroke="currentColor" stroke-width="2"/>
+                <line x1="190" y1="68" x2="222" y2="58" stroke="currentColor" stroke-width="2"/>
+                <!-- Bokken en bas après coupe -->
+                <line x1="190" y1="55" x2="190" y2="115" stroke="currentColor" stroke-width="4.5" stroke-linecap="round"/>
+                <line x1="178" y1="80" x2="202" y2="80" stroke="currentColor" stroke-width="2"/>
+                <!-- Flèche coupe -->
+                <g class="bounce-y">
+                  <line x1="210" y1="55" x2="210" y2="105" stroke="#dc2626" stroke-width="2" marker-end="url(#sm3)"/>
+                </g>
+                <circle cx="190" cy="115" r="7" fill="#dc2626" opacity="0.7" class="pulse"/>
+                <text x="190" y="172" text-anchor="middle" font-size="11" fill="#dc2626" font-weight="bold">✓ Coupe — Shomen uchi</text>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SUBURI BOKKEN -->
+      <div class="mb-10">
+        <h3 class="text-xl font-bold mb-1">Suburi <span class="text-red-500 font-normal text-base">素振り</span></h3>
+        <p class="text-gray-600 dark:text-gray-400 text-sm mb-6">Les 7 suburi au Bokken sont les frappes fondamentales pratiquées seul, tirées du Kenjutsu et adaptées à l'aïkido par Ō-Sensei.</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+          <div class="border border-gray-200 dark:border-gray-800 rounded-xl p-4 flex gap-4 items-start">
+            <svg viewBox="0 0 60 75" width="52" height="65" class="flex-shrink-0">
+              <circle cx="30" cy="14" r="9" fill="none" stroke="currentColor" stroke-width="1.8"/>
+              <line x1="30" y1="23" x2="30" y2="58" stroke="currentColor" stroke-width="1.8"/>
+              <line x1="30" y1="58" x2="20" y2="72" stroke="currentColor" stroke-width="1.8"/>
+              <line x1="30" y1="58" x2="40" y2="72" stroke="currentColor" stroke-width="1.8"/>
+              <polygon points="20,58 40,58 43,72 17,72" fill="#1a1a1a" opacity="0.85"/>
+              <line x1="18" y1="34" x2="30" y2="6" stroke="currentColor" stroke-width="1.8"/>
+              <line x1="42" y1="34" x2="30" y2="6" stroke="currentColor" stroke-width="1.8"/>
+              <line x1="30" y1="6" x2="30" y2="42" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/>
+              <line x1="24" y1="28" x2="36" y2="28" stroke="currentColor" stroke-width="1.5"/>
+            </svg>
+            <div>
+              <p class="font-semibold text-sm mb-1">1. Shomen uchi <span class="text-red-400 text-xs">正面打ち</span></p>
+              <p class="text-gray-500 text-xs">Frappe frontale verticale sur la ligne centrale. Coupe du haut vers le bas, gardant le sabre dans l'axe du corps.</p>
+            </div>
+          </div>
+
+          <div class="border border-gray-200 dark:border-gray-800 rounded-xl p-4 flex gap-4 items-start">
+            <svg viewBox="0 0 60 75" width="52" height="65" class="flex-shrink-0">
+              <circle cx="30" cy="14" r="9" fill="none" stroke="currentColor" stroke-width="1.8"/>
+              <line x1="30" y1="23" x2="30" y2="58" stroke="currentColor" stroke-width="1.8"/>
+              <line x1="30" y1="58" x2="20" y2="72" stroke="currentColor" stroke-width="1.8"/>
+              <line x1="30" y1="58" x2="40" y2="72" stroke="currentColor" stroke-width="1.8"/>
+              <polygon points="20,58 40,58 43,72 17,72" fill="#1a1a1a" opacity="0.85"/>
+              <!-- Bokken diagonal droite -->
+              <line x1="15" y1="42" x2="55" y2="12" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/>
+              <line x1="15" y1="38" x2="20" y2="36" stroke="currentColor" stroke-width="1.5"/>
+              <line x1="18" y1="34" x2="48" y2="18" stroke="currentColor" stroke-width="1.8"/>
+            </svg>
+            <div>
+              <p class="font-semibold text-sm mb-1">2. Yokomen uchi <span class="text-red-400 text-xs">横面打ち</span></p>
+              <p class="text-gray-500 text-xs">Frappe diagonale sur la tempe. Le Bokken est amené de haut en bas sur un angle de 45° vers la tête.</p>
+            </div>
+          </div>
+
+          <div class="border border-gray-200 dark:border-gray-800 rounded-xl p-4 flex gap-4 items-start">
+            <svg viewBox="0 0 60 75" width="52" height="65" class="flex-shrink-0">
+              <circle cx="30" cy="14" r="9" fill="none" stroke="currentColor" stroke-width="1.8"/>
+              <line x1="30" y1="23" x2="30" y2="58" stroke="currentColor" stroke-width="1.8"/>
+              <line x1="30" y1="58" x2="20" y2="72" stroke="currentColor" stroke-width="1.8"/>
+              <line x1="30" y1="58" x2="40" y2="72" stroke="currentColor" stroke-width="1.8"/>
+              <polygon points="20,58 40,58 43,72 17,72" fill="#1a1a1a" opacity="0.85"/>
+              <!-- Bokken pointé vers avant en tsuki -->
+              <line x1="5" y1="35" x2="55" y2="35" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/>
+              <polygon points="55,31 65,35 55,39" fill="currentColor"/>
+              <line x1="18" y1="30" x2="10" y2="35" stroke="currentColor" stroke-width="1.8"/>
+              <line x1="18" y1="34" x2="42" y2="35" stroke="currentColor" stroke-width="1.8"/>
+            </svg>
+            <div>
+              <p class="font-semibold text-sm mb-1">3. Tsuki <span class="text-red-400 text-xs">突き</span></p>
+              <p class="text-gray-500 text-xs">Estoc. Le Bokken est poussé horizontalement vers la gorge adverse. Technique de pénétration directe.</p>
+            </div>
+          </div>
+
+          <div class="border border-gray-200 dark:border-gray-800 rounded-xl p-4 flex gap-4 items-start">
+            <svg viewBox="0 0 60 75" width="52" height="65" class="flex-shrink-0">
+              <circle cx="30" cy="14" r="9" fill="none" stroke="currentColor" stroke-width="1.8"/>
+              <line x1="30" y1="23" x2="30" y2="58" stroke="currentColor" stroke-width="1.8"/>
+              <line x1="30" y1="58" x2="20" y2="72" stroke="currentColor" stroke-width="1.8"/>
+              <line x1="30" y1="58" x2="40" y2="72" stroke="currentColor" stroke-width="1.8"/>
+              <polygon points="20,58 40,58 43,72 17,72" fill="#1a1a1a" opacity="0.85"/>
+              <!-- Bokken en gedan (bas) -->
+              <line x1="10" y1="55" x2="52" y2="38" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/>
+              <line x1="18" y1="34" x2="15" y2="50" stroke="currentColor" stroke-width="1.8"/>
+              <line x1="18" y1="40" x2="40" y2="40" stroke="currentColor" stroke-width="1.8"/>
+            </svg>
+            <div>
+              <p class="font-semibold text-sm mb-1">4. Gedan gaeshi <span class="text-red-400 text-xs">下段返し</span></p>
+              <p class="text-gray-500 text-xs">Retour par le bas. Le Bokken pivote depuis la position basse et remonte en coupe diagonale ascendante.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- KUMI TACHI -->
+      <div class="mb-4">
+        <h3 class="text-xl font-bold mb-1">Kumi Tachi <span class="text-red-500 font-normal text-base">組太刀</span></h3>
+        <p class="text-gray-400 text-xs font-semibold uppercase tracking-wider mb-4">Combat à deux au Bokken</p>
+        <p class="text-gray-600 dark:text-gray-400 text-sm mb-6">Les Kumi Tachi sont des kata pratiqués à deux au Bokken. Ils reproduisent des situations de combat réel et permettent de comprendre le Ma-ai (distance), l'Irimi (entrée) et le Sen no Sen (initiative).</p>
+        <div class="space-y-4">
+
+          <div class="border border-gray-200 dark:border-gray-800 rounded-xl p-5 flex gap-5 items-start">
+            <svg viewBox="0 0 110 90" width="95" height="78" class="flex-shrink-0">
+              <defs><marker id="kt1" markerWidth="5" markerHeight="5" refX="3" refY="2.5" orient="auto"><path d="M0,0 L0,5 L5,2.5 z" fill="#dc2626"/></marker></defs>
+              <!-- Tori -->
+              <circle cx="28" cy="18" r="9" fill="none" stroke="currentColor" stroke-width="1.8"/>
+              <line x1="28" y1="27" x2="28" y2="62" stroke="currentColor" stroke-width="1.8"/>
+              <line x1="28" y1="62" x2="18" y2="78" stroke="currentColor" stroke-width="1.8"/>
+              <line x1="28" y1="62" x2="38" y2="78" stroke="currentColor" stroke-width="1.8"/>
+              <polygon points="18,62 38,62 41,78 15,78" fill="#1a1a1a" opacity="0.85"/>
+              <line x1="28" y1="38" x2="14" y2="28" stroke="currentColor" stroke-width="1.8"/>
+              <line x1="28" y1="38" x2="52" y2="30" stroke="currentColor" stroke-width="1.8"/>
+              <line x1="14" y1="28" x2="52" y2="30" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/>
+              <!-- Uke -->
+              <circle cx="84" cy="18" r="9" fill="none" stroke="currentColor" stroke-width="1.8"/>
+              <line x1="84" y1="27" x2="84" y2="62" stroke="currentColor" stroke-width="1.8"/>
+              <line x1="84" y1="62" x2="74" y2="78" stroke="currentColor" stroke-width="1.8"/>
+              <line x1="84" y1="62" x2="94" y2="78" stroke="currentColor" stroke-width="1.8"/>
+              <polygon points="74,62 94,62 97,78 71,78" fill="#555" opacity="0.65"/>
+              <line x1="84" y1="38" x2="70" y2="28" stroke="currentColor" stroke-width="1.8"/>
+              <line x1="84" y1="38" x2="60" y2="30" stroke="currentColor" stroke-width="1.8"/>
+              <line x1="70" y1="28" x2="60" y2="30" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/>
+              <!-- Contact bokken -->
+              <circle cx="56" cy="30" r="5" fill="#dc2626" opacity="0.7"/>
+            </svg>
+            <div>
+              <p class="font-semibold text-sm mb-1">Ichi no Tachi <span class="text-red-400 text-xs">一の太刀</span> — Premier kata</p>
+              <p class="text-gray-500 text-xs">Uke attaque en Shomen Uchi. Tori entre en Irimi, dévie le Bokken vers le bas et contre-attaque en Shomen Uchi. Travail du Ma-ai et de l'initiative.</p>
+            </div>
+          </div>
+
+          <div class="border border-gray-200 dark:border-gray-800 rounded-xl p-5 flex gap-5 items-start">
+            <svg viewBox="0 0 110 90" width="95" height="78" class="flex-shrink-0">
+              <!-- Tori en Irimi -->
+              <circle cx="50" cy="16" r="9" fill="none" stroke="currentColor" stroke-width="1.8"/>
+              <line x1="50" y1="25" x2="50" y2="60" stroke="currentColor" stroke-width="1.8"/>
+              <line x1="50" y1="60" x2="38" y2="78" stroke="currentColor" stroke-width="1.8"/>
+              <line x1="50" y1="60" x2="62" y2="78" stroke="currentColor" stroke-width="1.8"/>
+              <polygon points="38,60 62,60 65,78 35,78" fill="#1a1a1a" opacity="0.85"/>
+              <line x1="50" y1="36" x2="30" y2="22" stroke="currentColor" stroke-width="1.8"/>
+              <line x1="50" y1="36" x2="72" y2="26" stroke="currentColor" stroke-width="1.8"/>
+              <!-- Bokken de tori levé -->
+              <line x1="50" y1="8" x2="50" y2="36" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/>
+              <line x1="44" y1="22" x2="56" y2="22" stroke="currentColor" stroke-width="1.5"/>
+              <!-- Uke reculant -->
+              <circle cx="90" cy="22" r="9" fill="none" stroke="currentColor" stroke-width="1.8"/>
+              <line x1="90" y1="31" x2="88" y2="65" stroke="currentColor" stroke-width="1.8"/>
+              <line x1="89" y1="44" x2="72" y2="36" stroke="currentColor" stroke-width="1.8"/>
+              <line x1="89" y1="44" x2="100" y2="36" stroke="currentColor" stroke-width="1.8"/>
+              <line x1="88" y1="65" x2="76" y2="80" stroke="currentColor" stroke-width="1.8"/>
+              <line x1="88" y1="65" x2="100" y2="80" stroke="currentColor" stroke-width="1.8"/>
+              <polygon points="76,65 100,65 103,80 73,80" fill="#555" opacity="0.65"/>
+              <path d="M72 36 Q62 28 50 16" fill="none" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="4,2"/>
+            </svg>
+            <div>
+              <p class="font-semibold text-sm mb-1">Ni no Tachi <span class="text-red-400 text-xs">二の太刀</span> — Deuxième kata</p>
+              <p class="text-gray-500 text-xs">Uke attaque en Yokomen Uchi. Tori entre côté, dévie et enchaîne une contre-frappe Shomen Uchi depuis l'intérieur de l'attaque.</p>
+            </div>
+          </div>
+
+          <div class="border border-gray-200 dark:border-gray-800 rounded-xl p-5 flex gap-5 items-start">
+            <svg viewBox="0 0 110 90" width="95" height="78" class="flex-shrink-0">
+              <!-- Tori tsuki -->
+              <circle cx="30" cy="18" r="9" fill="none" stroke="currentColor" stroke-width="1.8"/>
+              <line x1="30" y1="27" x2="30" y2="62" stroke="currentColor" stroke-width="1.8"/>
+              <line x1="30" y1="62" x2="18" y2="78" stroke="currentColor" stroke-width="1.8"/>
+              <line x1="30" y1="62" x2="42" y2="78" stroke="currentColor" stroke-width="1.8"/>
+              <polygon points="18,62 42,62 45,78 15,78" fill="#1a1a1a" opacity="0.85"/>
+              <line x1="30" y1="38" x2="15" y2="35" stroke="currentColor" stroke-width="1.8"/>
+              <line x1="30" y1="38" x2="45" y2="35" stroke="currentColor" stroke-width="1.8"/>
+              <!-- Bokken en tsuki -->
+              <line x1="15" y1="35" x2="78" y2="35" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/>
+              <polygon points="78,31 88,35 78,39" fill="currentColor"/>
+              <!-- Uke -->
+              <circle cx="92" cy="18" r="9" fill="none" stroke="currentColor" stroke-width="1.8"/>
+              <line x1="92" y1="27" x2="92" y2="62" stroke="currentColor" stroke-width="1.8"/>
+              <line x1="92" y1="44" x2="78" y2="35" stroke="currentColor" stroke-width="1.8"/>
+              <line x1="92" y1="44" x2="102" y2="38" stroke="currentColor" stroke-width="1.8"/>
+              <line x1="92" y1="62" x2="80" y2="78" stroke="currentColor" stroke-width="1.8"/>
+              <line x1="92" y1="62" x2="104" y2="78" stroke="currentColor" stroke-width="1.8"/>
+              <polygon points="80,62 104,62 107,78 77,78" fill="#555" opacity="0.65"/>
+              <circle cx="80" cy="35" r="5" fill="#dc2626" opacity="0.7"/>
+            </svg>
+            <div>
+              <p class="font-semibold text-sm mb-1">San no Tachi <span class="text-red-400 text-xs">三の太刀</span> — Troisième kata</p>
+              <p class="text-gray-500 text-xs">Uke attaque en Tsuki. Tori dévie en triangle et répond par un Tsuki vers la gorge, démontrant le principe d'économie du mouvement.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════
+         TANTO
+    ═══════════════════════════ -->
+    <section id="tanto" class="mb-16">
+      <div class="flex items-baseline gap-4 mb-8">
+        <h2 class="text-3xl font-bold">Tanto</h2>
+        <span class="text-red-500 text-xl">短刀</span>
+        <span class="text-gray-500 text-sm">— Couteau en bois</span>
+      </div>
+      <p class="text-gray-600 dark:text-gray-400 text-sm mb-10">
+        Le Tanto Dori (défense contre couteau) enseigne à ne jamais affronter la lame directement — toujours se déplacer hors de sa trajectoire avant de contrôler le bras armé.
+      </p>
+
+      <!-- TANTO DORI ANIMÉ -->
+      <div class="border border-gray-200 dark:border-gray-800 rounded-2xl overflow-hidden mb-8">
+        <div class="px-6 pt-5 pb-3">
+          <div class="flex items-baseline gap-3 mb-1">
+            <h3 class="text-xl font-bold">Tanto Dori</h3>
+            <span class="text-red-500">短刀取り</span>
+            <span class="text-gray-500 text-sm">Défense contre couteau</span>
+          </div>
+          <p class="text-gray-600 dark:text-gray-400 text-sm">Tori dévie l'attaque au tanto en entrant dans l'angle mort de uke, contrôle le poignet armé et désarme en appliquant une immobilisation.</p>
+        </div>
+        <div class="bg-gray-50 dark:bg-gray-900 px-4 py-3">
+          <div class="flex gap-4 items-center mb-2">
+            <div style="display:flex;gap:5px;" class="dots-tanto"><span class="dot active"></span><span class="dot"></span><span class="dot"></span></div>
+            <span class="text-xs text-gray-500 step-lbl-tanto">Étape 1 / 3</span>
+            <div style="margin-left:auto;display:flex;gap:6px;">
+              <button class="btn-ctrl" onclick="prev('tanto')">←</button>
+              <button class="btn-ctrl btn-play play-tanto" onclick="togglePlay('tanto')">⏸</button>
+              <button class="btn-ctrl" onclick="next('tanto')">→</button>
+            </div>
+          </div>
+          <div class="steps-tanto">
+            <div class="step-panel active">
+              <svg viewBox="0 0 380 185" width="100%">
+                <defs><marker id="td1" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#dc2626"/></marker></defs>
+                <!-- Tori -->
+                <circle cx="100" cy="35" r="14" fill="none" stroke="currentColor" stroke-width="2"/>
+                <line x1="100" y1="49" x2="100" y2="108" stroke="currentColor" stroke-width="2"/>
+                <line x1="100" y1="65" x2="75"  y2="85" stroke="currentColor" stroke-width="2"/>
+                <line x1="100" y1="65" x2="130" y2="75" stroke="currentColor" stroke-width="2"/>
+                <line x1="100" y1="108" x2="78"  y2="145" stroke="currentColor" stroke-width="2"/>
+                <line x1="100" y1="108" x2="122" y2="145" stroke="currentColor" stroke-width="2"/>
+                <polygon points="78,108 122,108 128,145 72,145" fill="#1a1a1a" opacity="0.85"/>
+                <!-- Uke avec tanto -->
+                <circle cx="275" cy="35" r="14" fill="none" stroke="currentColor" stroke-width="2"/>
+                <line x1="275" y1="49" x2="275" y2="108" stroke="currentColor" stroke-width="2"/>
+                <line x1="275" y1="65" x2="225" y2="78" stroke="currentColor" stroke-width="2"/>
+                <line x1="275" y1="65" x2="300" y2="85" stroke="currentColor" stroke-width="2"/>
+                <line x1="275" y1="108" x2="253" y2="145" stroke="currentColor" stroke-width="2"/>
+                <line x1="275" y1="108" x2="297" y2="145" stroke="currentColor" stroke-width="2"/>
+                <polygon points="253,108 297,108 303,145 247,145" fill="#555" opacity="0.65"/>
+                <!-- Tanto -->
+                <line x1="225" y1="78" x2="195" y2="72" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+                <polygon points="195,68 182,72 195,76" fill="currentColor"/>
+                <!-- Flèche attaque -->
+                <line x1="185" y1="72" x2="135" y2="72" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#td1)"/>
+                <text x="190" y="172" text-anchor="middle" font-size="10" fill="currentColor" opacity="0.45">Uke attaque en Tsuki au tanto</text>
+              </svg>
+            </div>
+            <div class="step-panel">
+              <svg viewBox="0 0 380 185" width="100%">
+                <defs><marker id="td2" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#dc2626"/></marker></defs>
+                <!-- Tori entré, bras déviant -->
+                <circle cx="185" cy="35" r="14" fill="none" stroke="currentColor" stroke-width="2"/>
+                <line x1="185" y1="49" x2="185" y2="108" stroke="currentColor" stroke-width="2"/>
+                <line x1="185" y1="65" x2="155" y2="55" stroke="currentColor" stroke-width="2"/>
+                <line x1="185" y1="65" x2="225" y2="72" stroke="currentColor" stroke-width="2"/>
+                <line x1="185" y1="108" x2="163" y2="145" stroke="currentColor" stroke-width="2"/>
+                <line x1="185" y1="108" x2="207" y2="145" stroke="currentColor" stroke-width="2"/>
+                <polygon points="163,108 207,108 213,145 157,145" fill="#1a1a1a" opacity="0.85"/>
+                <!-- Uke bras contrôlé -->
+                <circle cx="275" cy="35" r="14" fill="none" stroke="currentColor" stroke-width="2"/>
+                <line x1="275" y1="49" x2="272" y2="108" stroke="currentColor" stroke-width="2"/>
+                <line x1="273" y1="65" x2="225" y2="72" stroke="currentColor" stroke-width="2"/>
+                <line x1="273" y1="75" x2="300" y2="88" stroke="currentColor" stroke-width="2"/>
+                <line x1="272" y1="108" x2="250" y2="145" stroke="currentColor" stroke-width="2"/>
+                <line x1="272" y1="108" x2="294" y2="145" stroke="currentColor" stroke-width="2"/>
+                <polygon points="250,108 294,108 300,145 244,145" fill="#555" opacity="0.65"/>
+                <!-- Tanto dévié -->
+                <line x1="225" y1="72" x2="200" y2="58" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+                <polygon points="200,54 188,58 200,62" fill="currentColor" opacity="0.5"/>
+                <!-- Flèche déviation -->
+                <path d="M200 72 Q210 55 200 50" fill="none" stroke="#dc2626" stroke-width="2" stroke-dasharray="4,2" marker-end="url(#td2)"/>
+                <circle cx="225" cy="72" r="7" fill="#dc2626" opacity="0.8"/>
+                <text x="190" y="172" text-anchor="middle" font-size="10" fill="currentColor" opacity="0.45">Tori entre — déviation du bras armé</text>
+              </svg>
+            </div>
+            <div class="step-panel">
+              <svg viewBox="0 0 380 185" width="100%">
+                <!-- Tori immobilise -->
+                <circle cx="155" cy="40" r="14" fill="none" stroke="currentColor" stroke-width="2"/>
+                <line x1="155" y1="54" x2="155" y2="108" stroke="currentColor" stroke-width="2"/>
+                <line x1="155" y1="68" x2="120" y2="58" stroke="currentColor" stroke-width="2"/>
+                <line x1="155" y1="68" x2="205" y2="115" stroke="currentColor" stroke-width="2"/>
+                <line x1="155" y1="108" x2="135" y2="142" stroke="currentColor" stroke-width="2"/>
+                <line x1="155" y1="108" x2="175" y2="142" stroke="currentColor" stroke-width="2"/>
+                <ellipse cx="155" cy="145" rx="28" ry="7" fill="#1a1a1a" opacity="0.75"/>
+                <!-- Uke au sol désarmé -->
+                <circle cx="298" cy="128" r="13" fill="none" stroke="currentColor" stroke-width="2"/>
+                <line x1="286" y1="132" x2="218" y2="138" stroke="currentColor" stroke-width="2"/>
+                <line x1="205" y1="115" x2="218" y2="138" stroke="currentColor" stroke-width="2"/>
+                <line x1="286" y1="142" x2="238" y2="155" stroke="currentColor" stroke-width="2"/>
+                <line x1="310" y1="136" x2="345" y2="145" stroke="currentColor" stroke-width="2"/>
+                <!-- Tanto au sol écarté -->
+                <line x1="175" y1="158" x2="148" y2="150" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" opacity="0.3"/>
+                <polygon points="148,147 138,150 148,153" fill="currentColor" opacity="0.3"/>
+                <!-- Points contrôle -->
+                <circle cx="205" cy="115" r="7" fill="#dc2626" opacity="0.9"/>
+                <text x="190" y="175" text-anchor="middle" font-size="11" fill="#dc2626" font-weight="bold">✓ Désarmement — Tanto Dori</text>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Principes tanto -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="p-4 rounded-xl border border-gray-200 dark:border-gray-800">
+          <p class="font-semibold text-sm mb-2 text-red-500">Principe 1</p>
+          <p class="text-gray-600 dark:text-gray-400 text-xs">Ne jamais affronter la lame frontalement. Toujours se déplacer hors de la trajectoire du couteau avant tout contact.</p>
+        </div>
+        <div class="p-4 rounded-xl border border-gray-200 dark:border-gray-800">
+          <p class="font-semibold text-sm mb-2 text-red-500">Principe 2</p>
+          <p class="text-gray-600 dark:text-gray-400 text-xs">Contrôler le poignet armé, pas le couteau. Le bras est la source du danger — le neutraliser neutralise l'arme.</p>
+        </div>
+        <div class="p-4 rounded-xl border border-gray-200 dark:border-gray-800">
+          <p class="font-semibold text-sm mb-2 text-red-500">Principe 3</p>
+          <p class="text-gray-600 dark:text-gray-400 text-xs">Éloigner l'arme du corps lors de l'immobilisation. Gokyo est la technique la mieux adaptée au désarmement.</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="border-t border-gray-200 dark:border-gray-800 text-center text-sm text-gray-500 py-6 mt-8">
+    © 2025 Aïkido Dojo — Tous droits réservés
+  </footer>
+
+  <script src="js/theme.js"></script>
+  <script>
+  const techs = {
+    jotsuki: { total:3, timer:null, playing:true },
+    shomen:  { total:3, timer:null, playing:true },
+    tanto:   { total:3, timer:null, playing:true },
+  };
+  const cursors = {};
+  Object.keys(techs).forEach(k => cursors[k] = 0);
+
+  function showStep(name, n) {
+    const t = techs[name];
+    n = ((n % t.total) + t.total) % t.total;
+    cursors[name] = n;
+    document.querySelectorAll(`.steps-${name} .step-panel`).forEach((p,i) => p.classList.toggle('active', i===n));
+    document.querySelectorAll(`.dots-${name} .dot`).forEach((d,i) => d.classList.toggle('active', i===n));
+    const lbl = document.querySelector(`.step-lbl-${name}`);
+    if (lbl) lbl.textContent = `Étape ${n+1} / ${t.total}`;
+  }
+
+  function next(name) { showStep(name, cursors[name]+1); }
+  function prev(name) { showStep(name, cursors[name]-1); }
+
+  function togglePlay(name) {
+    const t = techs[name];
+    t.playing = !t.playing;
+    document.querySelector(`.play-${name}`).textContent = t.playing ? '⏸' : '▶';
+    if (t.playing) { clearInterval(t.timer); t.timer = setInterval(() => next(name), 2300); }
+    else clearInterval(t.timer);
+  }
+
+  Object.keys(techs).forEach(name => {
+    techs[name].timer = setInterval(() => next(name), 2300);
+  });
+  </script>
+</body>
 </html>

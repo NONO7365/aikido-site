@@ -1,5 +1,5 @@
-// === Système d'animation des techniques ===
 
+// === Système d'animation des techniques ===
 const techs = {
   ikkyo: { total: 4, timer: null, playing: false },
   nikyo: { total: 3, timer: null, playing: false },

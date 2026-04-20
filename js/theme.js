@@ -1,14 +1,10 @@
-// ─── Thème dark / light ───────────────────────────────────
+// ─── Thème dark / light ───────────────────────────
 const html = document.documentElement;
 const toggle = document.getElementById("theme-toggle");
 const icon = document.getElementById("theme-icon");
 
 const savedTheme = localStorage.getItem("theme") || "dark";
-if (savedTheme === "light") {
-  html.classList.remove("dark");
-} else {
-  html.classList.add("dark");
-}
+html.classList.toggle("dark", savedTheme === "dark");
 
 function updateIcon() {
   if (icon) icon.textContent = html.classList.contains("dark") ? "☀️" : "🌙";
@@ -26,23 +22,7 @@ if (toggle) {
   });
 }
 
-// ─── Menu burger ──────────────────────────────────────────
-const burgerBtn = document.getElementById("burger-btn");
-const burgerMenu = document.getElementById("burger-menu");
-
-if (burgerBtn && burgerMenu) {
-  burgerBtn.addEventListener("click", () => {
-    burgerMenu.classList.toggle("hidden");
-  });
-  // Fermer en cliquant ailleurs
-  document.addEventListener("click", (e) => {
-    if (!burgerBtn.contains(e.target) && !burgerMenu.contains(e.target)) {
-      burgerMenu.classList.add("hidden");
-    }
-  });
-}
-
-// ─── Formulaire contact ───────────────────────────────────
+// ─── Formulaire contact ───────────────────────────
 const btnEnvoyer = document.getElementById("btn-envoyer");
 if (btnEnvoyer) {
   btnEnvoyer.addEventListener("click", () => {

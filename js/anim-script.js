@@ -1,6 +1,4 @@
 // === Système d'animation des techniques ===
-// Démarre uniquement via bouton ▶ ou survol desktop
-// Compatible mobile, tablette, desktop
 
 const techs = {
   ikkyo: { total: 4, timer: null, playing: false },
@@ -67,9 +65,17 @@ function togglePlay(name) {
   techs[name].playing ? stopAnim(name) : startAnim(name);
 }
 
-// Survol desktop uniquement (pointer: fine = souris)
-const hasMousePointer = window.matchMedia("(pointer: fine)").matches;
-if (hasMousePointer) {
+// Clic sur la zone SVG = toggle animation (mobile + desktop)
+document.querySelectorAll(".anim-zone").forEach((zone) => {
+  const name = zone.dataset.tech;
+  if (!name || !techs[name]) return;
+  zone.style.cursor = "pointer";
+  zone.addEventListener("click", () => togglePlay(name));
+});
+
+// Survol sur la carte = démarre/arrête (desktop avec souris uniquement)
+const hasMouse = window.matchMedia("(pointer: fine)").matches;
+if (hasMouse) {
   document.querySelectorAll(".tech-card").forEach((card) => {
     const name = card.dataset.tech;
     if (!name || !techs[name]) return;

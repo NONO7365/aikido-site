@@ -17,60 +17,53 @@
     .btn-play:hover { background: #b91c1c; }
     @keyframes fadeIn { from{opacity:0} to{opacity:1} }
     .step-panel.active svg { animation: fadeIn 0.3s ease; }
-    @keyframes pulse { 0%,100%{opacity:0.6} 50%{opacity:1} }
-    .pulse { animation: pulse 1s ease-in-out infinite; }
+    @keyframes pulse { 0%,100%{opacity:0.5} 50%{opacity:1} }
+    .pulse { animation: pulse 1.2s ease-in-out infinite; }
     @keyframes bounce-y { 0%,100%{transform:translateY(0)} 50%{transform:translateY(5px)} }
     .bounce-y { animation: bounce-y 0.9s ease-in-out infinite; }
     .video-wrap { position:relative; padding-bottom:56.25%; height:0; overflow:hidden; border-radius:10px; }
     .video-wrap iframe { position:absolute; top:0; left:0; width:100%; height:100%; border:0; }
+    .anim-video-grid { display:grid; grid-template-columns:1fr; gap:1rem; }
+    @media(min-width:768px){ .anim-video-grid { grid-template-columns:1fr 1fr; } }
+    .tech-card { cursor:default; }
   </style>
 </head>
 <body class="bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100 min-h-screen transition-colors duration-300">
 
-<nav class="border-b border-gray-200 dark:border-gray-800 px-6 py-4 flex items-center justify-between relative">
-  
-  <!-- Logo -->
-  <a href="index.html" class="text-xl font-bold tracking-wide z-10">
-    合気道 <span class="text-red-600">Aïkido</span>
-  </a>
-
-  <!-- Liens desktop (cachés sur mobile) -->
-  <ul class="hidden md:flex gap-6 text-sm font-medium">
-    <li><a href="index.html"                class="hover:text-red-500 transition-colors">Accueil</a></li>
-    <li><a href="techniques-sans-arme.html" class="hover:text-red-500 transition-colors">Sans arme</a></li>
-    <li><a href="techniques-avec-arme.html" class="hover:text-red-500 transition-colors">Avec arme</a></li>
-    <li><a href="contact.html"              class="hover:text-red-500 transition-colors">Contact</a></li>
-    <li><a href="a-propos.html"             class="hover:text-red-500 transition-colors">À propos</a></li>
-  </ul>
-
-  <!-- Droite : toggle + burger -->
-  <div class="flex items-center gap-3 z-10">
-    <button id="theme-toggle" class="p-2 rounded-full border border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
-      <span id="theme-icon">☀️</span>
-    </button>
-    <!-- Burger (visible sur mobile uniquement) -->
-    <button id="burger-btn" class="md:hidden p-2 rounded-lg border border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
-      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-        <line x1="2" y1="5"  x2="18" y2="5"/>
-        <line x1="2" y1="10" x2="18" y2="10"/>
-        <line x1="2" y1="15" x2="18" y2="15"/>
-      </svg>
-    </button>
-  </div>
-
-  <!-- Menu mobile dropdown -->
-  <div id="burger-menu" class="hidden md:hidden absolute top-full left-0 right-0 bg-white dark:bg-gray-950 border-b border-gray-200 dark:border-gray-800 shadow-lg z-50 px-6 py-4">
-    <ul class="flex flex-col gap-4 text-sm font-medium">
-      <li><a href="index.html"                class="block hover:text-red-500 transition-colors py-1">Accueil</a></li>
-      <li><a href="techniques-sans-arme.html" class="block hover:text-red-500 transition-colors py-1">Sans arme</a></li>
-      <li><a href="techniques-avec-arme.html" class="block hover:text-red-500 transition-colors py-1">Avec arme</a></li>
-      <li><a href="contact.html"              class="block hover:text-red-500 transition-colors py-1">Contact</a></li>
-      <li><a href="a-propos.html"             class="block hover:text-red-500 transition-colors py-1">À propos</a></li>
+  <!-- NAV -->
+  <nav class="border-b border-gray-200 dark:border-gray-800 px-6 py-4 flex items-center justify-between relative">
+    <a href="index.html" class="text-xl font-bold tracking-wide z-10">合気道 <span class="text-red-600">Aïkido</span></a>
+    <ul class="hidden md:flex gap-6 text-sm font-medium">
+      <li><a href="index.html"                class="hover:text-red-500 transition-colors">Accueil</a></li>
+      <li><a href="techniques-sans-arme.html" class="hover:text-red-500 transition-colors">Sans arme</a></li>
+      <li><a href="techniques-avec-arme.html" class="hover:text-red-500 transition-colors">Avec arme</a></li>
+      <li><a href="contact.html"              class="hover:text-red-500 transition-colors">Contact</a></li>
+      <li><a href="a-propos.html"             class="hover:text-red-500 transition-colors">À propos</a></li>
     </ul>
-  </div>
+    <div class="flex items-center gap-3 z-10">
+      <button id="theme-toggle" class="p-2 rounded-full border border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+        <span id="theme-icon">☀️</span>
+      </button>
+      <button id="burger-btn" class="md:hidden p-2 rounded-lg border border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <line x1="2" y1="5"  x2="18" y2="5"/>
+          <line x1="2" y1="10" x2="18" y2="10"/>
+          <line x1="2" y1="15" x2="18" y2="15"/>
+        </svg>
+      </button>
+    </div>
+    <div id="burger-menu" class="hidden md:hidden absolute top-full left-0 right-0 bg-white dark:bg-gray-950 border-b border-gray-200 dark:border-gray-800 shadow-lg z-50 px-6 py-4">
+      <ul class="flex flex-col gap-4 text-sm font-medium">
+        <li><a href="index.html"                class="block hover:text-red-500 transition-colors py-1">Accueil</a></li>
+        <li><a href="techniques-sans-arme.html" class="block hover:text-red-500 transition-colors py-1">Sans arme</a></li>
+        <li><a href="techniques-avec-arme.html" class="block hover:text-red-500 transition-colors py-1">Avec arme</a></li>
+        <li><a href="contact.html"              class="block hover:text-red-500 transition-colors py-1">Contact</a></li>
+        <li><a href="a-propos.html"             class="block hover:text-red-500 transition-colors py-1">À propos</a></li>
+      </ul>
+    </div>
+  </nav>
 
-</nav>
-
+  <!-- NAV INTERNE -->
   <div class="sticky top-0 z-10 bg-white dark:bg-gray-950 border-b border-gray-200 dark:border-gray-800 px-6 py-3 flex gap-6 text-sm overflow-x-auto">
     <a href="#katame" class="whitespace-nowrap font-semibold text-red-500">Katame Waza</a>
     <span class="text-gray-300 dark:text-gray-700">|</span>
@@ -85,7 +78,9 @@
 
     <h1 class="text-4xl font-bold mb-2">Techniques sans arme</h1>
     <p class="text-gray-600 dark:text-gray-400 mb-4">Pratiquées à mains nues entre <em>uke</em> (attaquant, hakama gris) et <em>tori</em> (défenseur, hakama noir).</p>
-    <div class="flex gap-6 mb-12 text-sm">
+    <p class="text-xs text-gray-500 dark:text-gray-600 mb-8 italic">Survolez une carte pour lancer l'animation — utilisez ← → pour naviguer manuellement.</p>
+
+    <div class="flex gap-6 mb-12 text-sm flex-wrap">
       <div class="flex items-center gap-2">
         <svg width="28" height="20"><circle cx="10" cy="10" r="7" fill="none" stroke="currentColor" stroke-width="2"/><polygon points="4,10 16,10 18,18 2,18" fill="#1a1a1a"/></svg>
         <span class="text-gray-600 dark:text-gray-400">Tori — défenseur</span>
@@ -108,26 +103,25 @@
         <span class="text-gray-500 text-sm">— Immobilisations</span>
       </div>
 
-      <!-- ── IKKYO ── -->
-       <div class="tech-card border border-gray-200 dark:border-gray-800 rounded-2xl overflow-hidden mb-8" data-tech="ikkyo"></div>
-      <!-- <div class="border border-gray-200 dark:border-gray-800 rounded-2xl overflow-hidden mb-8"> -->
+      <!-- IKKYO -->
+      <div class="tech-card border border-gray-200 dark:border-gray-800 rounded-2xl overflow-hidden mb-8" data-tech="ikkyo">
         <div class="px-6 pt-5 pb-3">
-          <div class="flex items-baseline gap-3 mb-1">
+          <div class="flex items-baseline gap-3 mb-1 flex-wrap">
             <h3 class="text-xl font-bold">Ikkyo</h3><span class="text-red-500">一教</span><span class="text-gray-500 text-sm">Première éducation</span>
           </div>
           <p class="text-gray-600 dark:text-gray-400 text-sm">Tori intercepte l'attaque au coude et pousse vers le bas en contrôlant coude + poignet. Immobilisation au sol genou sur les côtes.</p>
         </div>
         <div class="bg-gray-50 dark:bg-gray-900 px-4 py-3">
-          <div class="flex gap-4 items-center mb-3">
+          <div class="flex gap-4 items-center mb-3 flex-wrap">
             <div style="display:flex;gap:5px;" class="dots-ikkyo"><span class="dot active"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
             <span class="text-xs text-gray-500 step-lbl-ikkyo">Étape 1 / 4</span>
             <div style="margin-left:auto;display:flex;gap:6px;">
               <button class="btn-ctrl" onclick="prev('ikkyo')">←</button>
-              <button class="btn-ctrl btn-play play-ikkyo" onclick="togglePlay('ikkyo')">⏸</button>
+              <button class="btn-ctrl btn-play play-ikkyo" onclick="togglePlay('ikkyo')">▶</button>
               <button class="btn-ctrl" onclick="next('ikkyo')">→</button>
             </div>
           </div>
-          <div class="grid grid-cols-2 gap-4 items-start">
+          <div class="anim-video-grid">
             <div class="steps-ikkyo">
               <div class="step-panel active">
                 <svg viewBox="0 0 380 185" width="100%">
@@ -236,30 +230,28 @@
         </div>
       </div>
 
-      <!-- ── NIKYO ── -->
-      <!-- <div class="border border-gray-200 dark:border-gray-800 rounded-2xl overflow-hidden mb-8"> -->
-    <div class="tech-card border border-gray-200 dark:border-gray-800 rounded-2xl overflow-hidden mb-8" data-tech="nikkyo"></div>
+      <!-- NIKYO -->
+      <div class="tech-card border border-gray-200 dark:border-gray-800 rounded-2xl overflow-hidden mb-8" data-tech="nikyo">
         <div class="px-6 pt-5 pb-3">
-          <div class="flex items-baseline gap-3 mb-1">
+          <div class="flex items-baseline gap-3 mb-1 flex-wrap">
             <h3 class="text-xl font-bold">Nikyo</h3><span class="text-red-500">二教</span><span class="text-gray-500 text-sm">Deuxième éducation</span>
           </div>
           <p class="text-gray-600 dark:text-gray-400 text-sm">Torsion du poignet vers l'intérieur avec pression sur le radius. Douleur articulaire forçant uke à s'allonger au sol.</p>
         </div>
         <div class="bg-gray-50 dark:bg-gray-900 px-4 py-3">
-          <div class="flex gap-4 items-center mb-3">
+          <div class="flex gap-4 items-center mb-3 flex-wrap">
             <div style="display:flex;gap:5px;" class="dots-nikyo"><span class="dot active"></span><span class="dot"></span><span class="dot"></span></div>
             <span class="text-xs text-gray-500 step-lbl-nikyo">Étape 1 / 3</span>
             <div style="margin-left:auto;display:flex;gap:6px;">
               <button class="btn-ctrl" onclick="prev('nikyo')">←</button>
-              <button class="btn-ctrl btn-play play-nikyo" onclick="togglePlay('nikyo')">⏸</button>
+              <button class="btn-ctrl btn-play play-nikyo" onclick="togglePlay('nikyo')">▶</button>
               <button class="btn-ctrl" onclick="next('nikyo')">→</button>
             </div>
           </div>
-          <div class="grid grid-cols-2 gap-4 items-start">
+          <div class="anim-video-grid">
             <div class="steps-nikyo">
               <div class="step-panel active">
                 <svg viewBox="0 0 380 170" width="100%">
-                  <defs><marker id="an1" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#dc2626"/></marker></defs>
                   <circle cx="110" cy="32" r="14" fill="none" stroke="currentColor" stroke-width="2"/>
                   <line x1="110" y1="46" x2="110" y2="105" stroke="currentColor" stroke-width="2"/>
                   <line x1="110" y1="62" x2="155" y2="72" stroke="currentColor" stroke-width="2"/>
@@ -328,22 +320,21 @@
         </div>
       </div>
 
-      <!-- ── SANKYO YONKYO GOKYO (grille 3 colonnes) ── -->
+      <!-- SANKYO YONKYO GOKYO grille -->
       <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-4">
 
         <!-- SANKYO -->
-        <!-- <div class="border border-gray-200 dark:border-gray-800 rounded-2xl overflow-hidden"> -->
-        <div class="tech-card border border-gray-200 dark:border-gray-800 rounded-2xl overflow-hidden mb-8" data-tech="sankyo"></div>
+        <div class="tech-card border border-gray-200 dark:border-gray-800 rounded-2xl overflow-hidden" data-tech="sankyo">
           <div class="px-4 pt-4 pb-2">
             <h3 class="font-bold">Sankyo <span class="text-red-500 font-normal text-sm">三教</span></h3>
-            <p class="text-gray-500 text-xs mt-1">Rotation du poignet vers le haut — vissage de l'épaule. Uke sur la pointe des pieds.</p>
+            <p class="text-gray-500 text-xs mt-1">Rotation vers le haut — vissage de l'épaule. Uke sur la pointe des pieds.</p>
           </div>
           <div class="bg-gray-50 dark:bg-gray-900 px-3 py-2">
             <div class="flex gap-3 items-center mb-2">
               <div style="display:flex;gap:4px;" class="dots-sankyo"><span class="dot active"></span><span class="dot"></span></div>
               <div style="margin-left:auto;display:flex;gap:5px;">
                 <button class="btn-ctrl" onclick="prev('sankyo')">←</button>
-                <button class="btn-ctrl btn-play play-sankyo" onclick="togglePlay('sankyo')">⏸</button>
+                <button class="btn-ctrl btn-play play-sankyo" onclick="togglePlay('sankyo')">▶</button>
                 <button class="btn-ctrl" onclick="next('sankyo')">→</button>
               </div>
             </div>
@@ -395,24 +386,23 @@
               <div class="video-wrap">
                 <iframe src="https://www.youtube.com/embed/SNxZb1oX1XU" title="Sankyo" allowfullscreen></iframe>
               </div>
-              <p class="text-xs text-gray-500 mt-1">Série Nikyo→Sankyo→Yonkyo (FR)</p>
+              <p class="text-xs text-gray-500 mt-1">Nikyo→Sankyo→Yonkyo (FR)</p>
             </div>
           </div>
         </div>
 
         <!-- YONKYO -->
-        <!-- <div class="border border-gray-200 dark:border-gray-800 rounded-2xl overflow-hidden"> -->
-        <div class="tech-card border border-gray-200 dark:border-gray-800 rounded-2xl overflow-hidden mb-8" data-tech="yonkyo"></div>
+        <div class="tech-card border border-gray-200 dark:border-gray-800 rounded-2xl overflow-hidden" data-tech="yonkyo">
           <div class="px-4 pt-4 pb-2">
             <h3 class="font-bold">Yonkyo <span class="text-red-500 font-normal text-sm">四教</span></h3>
-            <p class="text-gray-500 text-xs mt-1">Pression de l'os de l'index sur le nerf radial. Douleur neurologique intense.</p>
+            <p class="text-gray-500 text-xs mt-1">Pression nerf radial. Douleur neurologique intense.</p>
           </div>
           <div class="bg-gray-50 dark:bg-gray-900 px-3 py-2">
             <div class="flex gap-3 items-center mb-2">
               <div style="display:flex;gap:4px;" class="dots-yonkyo"><span class="dot active"></span><span class="dot"></span></div>
               <div style="margin-left:auto;display:flex;gap:5px;">
                 <button class="btn-ctrl" onclick="prev('yonkyo')">←</button>
-                <button class="btn-ctrl btn-play play-yonkyo" onclick="togglePlay('yonkyo')">⏸</button>
+                <button class="btn-ctrl btn-play play-yonkyo" onclick="togglePlay('yonkyo')">▶</button>
                 <button class="btn-ctrl" onclick="next('yonkyo')">→</button>
               </div>
             </div>
@@ -464,24 +454,23 @@
               <div class="video-wrap">
                 <iframe src="https://www.youtube.com/embed/q2bd3PhlLOk" title="Yonkyo" allowfullscreen></iframe>
               </div>
-              <p class="text-xs text-gray-500 mt-1">Ikkyo→Nikyo→Sankyo→Yonkyo bases (EN)</p>
+              <p class="text-xs text-gray-500 mt-1">Ikkyo→Nikyo→Sankyo→Yonkyo bases</p>
             </div>
           </div>
         </div>
 
         <!-- GOKYO -->
-        <!-- <div class="border border-gray-200 dark:border-gray-800 rounded-2xl overflow-hidden"> -->
-        <div class="tech-card border border-gray-200 dark:border-gray-800 rounded-2xl overflow-hidden mb-8" data-tech="gokyo"></div>
+        <div class="tech-card border border-gray-200 dark:border-gray-800 rounded-2xl overflow-hidden" data-tech="gokyo">
           <div class="px-4 pt-4 pb-2">
             <h3 class="font-bold">Gokyo <span class="text-red-500 font-normal text-sm">五教</span></h3>
-            <p class="text-gray-500 text-xs mt-1">Variante d'Ikkyo pour désarmer un adversaire au tanto. Contrôle du bras armé.</p>
+            <p class="text-gray-500 text-xs mt-1">Variante d'Ikkyo pour désarmer au tanto.</p>
           </div>
           <div class="bg-gray-50 dark:bg-gray-900 px-3 py-2">
             <div class="flex gap-3 items-center mb-2">
               <div style="display:flex;gap:4px;" class="dots-gokyo"><span class="dot active"></span><span class="dot"></span></div>
               <div style="margin-left:auto;display:flex;gap:5px;">
                 <button class="btn-ctrl" onclick="prev('gokyo')">←</button>
-                <button class="btn-ctrl btn-play play-gokyo" onclick="togglePlay('gokyo')">⏸</button>
+                <button class="btn-ctrl btn-play play-gokyo" onclick="togglePlay('gokyo')">▶</button>
                 <button class="btn-ctrl" onclick="next('gokyo')">→</button>
               </div>
             </div>
@@ -521,7 +510,6 @@
                   <line x1="134" y1="116" x2="106" y2="120" stroke="currentColor" stroke-width="2"/>
                   <line x1="134" y1="124" x2="98" y2="130" stroke="currentColor" stroke-width="2"/>
                   <line x1="158" y1="120" x2="182" y2="126" stroke="currentColor" stroke-width="2"/>
-                  <line x1="78" y1="138" x2="58" y2="132" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" opacity="0.3"/>
                   <circle cx="105" cy="78" r="7" fill="#dc2626" opacity="0.9"/>
                   <text x="100" y="144" text-anchor="middle" font-size="10" fill="#dc2626">✓ Désarmement</text>
                 </svg>
@@ -531,7 +519,7 @@
               <div class="video-wrap">
                 <iframe src="https://www.youtube.com/embed/dwpNWsWiOHA" title="Gokyo" allowfullscreen></iframe>
               </div>
-              <p class="text-xs text-gray-500 mt-1">Gokyo suwari waza — Marc Bachräty (FR)</p>
+              <p class="text-xs text-gray-500 mt-1">Gokyo suwari waza (FR)</p>
             </div>
           </div>
         </div>
@@ -547,27 +535,25 @@
         <span class="text-gray-500 text-sm">— Projections</span>
       </div>
 
-      <!-- ── IRIMI NAGE ── -->
-      <!-- <div class="border border-gray-200 dark:border-gray-800 rounded-2xl overflow-hidden mb-8"> -->
-    <div class="tech-card border border-gray-200 dark:border-gray-800 rounded-2xl overflow-hidden mb-8" data-tech="irimi"></div>
-    
+      <!-- IRIMI NAGE -->
+      <div class="tech-card border border-gray-200 dark:border-gray-800 rounded-2xl overflow-hidden mb-8" data-tech="irimi">
         <div class="px-6 pt-5 pb-3">
-          <div class="flex items-baseline gap-3 mb-1">
+          <div class="flex items-baseline gap-3 mb-1 flex-wrap">
             <h3 class="text-xl font-bold">Irimi Nage</h3><span class="text-red-500">入り身投げ</span><span class="text-gray-500 text-sm">Projection par entrée</span>
           </div>
-          <p class="text-gray-600 dark:text-gray-400 text-sm">Tori entre dans l'axe de l'attaque, se place dos à uke et projette vers l'arrière via un mouvement circulaire du bras. Surnommée "la technique des 20 ans".</p>
+          <p class="text-gray-600 dark:text-gray-400 text-sm">Tori entre dans l'axe de l'attaque, se place dos à uke et projette vers l'arrière. Surnommée "la technique des 20 ans".</p>
         </div>
         <div class="bg-gray-50 dark:bg-gray-900 px-4 py-3">
-          <div class="flex gap-4 items-center mb-3">
+          <div class="flex gap-4 items-center mb-3 flex-wrap">
             <div style="display:flex;gap:5px;" class="dots-irimi"><span class="dot active"></span><span class="dot"></span><span class="dot"></span></div>
             <span class="text-xs text-gray-500 step-lbl-irimi">Étape 1 / 3</span>
             <div style="margin-left:auto;display:flex;gap:6px;">
               <button class="btn-ctrl" onclick="prev('irimi')">←</button>
-              <button class="btn-ctrl btn-play play-irimi" onclick="togglePlay('irimi')">⏸</button>
+              <button class="btn-ctrl btn-play play-irimi" onclick="togglePlay('irimi')">▶</button>
               <button class="btn-ctrl" onclick="next('irimi')">→</button>
             </div>
           </div>
-          <div class="grid grid-cols-2 gap-4 items-start">
+          <div class="anim-video-grid">
             <div class="steps-irimi">
               <div class="step-panel active">
                 <svg viewBox="0 0 380 175" width="100%">
@@ -638,18 +624,17 @@
               <div class="video-wrap">
                 <iframe src="https://www.youtube.com/embed/Kw04xwDMAws" title="Irimi Nage" allowfullscreen></iframe>
               </div>
-              <p class="text-xs text-gray-500 mt-2">Irimi Nage — Moriteru Ueshiba Doshu (Aikikai)</p>
+              <p class="text-xs text-gray-500 mt-2">Irimi Nage — Moriteru Ueshiba Doshu</p>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- ── KOTE GAESHI / SHIHO NAGE / KAITEN NAGE ── -->
+      <!-- KOTE GAESHI / SHIHO NAGE / KAITEN NAGE -->
       <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-8">
 
         <!-- KOTE GAESHI -->
-        <!-- <div class="border border-gray-200 dark:border-gray-800 rounded-2xl overflow-hidden"> -->
-        <div class="tech-card border border-gray-200 dark:border-gray-800 rounded-2xl overflow-hidden mb-8" data-tech="kote"></div>
+        <div class="tech-card border border-gray-200 dark:border-gray-800 rounded-2xl overflow-hidden" data-tech="kote">
           <div class="px-4 pt-4 pb-2">
             <h3 class="font-bold">Kote Gaeshi <span class="text-red-500 font-normal text-sm">小手返し</span></h3>
             <p class="text-gray-500 text-xs mt-1">Retournement externe du poignet. Projection en roulade.</p>
@@ -659,7 +644,7 @@
               <div style="display:flex;gap:4px;" class="dots-kote"><span class="dot active"></span><span class="dot"></span></div>
               <div style="margin-left:auto;display:flex;gap:5px;">
                 <button class="btn-ctrl" onclick="prev('kote')">←</button>
-                <button class="btn-ctrl btn-play play-kote" onclick="togglePlay('kote')">⏸</button>
+                <button class="btn-ctrl btn-play play-kote" onclick="togglePlay('kote')">▶</button>
                 <button class="btn-ctrl" onclick="next('kote')">→</button>
               </div>
             </div>
@@ -698,7 +683,6 @@
                   <circle cx="152" cy="85" r="11" fill="none" stroke="currentColor" stroke-width="2"/>
                   <path d="M145 93 Q127 115 112 119" fill="none" stroke="currentColor" stroke-width="2"/>
                   <line x1="159" y1="93" x2="169" y2="112" stroke="currentColor" stroke-width="2"/>
-                  <line x1="152" y1="75" x2="159" y2="59" stroke="currentColor" stroke-width="2"/>
                   <path d="M132 78 Q145 63 159 78" fill="none" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="4,2"/>
                   <text x="99" y="140" text-anchor="middle" font-size="10" fill="#dc2626">✓ Projection roulade</text>
                 </svg>
@@ -714,18 +698,17 @@
         </div>
 
         <!-- SHIHO NAGE -->
-        <!-- <div class="border border-gray-200 dark:border-gray-800 rounded-2xl overflow-hidden"> -->
-        <div class="tech-card border border-gray-200 dark:border-gray-800 rounded-2xl overflow-hidden mb-8" data-tech="shiho"></div>
+        <div class="tech-card border border-gray-200 dark:border-gray-800 rounded-2xl overflow-hidden" data-tech="shiho">
           <div class="px-4 pt-4 pb-2">
             <h3 class="font-bold">Shiho Nage <span class="text-red-500 font-normal text-sm">四方投げ</span></h3>
-            <p class="text-gray-500 text-xs mt-1">4 directions. Pivot 180° avec bras de uke levé au-dessus.</p>
+            <p class="text-gray-500 text-xs mt-1">4 directions. Pivot 180° bras levé au-dessus.</p>
           </div>
           <div class="bg-gray-50 dark:bg-gray-900 px-3 py-2">
             <div class="flex gap-3 items-center mb-2">
               <div style="display:flex;gap:4px;" class="dots-shiho"><span class="dot active"></span><span class="dot"></span></div>
               <div style="margin-left:auto;display:flex;gap:5px;">
                 <button class="btn-ctrl" onclick="prev('shiho')">←</button>
-                <button class="btn-ctrl btn-play play-shiho" onclick="togglePlay('shiho')">⏸</button>
+                <button class="btn-ctrl btn-play play-shiho" onclick="togglePlay('shiho')">▶</button>
                 <button class="btn-ctrl" onclick="next('shiho')">→</button>
               </div>
             </div>
@@ -782,18 +765,17 @@
         </div>
 
         <!-- KAITEN NAGE -->
-        <!-- <div class="border border-gray-200 dark:border-gray-800 rounded-2xl overflow-hidden"> -->
-        <div class="tech-card border border-gray-200 dark:border-gray-800 rounded-2xl overflow-hidden mb-8" data-tech="kaiten"></div>
+        <div class="tech-card border border-gray-200 dark:border-gray-800 rounded-2xl overflow-hidden" data-tech="kaiten">
           <div class="px-4 pt-4 pb-2">
             <h3 class="font-bold">Kaiten Nage <span class="text-red-500 font-normal text-sm">回転投げ</span></h3>
-            <p class="text-gray-500 text-xs mt-1">Rotation axiale. Uke pivote sur son propre axe et est projeté.</p>
+            <p class="text-gray-500 text-xs mt-1">Rotation axiale. Uke pivote sur son propre axe.</p>
           </div>
           <div class="bg-gray-50 dark:bg-gray-900 px-3 py-2">
             <div class="flex gap-3 items-center mb-2">
               <div style="display:flex;gap:4px;" class="dots-kaiten"><span class="dot active"></span><span class="dot"></span></div>
               <div style="margin-left:auto;display:flex;gap:5px;">
                 <button class="btn-ctrl" onclick="prev('kaiten')">←</button>
-                <button class="btn-ctrl btn-play play-kaiten" onclick="togglePlay('kaiten')">⏸</button>
+                <button class="btn-ctrl btn-play play-kaiten" onclick="togglePlay('kaiten')">▶</button>
                 <button class="btn-ctrl" onclick="next('kaiten')">→</button>
               </div>
             </div>
@@ -817,7 +799,7 @@
                   <polygon points="128,90 158,90 163,122 123,122" fill="#555" opacity="0.65"/>
                   <circle cx="98" cy="67" r="6" fill="#dc2626" opacity="0.8" class="pulse"/>
                   <g class="bounce-y"><line x1="98" y1="67" x2="98" y2="97" stroke="#dc2626" stroke-width="1.5" marker-end="url(#akn)"/></g>
-                  <text x="99" y="140" text-anchor="middle" font-size="9" fill="currentColor" opacity="0.45">Bras vers le bas — rotation</text>
+                  <text x="99" y="140" text-anchor="middle" font-size="9" fill="currentColor" opacity="0.45">Bras vers le bas</text>
                 </svg>
               </div>
               <div class="step-panel">
@@ -848,13 +830,14 @@
             </div>
           </div>
         </div>
+
       </div>
 
-      <!-- TENCHI NAGE + KOKYU HO -->
+      <!-- TENCHI + KOKYU HO -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
         <div class="p-5 rounded-2xl border border-gray-200 dark:border-gray-800">
           <h3 class="font-bold mb-1">Tenchi Nage <span class="text-red-500 font-normal text-sm">天地投げ</span></h3>
-          <p class="text-gray-600 dark:text-gray-400 text-sm">Projection ciel-terre. Un bras vers le haut (ciel), l'autre vers le bas (terre) — cisaillement déséquilibrant uke vers l'arrière.</p>
+          <p class="text-gray-600 dark:text-gray-400 text-sm">Projection ciel-terre. Un bras vers le haut, l'autre vers le bas — cisaillement déséquilibrant uke vers l'arrière.</p>
         </div>
         <div class="p-5 rounded-2xl border border-gray-200 dark:border-gray-800">
           <h3 class="font-bold mb-1">Kokyu Ho <span class="text-red-500 font-normal text-sm">呼吸法</span></h3>
@@ -892,7 +875,7 @@
         <span class="text-gray-500 text-sm">— Contre-techniques</span>
       </div>
       <div class="p-6 rounded-2xl border border-gray-200 dark:border-gray-800 mb-8">
-        <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">Les <strong class="text-gray-900 dark:text-gray-100">Kaeshi Waza</strong> s'étudient après une solide maîtrise des techniques de base. En principe, il existe au moins une contre-technique par technique. Elles constituent un dialogue martial où chacun peut inverser les rôles dès que l'autre perd son centre.</p>
+        <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">Les <strong class="text-gray-900 dark:text-gray-100">Kaeshi Waza</strong> s'étudient après une solide maîtrise des techniques de base. Il existe au moins une contre-technique par technique. Elles constituent un dialogue martial où chacun peut inverser les rôles dès que l'autre perd son centre.</p>
       </div>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div class="p-4 rounded-xl border border-gray-200 dark:border-gray-800"><p class="font-semibold text-sm mb-2 text-red-500">Contre Ikkyo</p><p class="text-gray-600 dark:text-gray-400 text-xs">Uke retourne la prise lors d'un relâchement de tori — applique Ikkyo ou Nikyo en retour.</p></div>
@@ -911,65 +894,74 @@
   </footer>
 
   <script src="js/theme.js"></script>
-<script>
-const techs = {
-  ikkyo:  { total:4, timer:null, playing:false },
-  nikyo:  { total:3, timer:null, playing:false },
-  sankyo: { total:2, timer:null, playing:false },
-  yonkyo: { total:2, timer:null, playing:false },
-  gokyo:  { total:2, timer:null, playing:false },
-  irimi:  { total:3, timer:null, playing:false },
-  kote:   { total:2, timer:null, playing:false },
-  shiho:  { total:2, timer:null, playing:false },
-  kaiten: { total:2, timer:null, playing:false },
-};
-const cursors = {};
-Object.keys(techs).forEach(k => cursors[k] = 0);
+  <script>
+  const techs = {
+    ikkyo:  { total:4, timer:null, playing:false },
+    nikyo:  { total:3, timer:null, playing:false },
+    sankyo: { total:2, timer:null, playing:false },
+    yonkyo: { total:2, timer:null, playing:false },
+    gokyo:  { total:2, timer:null, playing:false },
+    irimi:  { total:3, timer:null, playing:false },
+    kote:   { total:2, timer:null, playing:false },
+    shiho:  { total:2, timer:null, playing:false },
+    kaiten: { total:2, timer:null, playing:false },
+  };
+  const cursors = {};
+  Object.keys(techs).forEach(k => cursors[k] = 0);
 
-function showStep(name, n) {
-  const t = techs[name];
-  n = ((n % t.total) + t.total) % t.total;
-  cursors[name] = n;
-  document.querySelectorAll('.steps-'+name+' .step-panel').forEach((p,i) => p.classList.toggle('active', i===n));
-  document.querySelectorAll('.dots-'+name+' .dot').forEach((d,i) => d.classList.toggle('active', i===n));
-  const lbl = document.querySelector('.step-lbl-'+name);
-  if (lbl) lbl.textContent = 'Étape '+(n+1)+' / '+t.total;
-}
+  function showStep(name, n) {
+    const t = techs[name];
+    n = ((n % t.total) + t.total) % t.total;
+    cursors[name] = n;
+    document.querySelectorAll('.steps-'+name+' .step-panel').forEach((p,i) => p.classList.toggle('active', i===n));
+    document.querySelectorAll('.dots-'+name+' .dot').forEach((d,i) => d.classList.toggle('active', i===n));
+    const lbl = document.querySelector('.step-lbl-'+name);
+    if (lbl) lbl.textContent = 'Étape '+(n+1)+' / '+t.total;
+  }
 
-function next(name) { showStep(name, cursors[name]+1); }
-function prev(name) { showStep(name, cursors[name]-1); }
+  function next(name) { showStep(name, cursors[name]+1); }
+  function prev(name) { showStep(name, cursors[name]-1); }
 
-function startAnim(name) {
-  const t = techs[name];
-  if (t.timer) return;
-  t.playing = true;
-  const btn = document.querySelector('.play-'+name);
-  if (btn) btn.textContent = '⏸';
-  t.timer = setInterval(() => next(name), 2300);
-}
+  function startAnim(name) {
+    const t = techs[name];
+    if (t.timer) return;
+    t.playing = true;
+    const btn = document.querySelector('.play-'+name);
+    if (btn) btn.textContent = '⏸';
+    t.timer = setInterval(() => next(name), 2300);
+  }
 
-function stopAnim(name) {
-  const t = techs[name];
-  clearInterval(t.timer);
-  t.timer = null;
-  t.playing = false;
-  const btn = document.querySelector('.play-'+name);
-  if (btn) btn.textContent = '▶';
-}
+  function stopAnim(name) {
+    const t = techs[name];
+    clearInterval(t.timer);
+    t.timer = null;
+    t.playing = false;
+    const btn = document.querySelector('.play-'+name);
+    if (btn) btn.textContent = '▶';
+  }
 
-function togglePlay(name) {
-  const t = techs[name];
-  if (t.playing) stopAnim(name);
-  else startAnim(name);
-}
+  function togglePlay(name) {
+    techs[name].playing ? stopAnim(name) : startAnim(name);
+  }
 
-// Survol : démarrer/arrêter par carte
-document.querySelectorAll('.tech-card').forEach(card => {
-  const name = card.dataset.tech;
-  if (!name) return;
-  card.addEventListener('mouseenter', () => startAnim(name));
-  card.addEventListener('mouseleave', () => stopAnim(name));
-});
-</script>
+  // Survol : démarrer/stopper par carte
+  document.querySelectorAll('.tech-card').forEach(card => {
+    const name = card.dataset.tech;
+    if (!name) return;
+    card.addEventListener('mouseenter', () => startAnim(name));
+    card.addEventListener('mouseleave', () => stopAnim(name));
+  });
+
+  // Menu burger
+  const burgerBtn  = document.getElementById('burger-btn');
+  const burgerMenu = document.getElementById('burger-menu');
+  if (burgerBtn && burgerMenu) {
+    burgerBtn.addEventListener('click', () => burgerMenu.classList.toggle('hidden'));
+    document.addEventListener('click', e => {
+      if (!burgerBtn.contains(e.target) && !burgerMenu.contains(e.target))
+        burgerMenu.classList.add('hidden');
+    });
+  }
+  </script>
 </body>
 </html>

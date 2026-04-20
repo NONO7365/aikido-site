@@ -1,653 +1,306 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="fr" class="dark">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Aïkido — Stages</title>
-    <link rel="stylesheet" href="dist/output.css" />
-    <style>
-      html {
-        scroll-behavior: smooth;
-      }
-      .video-wrap {
-        position: relative;
-        padding-bottom: 80%;
-        height: 0;
-        overflow: hidden;
-        border-radius: 12px;
-      }
-      .video-wrap iframe {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        border: 0;
-      }
-      .badge {
-        display: inline-block;
-        padding: 2px 10px;
-        border-radius: 999px;
-        font-size: 11px;
-        font-weight: 600;
-      }
-      .stage-card {
-        transition: all 0.2s;
-      }
-      .stage-card:hover {
-        transform: translateY(-2px);
-      }
-      .dept-73 {
-        border-left: 4px solid #3b82f6;
-      }
-      .dept-73:hover {
-        background: rgba(59, 130, 246, 0.08);
-        border-color: #2563eb;
-      }
-      .dept-74 {
-        border-left: 4px solid #22c55e;
-      }
-      .dept-74:hover {
-        background: rgba(34, 197, 94, 0.08);
-        border-color: #16a34a;
-      }
-      .dept-38 {
-        border-left: 4px solid #f97316;
-      }
-      .dept-38:hover {
-        background: rgba(249, 115, 22, 0.08);
-        border-color: #ea580c;
-      }
-      .dept-01 {
-        border-left: 4px solid #a855f7;
-      }
-      .dept-01:hover {
-        background: rgba(168, 85, 247, 0.08);
-        border-color: #9333ea;
-      }
-      .filter-btn {
-        padding: 6px 16px;
-        border-radius: 999px;
-        font-size: 13px;
-        font-weight: 500;
-        border: 1.5px solid;
-        cursor: pointer;
-        transition: all 0.15s;
-        background: transparent;
-      }
-      .filter-btn:hover,
-      .filter-btn.active {
-        color: white !important;
-      }
-      .filter-btn-73 {
-        border-color: #3b82f6;
-        color: #3b82f6;
-      }
-      .filter-btn-73:hover,
-      .filter-btn-73.active {
-        background: #3b82f6;
-      }
-      .filter-btn-74 {
-        border-color: #22c55e;
-        color: #22c55e;
-      }
-      .filter-btn-74:hover,
-      .filter-btn-74.active {
-        background: #22c55e;
-      }
-      .filter-btn-38 {
-        border-color: #f97316;
-        color: #f97316;
-      }
-      .filter-btn-38:hover,
-      .filter-btn-38.active {
-        background: #f97316;
-      }
-      .filter-btn-01 {
-        border-color: #a855f7;
-        color: #a855f7;
-      }
-      .filter-btn-01:hover,
-      .filter-btn-01.active {
-        background: #a855f7;
-      }
-      .filter-btn-all {
-        border-color: #dc2626;
-        color: #dc2626;
-      }
-      .filter-btn-all:hover,
-      .filter-btn-all.active {
-        background: #dc2626;
-      }
-      .stage-item {
-        display: block;
-      }
-      .stage-item.hidden-stage {
-        display: none;
-      }
-    </style>
-  </head>
-  <body
-    class="bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100 min-h-screen transition-colors duration-300"
-  >
-    <nav
-      class="border-b border-gray-200 dark:border-gray-800 px-6 py-4 flex items-center justify-between relative"
-    >
-      <a href="index.html" class="text-xl font-bold tracking-wide z-10"
-        >合気道 <span class="text-red-600">Aïkido</span></a
-      >
-      <ul class="hidden md:flex gap-6 text-sm font-medium">
-        <li>
-          <a href="index.html" class="hover:text-red-500 transition-colors"
-            >Accueil</a
-          >
-        </li>
-        <li>
-          <a
-            href="techniques-sans-arme.html"
-            class="hover:text-red-500 transition-colors"
-            >Sans arme</a
-          >
-        </li>
-        <li>
-          <a
-            href="techniques-avec-arme.html"
-            class="hover:text-red-500 transition-colors"
-            >Avec arme</a
-          >
-        </li>
-        <li><a href="stages.html" class="text-red-500">Stages</a></li>
-        <li>
-          <a href="contact.html" class="hover:text-red-500 transition-colors"
-            >Contact</a
-          >
-        </li>
-        <li>
-          <a href="a-propos.html" class="hover:text-red-500 transition-colors"
-            >À propos</a
-          >
-        </li>
-      </ul>
-      <div class="flex items-center gap-3 z-10">
-        <button
-          id="theme-toggle"
-          class="p-2 rounded-full border border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-        >
-          <span id="theme-icon">☀️</span>
-        </button>
-        <button
-          id="burger-btn"
-          class="md:hidden p-2 rounded-lg border border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-        >
-          <svg
-            width="20"
-            height="20"
-            viewBox="0 0 20 20"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-          >
-            <line x1="2" y1="5" x2="18" y2="5" />
-            <line x1="2" y1="10" x2="18" y2="10" />
-            <line x1="2" y1="15" x2="18" y2="15" />
-          </svg>
-        </button>
-      </div>
-      <div
-        id="burger-menu"
-        class="hidden md:hidden absolute top-full left-0 right-0 bg-white dark:bg-gray-950 border-b border-gray-200 dark:border-gray-800 shadow-lg z-50 px-6 py-4"
-      >
-        <ul class="flex flex-col gap-4 text-sm font-medium">
-          <li>
-            <a
-              href="index.html"
-              class="block hover:text-red-500 transition-colors py-1"
-              >Accueil</a
-            >
-          </li>
-          <li>
-            <a
-              href="techniques-sans-arme.html"
-              class="block hover:text-red-500 transition-colors py-1"
-              >Sans arme</a
-            >
-          </li>
-          <li>
-            <a
-              href="techniques-avec-arme.html"
-              class="block hover:text-red-500 transition-colors py-1"
-              >Avec arme</a
-            >
-          </li>
-          <li>
-            <a href="stages.html" class="block text-red-500 py-1">Stages</a>
-          </li>
-          <li>
-            <a
-              href="contact.html"
-              class="block hover:text-red-500 transition-colors py-1"
-              >Contact</a
-            >
-          </li>
-          <li>
-            <a
-              href="a-propos.html"
-              class="block hover:text-red-500 transition-colors py-1"
-              >À propos</a
-            >
-          </li>
-        </ul>
-      </div>
-    </nav>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aïkido — Stages</title>
+  <link rel="stylesheet" href="dist/output.css" />
+  <style>
+    html { scroll-behavior: smooth; }
+    .badge { display:inline-block; padding:2px 10px; border-radius:999px; font-size:11px; font-weight:600; }
+    .stage-card { transition: all 0.2s; }
+    .stage-card:hover { transform: translateY(-2px); }
+    .dept-73 { border-left: 4px solid #3b82f6; }
+    .dept-73:hover { background: rgba(59,130,246,0.08); }
+    .dept-74 { border-left: 4px solid #22c55e; }
+    .dept-74:hover { background: rgba(34,197,94,0.08); }
+    .dept-38 { border-left: 4px solid #f97316; }
+    .dept-38:hover { background: rgba(249,115,22,0.08); }
+    .dept-01 { border-left: 4px solid #a855f7; }
+    .dept-01:hover { background: rgba(168,85,247,0.08); }
+    .filter-btn { padding: 6px 16px; border-radius: 999px; font-size: 13px; font-weight: 500; border: 1.5px solid; cursor: pointer; transition: all 0.15s; background: transparent; }
+    .filter-btn-73 { border-color: #3b82f6; color: #3b82f6; }
+    .filter-btn-73:hover, .filter-btn-73.active { background: #3b82f6; color: white; }
+    .filter-btn-74 { border-color: #22c55e; color: #22c55e; }
+    .filter-btn-74:hover, .filter-btn-74.active { background: #22c55e; color: white; }
+    .filter-btn-38 { border-color: #f97316; color: #f97316; }
+    .filter-btn-38:hover, .filter-btn-38.active { background: #f97316; color: white; }
+    .filter-btn-01 { border-color: #a855f7; color: #a855f7; }
+    .filter-btn-01:hover, .filter-btn-01.active { background: #a855f7; color: white; }
+    .filter-btn-all { border-color: #dc2626; color: #dc2626; }
+    .filter-btn-all:hover, .filter-btn-all.active { background: #dc2626; color: white; }
+    .stage-item { display: block; }
+    .stage-item.hidden-stage { display: none; }
+  </style>
+</head>
+<body class="bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100 min-h-screen transition-colors duration-300">
 
-    <div
-      class="sticky top-0 z-10 bg-white dark:bg-gray-950 border-b border-gray-200 dark:border-gray-800 px-6 py-3 flex gap-6 text-sm overflow-x-auto"
-    >
-      <a href="#locaux" class="whitespace-nowrap font-semibold text-red-500"
-        >Stages locaux</a
-      >
-      <span class="text-gray-300 dark:text-gray-700">|</span>
-      <a
-        href="#calendrier"
-        class="whitespace-nowrap hover:text-red-500 transition-colors"
-        >Calendrier national</a
-      >
-      <span class="text-gray-300 dark:text-gray-700">|</span>
-      <a
-        href="#ressources"
-        class="whitespace-nowrap hover:text-red-500 transition-colors"
-        >Ressources</a
-      >
+  <nav class="border-b border-gray-200 dark:border-gray-800 px-6 py-4 flex items-center justify-between relative">
+    <a href="index.html" class="text-xl font-bold tracking-wide z-10">合気道 <span class="text-red-600">Aïkido</span></a>
+    <ul class="hidden md:flex gap-6 text-sm font-medium">
+      <li><a href="index.html"                class="hover:text-red-500 transition-colors">Accueil</a></li>
+      <li><a href="techniques-sans-arme.html" class="hover:text-red-500 transition-colors">Sans arme</a></li>
+      <li><a href="techniques-avec-arme.html" class="hover:text-red-500 transition-colors">Avec arme</a></li>
+      <li><a href="stages.html"               class="text-red-500">Stages</a></li>
+      <li><a href="contact.html"              class="hover:text-red-500 transition-colors">Contact</a></li>
+      <li><a href="a-propos.html"             class="hover:text-red-500 transition-colors">À propos</a></li>
+    </ul>
+    <div class="flex items-center gap-3 z-10">
+      <button id="theme-toggle" class="p-2 rounded-full border border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+        <span id="theme-icon">☀️</span>
+      </button>
+      <button id="burger-btn" class="md:hidden p-2 rounded-lg border border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <line x1="2" y1="5"  x2="18" y2="5"/>
+          <line x1="2" y1="10" x2="18" y2="10"/>
+          <line x1="2" y1="15" x2="18" y2="15"/>
+        </svg>
+      </button>
     </div>
+    <div id="burger-menu" class="hidden md:hidden absolute top-full left-0 right-0 bg-white dark:bg-gray-950 border-b border-gray-200 dark:border-gray-800 shadow-lg z-50 px-6 py-4">
+      <ul class="flex flex-col gap-4 text-sm font-medium">
+        <li><a href="index.html"                class="block hover:text-red-500 transition-colors py-1">Accueil</a></li>
+        <li><a href="techniques-sans-arme.html" class="block hover:text-red-500 transition-colors py-1">Sans arme</a></li>
+        <li><a href="techniques-avec-arme.html" class="block hover:text-red-500 transition-colors py-1">Avec arme</a></li>
+        <li><a href="stages.html"               class="block text-red-500 py-1">Stages</a></li>
+        <li><a href="contact.html"              class="block hover:text-red-500 transition-colors py-1">Contact</a></li>
+        <li><a href="a-propos.html"             class="block hover:text-red-500 transition-colors py-1">À propos</a></li>
+      </ul>
+    </div>
+  </nav>
 
-    <main class="max-w-5xl mx-auto px-6 py-16">
-      <h1 class="text-4xl font-bold mb-2">Stages d'Aïkido</h1>
-      <p class="text-gray-600 dark:text-gray-400 mb-12">
-        Stages régionaux en
-        <strong class="text-gray-900 dark:text-gray-100">Savoie (73)</strong>,
-        <strong class="text-gray-900 dark:text-gray-100"
-          >Haute-Savoie (74)</strong
-        >,
-        <strong class="text-gray-900 dark:text-gray-100">Isère (38)</strong> et
-        <strong class="text-gray-900 dark:text-gray-100">Ain (01)</strong>.
+  <div class="sticky top-0 z-10 bg-white dark:bg-gray-950 border-b border-gray-200 dark:border-gray-800 px-6 py-3 flex gap-6 text-sm overflow-x-auto">
+    <a href="#locaux"     class="whitespace-nowrap font-semibold text-red-500">Stages locaux</a>
+    <span class="text-gray-300 dark:text-gray-700">|</span>
+    <a href="#calendrier" class="whitespace-nowrap hover:text-red-500 transition-colors">Calendrier régional</a>
+    <span class="text-gray-300 dark:text-gray-700">|</span>
+    <a href="#ressources" class="whitespace-nowrap hover:text-red-500 transition-colors">Ressources</a>
+  </div>
+
+  <main class="max-w-5xl mx-auto px-6 py-16">
+
+    <h1 class="text-4xl font-bold mb-2">Stages d'Aïkido</h1>
+    <p class="text-gray-600 dark:text-gray-400 mb-12">
+      Stages régionaux en
+      <strong class="text-gray-900 dark:text-gray-100">Savoie (73)</strong>,
+      <strong class="text-gray-900 dark:text-gray-100">Haute-Savoie (74)</strong>,
+      <strong class="text-gray-900 dark:text-gray-100">Isère (38)</strong> et
+      <strong class="text-gray-900 dark:text-gray-100">Ain (01)</strong>.
+    </p>
+
+    <!-- ═══════════ STAGES LOCAUX ═══════════ -->
+    <section id="locaux" class="mb-20">
+      <div class="flex items-baseline gap-4 mb-6">
+        <h2 class="text-3xl font-bold">Stages locaux</h2>
+        <span class="text-gray-500 text-sm">— mis à jour manuellement</span>
+      </div>
+
+      <!-- Filtres département -->
+      <div class="flex gap-2 flex-wrap mb-6">
+        <button class="filter-btn filter-btn-all active" onclick="filterStages('all', this)">Tous</button>
+        <button class="filter-btn filter-btn-73" onclick="filterStages('73', this)">73 — Savoie</button>
+        <button class="filter-btn filter-btn-74" onclick="filterStages('74', this)">74 — Haute-Savoie</button>
+        <button class="filter-btn filter-btn-38" onclick="filterStages('38', this)">38 — Isère</button>
+        <button class="filter-btn filter-btn-01" onclick="filterStages('01', this)">01 — Ain</button>
+      </div>
+
+      <div class="p-4 rounded-xl border border-yellow-200 dark:border-yellow-800 bg-yellow-50 dark:bg-yellow-950 text-yellow-800 dark:text-yellow-300 text-sm mb-8 flex gap-3 items-start">
+        <span class="text-lg flex-shrink-0">✏️</span>
+        <div>
+          <p class="font-semibold mb-1">Section mise à jour manuellement</p>
+          <p class="text-xs">Pour ajouter ou signaler un stage, <a href="contact.html" class="underline">contactez-nous</a>.</p>
+        </div>
+      </div>
+
+      <div class="space-y-4" id="stages-list">
+
+        <!-- STAGE 1 — 74 -->
+        <div class="stage-card stage-item dept-74 border border-gray-200 dark:border-gray-800 rounded-2xl p-5" data-dept="74">
+          <div class="flex items-start justify-between gap-4 flex-wrap">
+            <div>
+              <span class="badge bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 mb-2 inline-block">74 — Haute-Savoie</span>
+              <h3 class="font-bold text-lg">Marc Bachraty</h3>
+              <p class="text-gray-500 text-sm">Cranves-Sales (74)</p>
+            </div>
+            <div class="text-right flex-shrink-0">
+              <p class="text-red-500 font-bold text-sm">Sam. 11 avril 2026</p>
+              <span class="badge bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 mt-1 inline-block">FFAAA</span>
+            </div>
+          </div>
+          <p class="text-gray-600 dark:text-gray-400 text-sm mt-3">Stage régional toutes fédérations. Renseignements auprès de l'organisateur.</p>
+          <a href="https://stages-aikido.fr/region-stages-aikido-auvergne-rhone-alpes"
+             target="_blank"
+             class="text-xs text-red-500 hover:text-red-400 transition-colors mt-2 inline-block">
+            Voir sur stages-aikido.fr →
+          </a>
+        </div>
+
+        <!-- STAGE 2 — 73 -->
+        <div class="stage-card stage-item dept-73 border border-gray-200 dark:border-gray-800 rounded-2xl p-5" data-dept="73">
+          <div class="flex items-start justify-between gap-4 flex-wrap">
+            <div>
+              <span class="badge bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 mb-2 inline-block">73 — Savoie</span>
+              <h3 class="font-bold text-lg">Stage Ligue AURA</h3>
+              <p class="text-gray-500 text-sm">Chambéry (73)</p>
+            </div>
+            <div class="text-right flex-shrink-0">
+              <p class="text-red-500 font-bold text-sm">À venir</p>
+              <span class="badge bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 mt-1 inline-block">FFAB</span>
+            </div>
+          </div>
+          <p class="text-gray-600 dark:text-gray-400 text-sm mt-3">Stage de la Ligue Auvergne-Rhône-Alpes. Ouvert à tous niveaux. Passeport et certificat médical obligatoires.</p>
+          <a href="https://www.ffab-aikido-ligue-aura.org/stages-evenements-nationaux"
+             target="_blank"
+             class="text-xs text-red-500 hover:text-red-400 transition-colors mt-2 inline-block">
+            Calendrier Ligue AURA →
+          </a>
+        </div>
+
+        <!-- CARTE AJOUTER -->
+        <div class="stage-card stage-item border-2 border-dashed border-gray-300 dark:border-gray-700 rounded-2xl p-5 flex flex-col md:flex-row items-center justify-between gap-4" data-dept="all">
+          <div class="text-center md:text-left">
+            <p class="font-semibold text-gray-600 dark:text-gray-400 mb-1">Ajouter un stage</p>
+            <p class="text-gray-500 text-xs">Vous organisez un stage en Savoie ou département voisin ?</p>
+          </div>
+          <a href="contact.html"
+             class="flex-shrink-0 text-sm px-5 py-2 rounded-full border border-red-500 text-red-500 hover:bg-red-500 hover:text-white transition-colors">
+            Nous contacter
+          </a>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ═══════════ CALENDRIER RÉGIONAL ═══════════ -->
+    <section id="calendrier" class="mb-20">
+      <div class="flex items-baseline gap-4 mb-4">
+        <h2 class="text-3xl font-bold">Calendrier régional</h2>
+        <span class="text-gray-500 text-sm">— Auvergne-Rhône-Alpes</span>
+      </div>
+      <p class="text-gray-600 dark:text-gray-400 text-sm mb-8">
+        Tous les stages d'aïkido en Auvergne-Rhône-Alpes (Savoie, Haute-Savoie, Isère, Ain et toute la région),
+        toutes fédérations confondues — source : stages-aikido.fr.
       </p>
 
-      <!-- ═══════════ STAGES LOCAUX ═══════════ -->
-      <section id="locaux" class="mb-20">
-        <div class="flex items-baseline gap-4 mb-6">
-          <h2 class="text-3xl font-bold">Stages locaux</h2>
-          <span class="text-gray-500 text-sm">— mis à jour manuellement</span>
-        </div>
+      <!-- Boutons accès direct -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
 
-        <!-- Filtre par département -->
-        <div class="flex gap-2 flex-wrap mb-6">
-          <button
-            class="filter-btn filter-btn-all active"
-            onclick="filterStages('all', this)"
-          >
-            Tous
-          </button>
-          <button
-            class="filter-btn filter-btn-73"
-            onclick="filterStages('73', this)"
-          >
-            73 — Savoie
-          </button>
-          <button
-            class="filter-btn filter-btn-74"
-            onclick="filterStages('74', this)"
-          >
-            74 — Haute-Savoie
-          </button>
-          <button
-            class="filter-btn filter-btn-38"
-            onclick="filterStages('38', this)"
-          >
-            38 — Isère
-          </button>
-          <button
-            class="filter-btn filter-btn-01"
-            onclick="filterStages('01', this)"
-          >
-            01 — Ain
-          </button>
-        </div>
-
-        <div
-          class="p-4 rounded-xl border border-yellow-200 dark:border-yellow-800 bg-yellow-50 dark:bg-yellow-950 text-yellow-800 dark:text-yellow-300 text-sm mb-8 flex gap-3 items-start"
-        >
-          <span class="text-lg flex-shrink-0">✏️</span>
+        <a href="https://stages-aikido.fr/region-stages-aikido-auvergne-rhone-alpes"
+           target="_blank"
+           class="flex items-center gap-4 p-5 rounded-2xl border-2 border-red-300 dark:border-red-800 bg-red-50 dark:bg-red-950 hover:bg-red-100 dark:hover:bg-red-900 transition-all hover:-translate-y-1">
+          <div class="w-12 h-12 rounded-full bg-red-600 flex items-center justify-center flex-shrink-0">
+            <span class="text-white font-bold text-xs">AuRA</span>
+          </div>
           <div>
-            <p class="font-semibold mb-1">Section mise à jour manuellement</p>
-            <p class="text-xs">
-              Pour ajouter ou signaler un stage,
-              <a href="contact.html" class="underline">contactez-nous</a>.
-            </p>
+            <p class="font-bold text-red-700 dark:text-red-300">Auvergne-Rhône-Alpes</p>
+            <p class="text-xs text-red-600 dark:text-red-400 mt-0.5">Savoie · Haute-Savoie · Isère · Ain et toute la région</p>
+            <p class="text-xs text-red-500 mt-2 font-medium">Voir tous les stages de la région →</p>
           </div>
-        </div>
+        </a>
 
-        <!-- LISTE DES STAGES -->
-        <div class="space-y-4" id="stages-list">
-          <!-- STAGE 1 — 74 -->
-          <div
-            class="stage-card stage-item dept-74 border border-gray-200 dark:border-gray-800 rounded-2xl p-5"
-            data-dept="74"
-          >
-            <div class="flex items-start justify-between gap-4 flex-wrap">
-              <div>
-                <span
-                  class="badge bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 mb-2 inline-block"
-                  >74 — Haute-Savoie</span
-                >
-                <h3 class="font-bold text-lg">Marc Bachraty</h3>
-                <p class="text-gray-500 text-sm">Cranves-Sales (74)</p>
-              </div>
-              <div class="text-right flex-shrink-0">
-                <p class="text-red-500 font-bold text-sm">Sam. 11 avril 2026</p>
-                <span
-                  class="badge bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 mt-1 inline-block"
-                  >FFAAA</span
-                >
-              </div>
-            </div>
-            <p class="text-gray-600 dark:text-gray-400 text-sm mt-3">
-              Stage régional toutes fédérations. Renseignements auprès de
-              l'organisateur.
-            </p>
-            <a
-              href="https://stages-aikido.fr/calendrier-stages-aikido-france"
-              target="_blank"
-              class="text-xs text-red-500 hover:text-red-400 transition-colors mt-2 inline-block"
-            >
-              Voir sur stages-aikido.fr →
-            </a>
+        <a href="https://stages-aikido.fr/calendrier-stages-aikido-france"
+           target="_blank"
+           class="flex items-center gap-4 p-5 rounded-2xl border-2 border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 hover:bg-gray-100 dark:hover:bg-gray-800 transition-all hover:-translate-y-1">
+          <div class="w-12 h-12 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center flex-shrink-0 text-xl">
+            📅
           </div>
-
-          <!-- STAGE 2 — 73 -->
-          <div
-            class="stage-card stage-item dept-73 border border-gray-200 dark:border-gray-800 rounded-2xl p-5"
-            data-dept="73"
-          >
-            <div class="flex items-start justify-between gap-4 flex-wrap">
-              <div>
-                <span
-                  class="badge bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 mb-2 inline-block"
-                  >73 — Savoie</span
-                >
-                <h3 class="font-bold text-lg">Stage Ligue AURA</h3>
-                <p class="text-gray-500 text-sm">Chambéry (73)</p>
-              </div>
-              <div class="text-right flex-shrink-0">
-                <p class="text-red-500 font-bold text-sm">À venir</p>
-                <span
-                  class="badge bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 mt-1 inline-block"
-                  >FFAB</span
-                >
-              </div>
-            </div>
-            <p class="text-gray-600 dark:text-gray-400 text-sm mt-3">
-              Stage de la Ligue Auvergne-Rhône-Alpes. Ouvert à tous niveaux.
-              Passeport et certificat médical obligatoires.
-            </p>
-            <a
-              href="https://www.ffab-aikido-ligue-aura.org/stages-evenements-nationaux"
-              target="_blank"
-              class="text-xs text-red-500 hover:text-red-400 transition-colors mt-2 inline-block"
-            >
-              Calendrier Ligue AURA →
-            </a>
+          <div>
+            <p class="font-bold text-gray-700 dark:text-gray-300">Calendrier national complet</p>
+            <p class="text-xs text-gray-500 mt-0.5">Toutes régions · Toutes fédérations</p>
+            <p class="text-xs text-gray-400 mt-2 font-medium">stages-aikido.fr →</p>
           </div>
+        </a>
 
-          <!-- CARTE AJOUTER -->
-          <div
-            class="stage-card stage-item border-2 border-dashed border-gray-300 dark:border-gray-700 rounded-2xl p-5 flex flex-col md:flex-row items-center justify-between gap-4"
-            data-dept="all"
-          >
-            <div class="text-center md:text-left">
-              <p class="font-semibold text-gray-600 dark:text-gray-400 mb-1">
-                Ajouter un stage
-              </p>
-              <p class="text-gray-500 text-xs">
-                Vous organisez un stage en Savoie ou département voisin ?
-              </p>
-            </div>
-            <a
-              href="contact.html"
-              class="flex-shrink-0 text-sm px-5 py-2 rounded-full border border-red-500 text-red-500 hover:bg-red-500 hover:text-white transition-colors"
-            >
-              Nous contacter
-            </a>
+      </div>
+
+      <!-- Aperçu iframe région AuRA -->
+      <div class="border border-gray-200 dark:border-gray-800 rounded-2xl overflow-hidden">
+        <div class="bg-gray-50 dark:bg-gray-900 px-4 py-3 flex items-center justify-between flex-wrap gap-2">
+          <div class="flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-red-500"></span>
+            <span class="text-sm font-medium">Stages Aïkido — Auvergne-Rhône-Alpes</span>
           </div>
-        </div>
-      </section>
-
-      <!-- ═══════════ CALENDRIER NATIONAL ═══════════ -->
-      <section id="calendrier" class="mb-20">
-        <div class="flex items-baseline gap-4 mb-4">
-          <h2 class="text-3xl font-bold">Calendrier national</h2>
-          <span class="text-gray-500 text-sm">— stages-aikido.fr</span>
-        </div>
-        <p class="text-gray-600 dark:text-gray-400 text-sm mb-6">
-          Calendrier complet de tous les stages en France, toutes fédérations.
-          Cliquez sur un lien département ci-dessous pour ouvrir directement le
-          calendrier filtré.
-        </p>
-
-        <!-- Liens départements — ouvrent directement stages-aikido.fr dans un nouvel onglet -->
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
-          <a
-            href="https://stages-aikido.fr/top-regions-stages-aikido-france"
-            target="_blank"
-            class="flex flex-col items-center p-4 rounded-2xl border-2 border-blue-300 dark:border-blue-700 bg-blue-50 dark:bg-blue-950 hover:bg-blue-100 dark:hover:bg-blue-900 transition-colors text-center"
-          >
-            <span class="text-2xl font-bold text-blue-600 dark:text-blue-400"
-              >73</span
-            >
-            <span
-              class="text-sm font-semibold text-blue-700 dark:text-blue-300 mt-1"
-              >Savoie</span
-            >
-            <span class="text-xs text-blue-500 dark:text-blue-400 mt-2"
-              >Voir les stages →</span
-            >
-          </a>
-          <a
-            href="https://stages-aikido.fr/top-regions-stages-aikido-france"
-            target="_blank"
-            class="flex flex-col items-center p-4 rounded-2xl border-2 border-green-300 dark:border-green-700 bg-green-50 dark:bg-green-950 hover:bg-green-100 dark:hover:bg-green-900 transition-colors text-center"
-          >
-            <span class="text-2xl font-bold text-green-600 dark:text-green-400"
-              >74</span
-            >
-            <span
-              class="text-sm font-semibold text-green-700 dark:text-green-300 mt-1"
-              >Haute-Savoie</span
-            >
-            <span class="text-xs text-green-500 dark:text-green-400 mt-2"
-              >Voir les stages →</span
-            >
-          </a>
-          <a
-            href="https://stages-aikido.fr/top-regions-stages-aikido-france"
-            target="_blank"
-            class="flex flex-col items-center p-4 rounded-2xl border-2 border-orange-300 dark:border-orange-700 bg-orange-50 dark:bg-orange-950 hover:bg-orange-100 dark:hover:bg-orange-900 transition-colors text-center"
-          >
-            <span
-              class="text-2xl font-bold text-orange-600 dark:text-orange-400"
-              >38</span
-            >
-            <span
-              class="text-sm font-semibold text-orange-700 dark:text-orange-300 mt-1"
-              >Isère</span
-            >
-            <span class="text-xs text-orange-500 dark:text-orange-400 mt-2"
-              >Voir les stages →</span
-            >
-          </a>
-          <a
-            href="https://stages-aikido.fr/top-regions-stages-aikido-france"
-            target="_blank"
-            class="flex flex-col items-center p-4 rounded-2xl border-2 border-purple-300 dark:border-purple-700 bg-purple-50 dark:bg-purple-950 hover:bg-purple-100 dark:hover:bg-purple-900 transition-colors text-center"
-          >
-            <span
-              class="text-2xl font-bold text-purple-600 dark:text-purple-400"
-              >01</span
-            >
-            <span
-              class="text-sm font-semibold text-purple-700 dark:text-purple-300 mt-1"
-              >Ain</span
-            >
-            <span class="text-xs text-purple-500 dark:text-purple-400 mt-2"
-              >Voir les stages →</span
-            >
+          <a href="https://stages-aikido.fr/region-stages-aikido-auvergne-rhone-alpes"
+             target="_blank"
+             class="text-xs text-red-500 hover:text-red-400 transition-colors font-medium">
+            Ouvrir en plein écran →
           </a>
         </div>
-
-        <p class="text-xs text-gray-500 dark:text-gray-600 mb-6 italic">
-          Note : le site stages-aikido.fr ne permet pas le filtrage par URL
-          directe. Une fois sur le site, utilisez le champ de recherche pour
-          filtrer par département (73, 74, 38 ou 01).
-        </p>
-
-        <!-- Iframe -->
-        <div
-          class="border border-gray-200 dark:border-gray-800 rounded-2xl overflow-hidden"
-        >
-          <div
-            class="bg-gray-50 dark:bg-gray-900 px-4 py-3 flex items-center justify-between flex-wrap gap-2"
-          >
-            <span class="text-sm text-gray-500"
-              >Source : stages-aikido.fr — calendrier collaboratif toutes
-              fédérations</span
-            >
-            <a
-              href="https://stages-aikido.fr/calendrier-stages-aikido-france"
-              target="_blank"
-              class="text-xs text-red-500 hover:text-red-400 transition-colors font-medium"
-            >
-              Ouvrir en plein écran →
-            </a>
-          </div>
-          <div class="video-wrap">
-            <div
-              class="rounded-2xl border border-gray-200 dark:border-gray-800 p-8 text-center bg-gray-50 dark:bg-gray-900"
-            >
-              <div class="text-5xl mb-4">📅</div>
-              <h3 class="font-bold text-xl mb-2">
-                Consulter le calendrier complet
-              </h3>
-              <p class="text-gray-500 text-sm mb-6">
-                Le site stages-aikido.fr recense tous les stages en France.<br />
-                Une fois sur le site, tapez <strong>73</strong>,
-                <strong>74</strong>, <strong>38</strong> ou
-                <strong>01</strong> dans la recherche pour filtrer par
-                département.
-              </p>
-              <a
-                href="https://stages-aikido.fr/calendrier-stages-aikido-france"
-                target="_blank"
-                class="inline-block bg-red-600 hover:bg-red-700 text-white font-medium px-8 py-3 rounded-full transition-colors"
-              >
-                Ouvrir le calendrier →
-              </a>
-            </div>
-          </div>
+        <div style="position:relative; padding-bottom:85%; height:0; overflow:hidden;">
+          <iframe
+            style="position:absolute; top:0; left:0; width:100%; height:100%; border:0;"
+            src="https://stages-aikido.fr/region-stages-aikido-auvergne-rhone-alpes"
+            title="Stages Aikido Auvergne-Rhône-Alpes"
+            loading="lazy"
+            sandbox="allow-scripts allow-same-origin allow-popups allow-forms allow-top-navigation">
+          </iframe>
         </div>
-        <p class="text-xs text-gray-500 mt-3 text-center italic">
-          Si le calendrier ne s'affiche pas,
-          <a
-            href="https://stages-aikido.fr/calendrier-stages-aikido-france"
-            target="_blank"
-            class="text-red-500 hover:underline"
-            >ouvrez-le directement ici</a
-          >.
-        </p>
-      </section>
+      </div>
+      <p class="text-xs text-gray-500 mt-3 text-center italic">
+        Si le calendrier ne s'affiche pas,
+        <a href="https://stages-aikido.fr/region-stages-aikido-auvergne-rhone-alpes"
+           target="_blank" class="text-red-500 hover:underline">ouvrez-le directement ici</a>.
+      </p>
+    </section>
 
-      <!-- ═══════════ RESSOURCES ═══════════ -->
-      <section id="ressources">
-        <div class="flex items-baseline gap-4 mb-8">
-          <h2 class="text-3xl font-bold">Ressources</h2>
-          <span class="text-gray-500 text-sm">— Liens utiles</span>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
-          <a
-            href="https://www.ffab-aikido-ligue-aura.org/stages-evenements-nationaux"
-            target="_blank"
-            class="stage-card dept-73 border border-gray-200 dark:border-gray-800 rounded-2xl p-5 block"
-          >
-            <div class="text-2xl mb-3">🥋</div>
-            <h3 class="font-bold mb-1">Ligue AURA — FFAB</h3>
-            <p class="text-gray-500 text-sm">
-              Calendrier officiel Auvergne-Rhône-Alpes. Savoie, Isère, Ain,
-              Haute-Savoie...
-            </p>
-            <p class="text-blue-500 text-xs mt-3 font-medium">
-              ffab-aikido-ligue-aura.org →
-            </p>
-          </a>
+    <!-- ═══════════ RESSOURCES ═══════════ -->
+    <section id="ressources">
+      <div class="flex items-baseline gap-4 mb-8">
+        <h2 class="text-3xl font-bold">Ressources</h2>
+        <span class="text-gray-500 text-sm">— Liens utiles</span>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
 
-          <a
-            href="https://stages-aikido.fr/calendrier-stages-aikido-france"
-            target="_blank"
-            class="stage-card dept-74 border border-gray-200 dark:border-gray-800 rounded-2xl p-5 block"
-          >
-            <div class="text-2xl mb-3">📅</div>
-            <h3 class="font-bold mb-1">Stages-Aikido.fr</h3>
-            <p class="text-gray-500 text-sm">
-              Calendrier collaboratif national toutes fédérations. Plus de 1000
-              stages référencés.
-            </p>
-            <p class="text-green-500 text-xs mt-3 font-medium">
-              stages-aikido.fr →
-            </p>
-          </a>
+        <a href="https://stages-aikido.fr/region-stages-aikido-auvergne-rhone-alpes"
+           target="_blank"
+           class="stage-card dept-74 border border-gray-200 dark:border-gray-800 rounded-2xl p-5 block">
+          <div class="text-2xl mb-3">🗺️</div>
+          <h3 class="font-bold mb-1">Stages AuRA</h3>
+          <p class="text-gray-500 text-sm">Tous les stages d'aïkido en Auvergne-Rhône-Alpes sur stages-aikido.fr.</p>
+          <p class="text-green-500 text-xs mt-3 font-medium">stages-aikido.fr/auvergne-rhone-alpes →</p>
+        </a>
 
-          <a
-            href="https://stages-aikido.fr/stages/ajouter"
-            target="_blank"
-            class="stage-card dept-38 border border-gray-200 dark:border-gray-800 rounded-2xl p-5 block"
-          >
-            <div class="text-2xl mb-3">➕</div>
-            <h3 class="font-bold mb-1">Publier un stage</h3>
-            <p class="text-gray-500 text-sm">
-              Ajoutez gratuitement votre stage sur stages-aikido.fr pour le
-              diffuser à tous les pratiquants.
-            </p>
-            <p class="text-orange-500 text-xs mt-3 font-medium">
-              Ajouter un stage →
-            </p>
-          </a>
-        </div>
-      </section>
-    </main>
+        <a href="https://www.ffab-aikido-ligue-aura.org/stages-evenements-nationaux"
+           target="_blank"
+           class="stage-card dept-73 border border-gray-200 dark:border-gray-800 rounded-2xl p-5 block">
+          <div class="text-2xl mb-3">🥋</div>
+          <h3 class="font-bold mb-1">Ligue AURA — FFAB</h3>
+          <p class="text-gray-500 text-sm">Calendrier officiel de la Ligue Auvergne-Rhône-Alpes d'Aïkido et de Budo.</p>
+          <p class="text-blue-500 text-xs mt-3 font-medium">ffab-aikido-ligue-aura.org →</p>
+        </a>
 
-    <footer
-      class="border-t border-gray-200 dark:border-gray-800 text-center text-sm text-gray-500 py-6 mt-16"
-    >
-      © 2025 Aïkido Dojo — Tous droits réservés
-    </footer>
+        <a href="https://stages-aikido.fr/stages/ajouter"
+           target="_blank"
+           class="stage-card dept-38 border border-gray-200 dark:border-gray-800 rounded-2xl p-5 block">
+          <div class="text-2xl mb-3">➕</div>
+          <h3 class="font-bold mb-1">Publier un stage</h3>
+          <p class="text-gray-500 text-sm">Ajoutez gratuitement votre stage sur stages-aikido.fr pour le diffuser à tous les pratiquants.</p>
+          <p class="text-orange-500 text-xs mt-3 font-medium">Ajouter un stage →</p>
+        </a>
 
-    <script src="js/theme.js"></script>
-    <script>
-      function filterStages(dept, btn) {
-        // Mettre à jour les boutons actifs
-        document
-          .querySelectorAll(".filter-btn")
-          .forEach((b) => b.classList.remove("active"));
-        btn.classList.add("active");
+      </div>
+    </section>
 
-        // Filtrer les cartes
-        document.querySelectorAll(".stage-item").forEach((card) => {
-          const cardDept = card.dataset.dept;
-          if (dept === "all" || cardDept === dept || cardDept === "all") {
-            card.classList.remove("hidden-stage");
-          } else {
-            card.classList.add("hidden-stage");
-          }
-        });
+  </main>
+
+  <footer class="border-t border-gray-200 dark:border-gray-800 text-center text-sm text-gray-500 py-6 mt-16">
+    © 2025 Aïkido Dojo — Tous droits réservés
+  </footer>
+
+  <script src="js/theme.js"></script>
+  <script>
+  function filterStages(dept, btn) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.stage-item').forEach(card => {
+      const cardDept = card.dataset.dept;
+      if (dept === 'all' || cardDept === dept || cardDept === 'all') {
+        card.classList.remove('hidden-stage');
+      } else {
+        card.classList.add('hidden-stage');
       }
-    </script>
-  </body>
+    });
+  }
+  </script>
+</body>
 </html>

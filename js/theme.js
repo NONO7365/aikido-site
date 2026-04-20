@@ -1,4 +1,3 @@
-// ─── Thème dark / light ───────────────────────────
 const html = document.documentElement;
 const toggle = document.getElementById("theme-toggle");
 const icon = document.getElementById("theme-icon");
@@ -21,6 +20,7 @@ if (toggle) {
     updateIcon();
   });
 }
+
 const burgerBtn = document.getElementById("burger-btn");
 const burgerMenu = document.getElementById("burger-menu");
 if (burgerBtn && burgerMenu) {
@@ -33,10 +33,9 @@ if (burgerBtn && burgerMenu) {
   });
 }
 
-// ─── Formulaire contact ───────────────────────────
 const btnEnvoyer = document.getElementById("btn-envoyer");
 if (btnEnvoyer) {
-  btnEnvoyer.addEventListener("click", () => {
+  btnEnvoyer.addEventListener("click", async () => {
     const nom = document.getElementById("nom")?.value.trim();
     const email = document.getElementById("email")?.value.trim();
     const message = document.getElementById("message")?.value.trim();
@@ -44,9 +43,34 @@ if (btnEnvoyer) {
       alert("Merci de remplir au moins votre nom, email et message.");
       return;
     }
-    document.getElementById("confirmation").classList.remove("hidden");
-    btnEnvoyer.disabled = true;
-    btnEnvoyer.textContent = "Message envoyé ✓";
-    btnEnvoyer.classList.replace("bg-red-600", "bg-gray-400");
+    const btn = btnEnvoyer;
+    btn.disabled = true;
+    btn.textContent = "Envoi en cours...";
+    btn.classList.replace("bg-red-600", "bg-gray-400");
+    try {
+      const response = await fetch("https://formspree.io/f/xrerlrkd", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ nom, email, message }),
+      });
+      if (response.ok) {
+        document.getElementById("confirmation").classList.remove("hidden");
+        btn.textContent = "Message envoye !";
+        document.getElementById("nom").value = "";
+        document.getElementById("email").value = "";
+        document.getElementById("sujet").value = "";
+        document.getElementById("message").value = "";
+      } else {
+        btn.disabled = false;
+        btn.textContent = "Envoyer le message";
+        btn.classList.replace("bg-gray-400", "bg-red-600");
+        alert("Une erreur est survenue. Reessayez.");
+      }
+    } catch {
+      btn.disabled = false;
+      btn.textContent = "Envoyer le message";
+      btn.classList.replace("bg-gray-400", "bg-red-600");
+      alert("Verifiez votre connexion internet.");
+    }
   });
 }

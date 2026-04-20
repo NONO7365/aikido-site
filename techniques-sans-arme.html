@@ -894,7 +894,8 @@
   </footer>
 
   <script src="js/theme.js"></script>
-  <script>
+  <script src="js/theme.js"></script>
+<script>
   const techs = {
     ikkyo:  { total:4, timer:null, playing:false },
     nikyo:  { total:3, timer:null, playing:false },
@@ -913,8 +914,10 @@
     const t = techs[name];
     n = ((n % t.total) + t.total) % t.total;
     cursors[name] = n;
-    document.querySelectorAll('.steps-'+name+' .step-panel').forEach((p,i) => p.classList.toggle('active', i===n));
-    document.querySelectorAll('.dots-'+name+' .dot').forEach((d,i) => d.classList.toggle('active', i===n));
+    document.querySelectorAll('.steps-'+name+' .step-panel')
+      .forEach((p,i) => p.classList.toggle('active', i===n));
+    document.querySelectorAll('.dots-'+name+' .dot')
+      .forEach((d,i) => d.classList.toggle('active', i===n));
     const lbl = document.querySelector('.step-lbl-'+name);
     if (lbl) lbl.textContent = 'Étape '+(n+1)+' / '+t.total;
   }
@@ -944,12 +947,25 @@
     techs[name].playing ? stopAnim(name) : startAnim(name);
   }
 
-  // Survol : démarrer/stopper par carte
+  // Détection touch vs souris
+  const isTouchDevice = () => window.matchMedia('(hover: none)').matches;
+
   document.querySelectorAll('.tech-card').forEach(card => {
     const name = card.dataset.tech;
     if (!name) return;
-    card.addEventListener('mouseenter', () => startAnim(name));
-    card.addEventListener('mouseleave', () => stopAnim(name));
+
+    if (isTouchDevice()) {
+      // Mobile : tap sur la carte pour lancer/arrêter
+      card.addEventListener('click', (e) => {
+        // Ne pas déclencher si on clique sur un bouton
+        if (e.target.closest('button') || e.target.closest('iframe')) return;
+        techs[name].playing ? stopAnim(name) : startAnim(name);
+      });
+    } else {
+      // Desktop : survol
+      card.addEventListener('mouseenter', () => startAnim(name));
+      card.addEventListener('mouseleave', () => stopAnim(name));
+    }
   });
 
   // Menu burger
@@ -962,6 +978,6 @@
         burgerMenu.classList.add('hidden');
     });
   }
-  </script>
+</script>
 </body>
 </html>

@@ -1,5 +1,3 @@
-
-// === Système d'animation des techniques ===
 const techs = {
   ikkyo: { total: 4, timer: null, playing: false },
   nikyo: { total: 3, timer: null, playing: false },
@@ -30,7 +28,7 @@ function showStep(name, n) {
     .querySelectorAll(".dots-" + name + " .dot")
     .forEach((d, i) => d.classList.toggle("active", i === n));
   const lbl = document.querySelector(".step-lbl-" + name);
-  if (lbl) lbl.textContent = "Étape " + (n + 1) + " / " + t.total;
+  if (lbl) lbl.textContent = "Etape " + (n + 1) + " / " + t.total;
 }
 
 function next(name) {
@@ -46,7 +44,7 @@ function startAnim(name) {
   if (t.timer) return;
   t.playing = true;
   const btn = document.querySelector(".play-" + name);
-  if (btn) btn.textContent = "⏸";
+  if (btn) btn.textContent = "II";
   t.timer = setInterval(() => next(name), 2300);
 }
 
@@ -57,7 +55,7 @@ function stopAnim(name) {
   t.timer = null;
   t.playing = false;
   const btn = document.querySelector(".play-" + name);
-  if (btn) btn.textContent = "▶";
+  if (btn) btn.textContent = ">";
 }
 
 function togglePlay(name) {
@@ -65,7 +63,6 @@ function togglePlay(name) {
   techs[name].playing ? stopAnim(name) : startAnim(name);
 }
 
-// Clic sur la zone SVG = toggle animation (mobile + desktop)
 document.querySelectorAll(".anim-zone").forEach((zone) => {
   const name = zone.dataset.tech;
   if (!name || !techs[name]) return;
@@ -73,7 +70,6 @@ document.querySelectorAll(".anim-zone").forEach((zone) => {
   zone.addEventListener("click", () => togglePlay(name));
 });
 
-// Survol sur la carte = démarre/arrête (desktop avec souris uniquement)
 const hasMouse = window.matchMedia("(pointer: fine)").matches;
 if (hasMouse) {
   document.querySelectorAll(".tech-card").forEach((card) => {
@@ -84,10 +80,4 @@ if (hasMouse) {
   });
 }
 
-
-
-console.log(
-  "Aikido animations prêtes —",
-  Object.keys(techs).length,
-  "techniques chargées",
-);
+console.log("Aikido animations pretes");

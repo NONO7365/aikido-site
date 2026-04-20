@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="fr" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aïkido — Galerie</title>
+  <link rel="stylesheet" href="dist/output.css" />
+  <style>
+    html { scroll-behavior: smooth; }
+
+    /* Filtres */
+    .filter-btn { padding: 6px 18px; border-radius: 999px; font-size: 13px; font-weight: 500; border: 1.5px solid #4b5563; cursor: pointer; transition: all 0.15s; background: transparent; color: inherit; }
+    .filter-btn:hover { border-color: #dc2626; color: #dc2626; }
+    .filter-btn.active { background: #dc2626; border-color: #dc2626; color: white; }
+
+    /* Grille galerie */
+    .gallery-grid { columns: 2; gap: 12px; }
+    @media(min-width: 768px) { .gallery-grid { columns: 3; } }
+    @media(min-width: 1024px) { .gallery-grid { columns: 4; } }
+    .gallery-item { break-inside: avoid; margin-bottom: 12px; border-radius: 12px; overflow: hidden; cursor: pointer; position: relative; }
+    .gallery-item img { width: 100%; display: block; transition: transform 0.3s ease; }
+    .gallery-item:hover img { transform: scale(1.04); }
+    .gallery-item .overlay { position: absolute; inset: 0; background: rgba(0,0,0,0); transition: background 0.2s; display: flex; align-items: center; justify-content: center; }
+    .gallery-item:hover .overlay { background: rgba(0,0,0,0.35); }
+    .gallery-item .overlay-icon { opacity: 0; transition: opacity 0.2s; color: white; font-size: 28px; }
+    .gallery-item:hover .overlay-icon { opacity: 1; }
+    .gallery-item.hidden-item { display: none; }
+
+    /* Badge type */
+    .type-badge { position: absolute; top: 8px; right: 8px; background: rgba(0,0,0,0.6); color: white; font-size: 10px; font-weight: 600; padding: 2px 7px; border-radius: 999px; backdrop-filter: blur(4px); }
+    .type-video { background: rgba(220,38,38,0.85); }
+
+    /* Placeholder image (quand pas encore de vraie photo) */
+    .img-placeholder { width: 100%; aspect-ratio: 4/3; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; font-size: 12px; color: #9ca3af; border-radius: 12px; }
+
+    /* Lightbox */
+    .lightbox { position: fixed; inset: 0; background: rgba(0,0,0,0.92); z-index: 999; display: none; align-items: center; justify-content: center; flex-direction: column; padding: 20px; }
+    .lightbox.open { display: flex; }
+    .lightbox img { max-width: 90vw; max-height: 80vh; border-radius: 8px; object-fit: contain; }
+    .lightbox-close { position: absolute; top: 16px; right: 20px; color: white; font-size: 28px; cursor: pointer; background: none; border: none; line-height: 1; }
+    .lightbox-close:hover { color: #dc2626; }
+    .lightbox-caption { color: #d1d5db; font-size: 13px; margin-top: 12px; text-align: center; }
+    .lightbox-nav { position: absolute; top: 50%; transform: translateY(-50%); color: white; font-size: 32px; cursor: pointer; background: rgba(255,255,255,0.1); border: none; border-radius: 50%; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; transition: background 0.15s; }
+    .lightbox-nav:hover { background: rgba(220,38,38,0.7); }
+    .lightbox-prev { left: 12px; }
+    .lightbox-next { right: 12px; }
+
+    /* Vidéo embed dans lightbox */
+    .lightbox-video { width: min(90vw, 800px); aspect-ratio: 16/9; border-radius: 8px; }
+  </style>
+</head>
+<body class="bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100 min-h-screen transition-colors duration-300">
+
+  <!-- NAV -->
+  <nav class="border-b border-gray-200 dark:border-gray-800 px-6 py-4 flex items-center justify-between relative">
+    <a href="index.html" class="text-xl font-bold tracking-wide z-10">合気道 <span class="text-red-600">Aïkido</span></a>
+    <ul class="hidden md:flex gap-6 text-sm font-medium">
+      <li><a href="index.html"                class="hover:text-red-500 transition-colors">Accueil</a></li>
+      <li><a href="techniques-sans-arme.html" class="hover:text-red-500 transition-colors">Sans arme</a></li>
+      <li><a href="techniques-avec-arme.html" class="hover:text-red-500 transition-colors">Avec arme</a></li>
+      <li><a href="stages.html"               class="hover:text-red-500 transition-colors">Stages</a></li>
+      <li><a href="galerie.html"              class="text-red-500">Galerie</a></li>
+      <li><a href="contact.html"              class="hover:text-red-500 transition-colors">Contact</a></li>
+      <li><a href="a-propos.html"             class="hover:text-red-500 transition-colors">À propos</a></li>
+    </ul>
+    <div class="flex items-center gap-3 z-10">
+      <button id="theme-toggle" class="p-2 rounded-full border border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+        <span id="theme-icon">☀️</span>
+      </button>
+      <button id="burger-btn" class="md:hidden p-2 rounded-lg border border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <line x1="2" y1="5"  x2="18" y2="5"/>
+          <line x1="2" y1="10" x2="18" y2="10"/>
+          <line x1="2" y1="15" x2="18" y2="15"/>
+        </svg>
+      </button>
+    </div>
+    <div id="burger-menu" class="hidden md:hidden absolute top-full left-0 right-0 bg-white dark:bg-gray-950 border-b border-gray-200 dark:border-gray-800 shadow-lg z-50 px-6 py-4">
+      <ul class="flex flex-col gap-4 text-sm font-medium">
+        <li><a href="index.html"                class="block hover:text-red-500 transition-colors py-1">Accueil</a></li>
+        <li><a href="techniques-sans-arme.html" class="block hover:text-red-500 transition-colors py-1">Sans arme</a></li>
+        <li><a href="techniques-avec-arme.html" class="block hover:text-red-500 transition-colors py-1">Avec arme</a></li>
+        <li><a href="stages.html"               class="block hover:text-red-500 transition-colors py-1">Stages</a></li>
+        <li><a href="galerie.html"              class="block text-red-500 py-1">Galerie</a></li>
+        <li><a href="contact.html"              class="block hover:text-red-500 transition-colors py-1">Contact</a></li>
+        <li><a href="a-propos.html"             class="block hover:text-red-500 transition-colors py-1">À propos</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main class="max-w-6xl mx-auto px-6 py-16">
+
+    <!-- EN-TÊTE -->
+    <div class="mb-10">
+      <h1 class="text-4xl font-bold mb-3">Galerie</h1>
+      <p class="text-gray-600 dark:text-gray-400">Photos et vidéos du dojo, des stages et des démonstrations.</p>
+    </div>
+
+    <!-- FILTRES -->
+    <div class="flex gap-3 flex-wrap mb-8">
+      <button class="filter-btn active" onclick="filterGallery('all', this)">Tout</button>
+      <button class="filter-btn" onclick="filterGallery('dojo', this)">Dojo</button>
+      <button class="filter-btn" onclick="filterGallery('techniques', this)">Techniques</button>
+      <button class="filter-btn" onclick="filterGallery('stages', this)">Stages</button>
+      <button class="filter-btn" onclick="filterGallery('armes', this)">Armes</button>
+      <button class="filter-btn" onclick="filterGallery('video', this)">Vidéos</button>
+    </div>
+
+    <!-- COMPTEUR -->
+    <p class="text-sm text-gray-500 mb-6" id="gallery-count"></p>
+
+    <!-- GRILLE -->
+    <div class="gallery-grid" id="gallery-grid">
+
+      <!-- ── EXEMPLES PHOTOS (remplace src par tes vraies images) ── -->
+
+      <!-- Photo dojo 1 -->
+      <div class="gallery-item" data-cat="dojo" data-type="photo" data-caption="Le dojo — vue d'ensemble du tatami"
+           onclick="openLightbox(this)">
+        <div class="img-placeholder bg-gray-100 dark:bg-gray-800">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
+          <span>Dojo — tatami</span>
+          <span class="text-xs">(remplacer par assets/dojo-01.jpg)</span>
+        </div>
+        <!-- Quand tu as la photo : <img src="assets/images/dojo-01.jpg" alt="Le dojo"> -->
+        <div class="overlay"><span class="overlay-icon">🔍</span></div>
+        <span class="type-badge">Photo</span>
+      </div>
+
+      <!-- Photo dojo 2 -->
+      <div class="gallery-item" data-cat="dojo" data-type="photo" data-caption="Entrée du dojo"
+           onclick="openLightbox(this)">
+        <div class="img-placeholder bg-gray-100 dark:bg-gray-800">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
+          <span>Dojo — entrée</span>
+        </div>
+        <div class="overlay"><span class="overlay-icon">🔍</span></div>
+        <span class="type-badge">Photo</span>
+      </div>
+
+      <!-- Photo technique 1 -->
+      <div class="gallery-item" data-cat="techniques" data-type="photo" data-caption="Ikkyo — contrôle au sol"
+           onclick="openLightbox(this)">
+        <div class="img-placeholder bg-gray-100 dark:bg-gray-800" style="aspect-ratio:3/4;">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
+          <span>Ikkyo</span>
+        </div>
+        <div class="overlay"><span class="overlay-icon">🔍</span></div>
+        <span class="type-badge">Photo</span>
+      </div>
+
+      <!-- Vidéo YouTube — Irimi Nage Doshu -->
+      <div class="gallery-item" data-cat="techniques video" data-type="video"
+           data-youtube="Kw04xwDMAws" data-caption="Irimi Nage — Moriteru Ueshiba Doshu"
+           onclick="openVideo(this)">
+        <img src="https://img.youtube.com/vi/Kw04xwDMAws/mqdefault.jpg" alt="Irimi Nage" loading="lazy"/>
+        <div class="overlay"><span class="overlay-icon">▶</span></div>
+        <span class="type-badge type-video">Vidéo</span>
+      </div>
+
+      <!-- Photo stage 1 -->
+      <div class="gallery-item" data-cat="stages" data-type="photo" data-caption="Stage régional — démonstration"
+           onclick="openLightbox(this)">
+        <div class="img-placeholder bg-gray-100 dark:bg-gray-800">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
+          <span>Stage — démonstration</span>
+        </div>
+        <div class="overlay"><span class="overlay-icon">🔍</span></div>
+        <span class="type-badge">Photo</span>
+      </div>
+
+      <!-- Vidéo YouTube — Shiho Nage Doshu -->
+      <div class="gallery-item" data-cat="techniques video" data-type="video"
+           data-youtube="jwRPuHXZmOo" data-caption="Shiho Nage — Moriteru Ueshiba Doshu"
+           onclick="openVideo(this)">
+        <img src="https://img.youtube.com/vi/jwRPuHXZmOo/mqdefault.jpg" alt="Shiho Nage" loading="lazy"/>
+        <div class="overlay"><span class="overlay-icon">▶</span></div>
+        <span class="type-badge type-video">Vidéo</span>
+      </div>
+
+      <!-- Photo armes 1 -->
+      <div class="gallery-item" data-cat="armes" data-type="photo" data-caption="Pratique du Jo — suburi"
+           onclick="openLightbox(this)">
+        <div class="img-placeholder bg-gray-100 dark:bg-gray-800" style="aspect-ratio:4/3;">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
+          <span>Jo — suburi</span>
+        </div>
+        <div class="overlay"><span class="overlay-icon">🔍</span></div>
+        <span class="type-badge">Photo</span>
+      </div>
+
+      <!-- Vidéo YouTube — Bokken -->
+      <div class="gallery-item" data-cat="armes video" data-type="video"
+           data-youtube="dD8e-Y-nHbk" data-caption="7 Bokken Suburi — Stefan Stenudd"
+           onclick="openVideo(this)">
+        <img src="https://img.youtube.com/vi/dD8e-Y-nHbk/mqdefault.jpg" alt="Bokken Suburi" loading="lazy"/>
+        <div class="overlay"><span class="overlay-icon">▶</span></div>
+        <span class="type-badge type-video">Vidéo</span>
+      </div>
+
+      <!-- Photo technique 2 -->
+      <div class="gallery-item" data-cat="techniques" data-type="photo" data-caption="Kote Gaeshi — projection"
+           onclick="openLightbox(this)">
+        <div class="img-placeholder bg-gray-100 dark:bg-gray-800" style="aspect-ratio:1/1;">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
+          <span>Kote Gaeshi</span>
+        </div>
+        <div class="overlay"><span class="overlay-icon">🔍</span></div>
+        <span class="type-badge">Photo</span>
+      </div>
+
+      <!-- Vidéo YouTube — Jo kata 31 -->
+      <div class="gallery-item" data-cat="armes video" data-type="video"
+           data-youtube="QEXY4S_W748" data-caption="Jo — Kata des 31 frappes (FR)"
+           onclick="openVideo(this)">
+        <img src="https://img.youtube.com/vi/QEXY4S_W748/mqdefault.jpg" alt="Jo kata 31" loading="lazy"/>
+        <div class="overlay"><span class="overlay-icon">▶</span></div>
+        <span class="type-badge type-video">Vidéo</span>
+      </div>
+
+      <!-- Photo stage 2 -->
+      <div class="gallery-item" data-cat="stages" data-type="photo" data-caption="Stage Haute-Savoie — pratique collective"
+           onclick="openLightbox(this)">
+        <div class="img-placeholder bg-gray-100 dark:bg-gray-800">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
+          <span>Stage Haute-Savoie</span>
+        </div>
+        <div class="overlay"><span class="overlay-icon">🔍</span></div>
+        <span class="type-badge">Photo</span>
+      </div>
+
+      <!-- Vidéo YouTube — Tanto Dori -->
+      <div class="gallery-item" data-cat="armes techniques video" data-type="video"
+           data-youtube="ZZTWs3os_nQ" data-caption="Tanto Dori — Marc Bachräty (FR)"
+           onclick="openVideo(this)">
+        <img src="https://img.youtube.com/vi/ZZTWs3os_nQ/mqdefault.jpg" alt="Tanto Dori" loading="lazy"/>
+        <div class="overlay"><span class="overlay-icon">▶</span></div>
+        <span class="type-badge type-video">Vidéo</span>
+      </div>
+
+    </div>
+
+    <!-- MESSAGE AJOUT PHOTO -->
+    <div class="mt-12 p-6 rounded-2xl border-2 border-dashed border-gray-300 dark:border-gray-700 text-center">
+      <p class="text-gray-500 text-sm mb-1">Pour ajouter vos photos</p>
+      <p class="text-xs text-gray-400">Placez vos images dans <code class="bg-gray-100 dark:bg-gray-800 px-2 py-0.5 rounded">assets/images/</code> et remplacez les blocs <code class="bg-gray-100 dark:bg-gray-800 px-2 py-0.5 rounded">img-placeholder</code> par <code class="bg-gray-100 dark:bg-gray-800 px-2 py-0.5 rounded">&lt;img src="assets/images/votre-photo.jpg"&gt;</code></p>
+    </div>
+
+  </main>
+
+  <footer class="border-t border-gray-200 dark:border-gray-800 text-center text-sm text-gray-500 py-6 mt-16">
+    © 2025 Aïkido Dojo — Tous droits réservés
+  </footer>
+
+  <!-- LIGHTBOX PHOTO -->
+  <div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
+    <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
+    <button class="lightbox-nav lightbox-prev" onclick="navigateLightbox(-1, event)">&#8249;</button>
+    <button class="lightbox-nav lightbox-next" onclick="navigateLightbox(1, event)">&#8250;</button>
+    <img id="lightbox-img" src="" alt="" style="display:none;"/>
+    <iframe id="lightbox-iframe" class="lightbox-video" src="" style="display:none;" allowfullscreen></iframe>
+    <p class="lightbox-caption" id="lightbox-caption"></p>
+  </div>
+
+  <script src="js/theme.js"></script>
+  <script>
+  // ── Filtrage ──────────────────────────────────────────
+  function filterGallery(cat, btn) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+
+    const items = document.querySelectorAll('.gallery-item');
+    let visible = 0;
+    items.forEach(item => {
+      const cats = item.dataset.cat || '';
+      const show = cat === 'all' || cats.includes(cat);
+      item.classList.toggle('hidden-item', !show);
+      if (show) visible++;
+    });
+    document.getElementById('gallery-count').textContent =
+      visible + ' élément' + (visible > 1 ? 's' : '');
+  }
+
+  // Compteur initial
+  window.addEventListener('DOMContentLoaded', () => {
+    const total = document.querySelectorAll('.gallery-item').length;
+    document.getElementById('gallery-count').textContent =
+      total + ' éléments';
+  });
+
+  // ── Lightbox photo ────────────────────────────────────
+  let currentIndex = 0;
+  let visibleItems = [];
+
+  function getVisibleItems() {
+    return [...document.querySelectorAll('.gallery-item:not(.hidden-item)')];
+  }
+
+  function openLightbox(el) {
+    const caption = el.dataset.caption || '';
+    const img = el.querySelector('img');
+    visibleItems = getVisibleItems();
+    currentIndex = visibleItems.indexOf(el);
+
+    const lb = document.getElementById('lightbox');
+    const lbImg = document.getElementById('lightbox-img');
+    const lbIframe = document.getElementById('lightbox-iframe');
+    const lbCaption = document.getElementById('lightbox-caption');
+
+    if (img) {
+      lbImg.src = img.src;
+      lbImg.style.display = 'block';
+      lbIframe.style.display = 'none';
+      lbIframe.src = '';
+    } else {
+      lbImg.style.display = 'none';
+      lbImg.src = '';
+    }
+
+    lbCaption.textContent = caption;
+    lb.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function openVideo(el) {
+    const youtubeId = el.dataset.youtube;
+    const caption = el.dataset.caption || '';
+    visibleItems = getVisibleItems();
+    currentIndex = visibleItems.indexOf(el);
+
+    const lb = document.getElementById('lightbox');
+    const lbImg = document.getElementById('lightbox-img');
+    const lbIframe = document.getElementById('lightbox-iframe');
+    const lbCaption = document.getElementById('lightbox-caption');
+
+    lbImg.style.display = 'none';
+    lbImg.src = '';
+    lbIframe.src = 'https://www.youtube.com/embed/' + youtubeId + '?autoplay=1';
+    lbIframe.style.display = 'block';
+    lbCaption.textContent = caption;
+    lb.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox(event) {
+    if (event && event.target !== document.getElementById('lightbox') && !event.target.classList.contains('lightbox-close')) return;
+    const lb = document.getElementById('lightbox');
+    lb.classList.remove('open');
+    document.getElementById('lightbox-iframe').src = '';
+    document.body.style.overflow = '';
+  }
+
+  function navigateLightbox(dir, event) {
+    if (event) event.stopPropagation();
+    visibleItems = getVisibleItems();
+    currentIndex = (currentIndex + dir + visibleItems.length) % visibleItems.length;
+    const el = visibleItems[currentIndex];
+    if (!el) return;
+    if (el.dataset.type === 'video') openVideo(el);
+    else openLightbox(el);
+  }
+
+  // Clavier
+  document.addEventListener('keydown', e => {
+    const lb = document.getElementById('lightbox');
+    if (!lb.classList.contains('open')) return;
+    if (e.key === 'Escape') closeLightbox({target: lb});
+    if (e.key === 'ArrowRight') navigateLightbox(1, null);
+    if (e.key === 'ArrowLeft') navigateLightbox(-1, null);
+  });
+  </script>
+</body>
+</html>

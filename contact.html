@@ -203,6 +203,12 @@
             // Succès
             confirmation.classList.remove("hidden");
             btn.textContent = "Message envoyé ✓";
+
+            // Vider les champs
+            document.getElementById("nom").value = "";
+            document.getElementById("email").value = "";
+            document.getElementById("sujet").value = "";
+            document.getElementById("message").value = "";
           } else {
             // Erreur serveur
             btn.disabled = false;

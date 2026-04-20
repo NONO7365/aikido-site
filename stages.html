@@ -7,34 +7,24 @@
   <link rel="stylesheet" href="dist/output.css" />
   <style>
     html { scroll-behavior: smooth; }
-    .badge { display:inline-block; padding:2px 10px; border-radius:999px; font-size:11px; font-weight:600; }
-    .stage-card { transition: all 0.2s; }
-    .stage-card:hover { transform: translateY(-2px); }
-    .dept-73 { border-left: 4px solid #3b82f6; }
-    .dept-73:hover { background: rgba(59,130,246,0.08); }
-    .dept-74 { border-left: 4px solid #22c55e; }
-    .dept-74:hover { background: rgba(34,197,94,0.08); }
-    .dept-38 { border-left: 4px solid #f97316; }
-    .dept-38:hover { background: rgba(249,115,22,0.08); }
-    .dept-01 { border-left: 4px solid #a855f7; }
-    .dept-01:hover { background: rgba(168,85,247,0.08); }
-    .filter-btn { padding: 6px 16px; border-radius: 999px; font-size: 13px; font-weight: 500; border: 1.5px solid; cursor: pointer; transition: all 0.15s; background: transparent; }
-    .filter-btn-73 { border-color: #3b82f6; color: #3b82f6; }
-    .filter-btn-73:hover, .filter-btn-73.active { background: #3b82f6; color: white; }
-    .filter-btn-74 { border-color: #22c55e; color: #22c55e; }
-    .filter-btn-74:hover, .filter-btn-74.active { background: #22c55e; color: white; }
-    .filter-btn-38 { border-color: #f97316; color: #f97316; }
-    .filter-btn-38:hover, .filter-btn-38.active { background: #f97316; color: white; }
-    .filter-btn-01 { border-color: #a855f7; color: #a855f7; }
-    .filter-btn-01:hover, .filter-btn-01.active { background: #a855f7; color: white; }
-    .filter-btn-all { border-color: #dc2626; color: #dc2626; }
-    .filter-btn-all:hover, .filter-btn-all.active { background: #dc2626; color: white; }
-    .stage-item { display: block; }
-    .stage-item.hidden-stage { display: none; }
+    .resource-card { transition: all 0.2s; }
+    .resource-card:hover { transform: translateY(-2px); }
+    .dept-bar { display:flex; gap:8px; flex-wrap:wrap; }
+    .dept-tag { padding: 4px 14px; border-radius: 999px; font-size: 12px; font-weight: 600; border: 1.5px solid; transition: all 0.15s; text-decoration: none; display:inline-block; }
+    .dept-tag:hover { color: white; }
+    .dept-73 { border-color:#3b82f6; color:#3b82f6; }
+    .dept-73:hover { background:#3b82f6; }
+    .dept-74 { border-color:#22c55e; color:#22c55e; }
+    .dept-74:hover { background:#22c55e; }
+    .dept-38 { border-color:#f97316; color:#f97316; }
+    .dept-38:hover { background:#f97316; }
+    .dept-01 { border-color:#a855f7; color:#a855f7; }
+    .dept-01:hover { background:#a855f7; }
   </style>
 </head>
 <body class="bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100 min-h-screen transition-colors duration-300">
 
+  <!-- NAV -->
   <nav class="border-b border-gray-200 dark:border-gray-800 px-6 py-4 flex items-center justify-between relative">
     <a href="index.html" class="text-xl font-bold tracking-wide z-10">合気道 <span class="text-red-600">Aïkido</span></a>
     <ul class="hidden md:flex gap-6 text-sm font-medium">
@@ -69,200 +59,109 @@
     </div>
   </nav>
 
-  <div class="sticky top-0 z-10 bg-white dark:bg-gray-950 border-b border-gray-200 dark:border-gray-800 px-6 py-3 flex gap-6 text-sm overflow-x-auto">
-    <a href="#locaux"     class="whitespace-nowrap font-semibold text-red-500">Stages locaux</a>
-    <span class="text-gray-300 dark:text-gray-700">|</span>
-    <a href="#calendrier" class="whitespace-nowrap hover:text-red-500 transition-colors">Calendrier régional</a>
-    <span class="text-gray-300 dark:text-gray-700">|</span>
-    <a href="#ressources" class="whitespace-nowrap hover:text-red-500 transition-colors">Ressources</a>
-  </div>
-
   <main class="max-w-5xl mx-auto px-6 py-16">
 
-    <h1 class="text-4xl font-bold mb-2">Stages d'Aïkido</h1>
-    <p class="text-gray-600 dark:text-gray-400 mb-12">
-      Stages régionaux en
-      <strong class="text-gray-900 dark:text-gray-100">Savoie (73)</strong>,
-      <strong class="text-gray-900 dark:text-gray-100">Haute-Savoie (74)</strong>,
-      <strong class="text-gray-900 dark:text-gray-100">Isère (38)</strong> et
-      <strong class="text-gray-900 dark:text-gray-100">Ain (01)</strong>.
-    </p>
+    <!-- EN-TÊTE -->
+    <div class="mb-10">
+      <p class="text-red-500 text-sm font-semibold tracking-widest uppercase mb-3">Auvergne-Rhône-Alpes</p>
+      <h1 class="text-4xl font-bold mb-4">Stages d'Aïkido</h1>
+      <p class="text-gray-600 dark:text-gray-400 max-w-2xl">
+        Calendrier des stages en région Auvergne-Rhône-Alpes — toutes fédérations confondues.
+        Source : <a href="https://stages-aikido.fr" target="_blank" class="text-red-500 hover:underline">stages-aikido.fr</a>,
+        mis à jour en temps réel par la communauté.
+      </p>
+    </div>
 
-    <!-- ═══════════ STAGES LOCAUX ═══════════ -->
-    <section id="locaux" class="mb-20">
-      <div class="flex items-baseline gap-4 mb-6">
-        <h2 class="text-3xl font-bold">Stages locaux</h2>
-        <span class="text-gray-500 text-sm">— mis à jour manuellement</span>
-      </div>
+    <!-- BOUTONS ACCÈS RAPIDE -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
 
-      <!-- Filtres département -->
-      <div class="flex gap-2 flex-wrap mb-6">
-        <button class="filter-btn filter-btn-all active" onclick="filterStages('all', this)">Tous</button>
-        <button class="filter-btn filter-btn-73" onclick="filterStages('73', this)">73 — Savoie</button>
-        <button class="filter-btn filter-btn-74" onclick="filterStages('74', this)">74 — Haute-Savoie</button>
-        <button class="filter-btn filter-btn-38" onclick="filterStages('38', this)">38 — Isère</button>
-        <button class="filter-btn filter-btn-01" onclick="filterStages('01', this)">01 — Ain</button>
-      </div>
-
-      <div class="p-4 rounded-xl border border-yellow-200 dark:border-yellow-800 bg-yellow-50 dark:bg-yellow-950 text-yellow-800 dark:text-yellow-300 text-sm mb-8 flex gap-3 items-start">
-        <span class="text-lg flex-shrink-0">✏️</span>
+      <a href="https://stages-aikido.fr/region-stages-aikido-auvergne-rhone-alpes"
+         target="_blank"
+         class="flex items-center gap-4 p-5 rounded-2xl border-2 border-red-300 dark:border-red-800 bg-red-50 dark:bg-red-950 hover:bg-red-100 dark:hover:bg-red-900 transition-all hover:-translate-y-1">
+        <div class="w-12 h-12 rounded-full bg-red-600 flex items-center justify-center flex-shrink-0">
+          <span class="text-white font-bold text-xs leading-tight text-center">Au<br/>RA</span>
+        </div>
         <div>
-          <p class="font-semibold mb-1">Section mise à jour manuellement</p>
-          <p class="text-xs">Pour ajouter ou signaler un stage, <a href="contact.html" class="underline">contactez-nous</a>.</p>
+          <p class="font-bold text-red-700 dark:text-red-300">Auvergne-Rhône-Alpes</p>
+          <p class="text-xs text-red-600 dark:text-red-400 mt-0.5">Savoie · Haute-Savoie · Isère · Ain · et toute la région</p>
+          <p class="text-xs text-red-500 mt-2 font-medium">Ouvrir le calendrier complet →</p>
         </div>
+      </a>
+
+      <a href="https://stages-aikido.fr/calendrier-stages-aikido-france"
+         target="_blank"
+         class="flex items-center gap-4 p-5 rounded-2xl border-2 border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 hover:bg-gray-100 dark:hover:bg-gray-800 transition-all hover:-translate-y-1">
+        <div class="w-12 h-12 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center flex-shrink-0 text-2xl">
+          📅
+        </div>
+        <div>
+          <p class="font-bold text-gray-700 dark:text-gray-300">Calendrier national</p>
+          <p class="text-xs text-gray-500 mt-0.5">Toutes régions · Toutes fédérations</p>
+          <p class="text-xs text-gray-400 mt-2 font-medium">stages-aikido.fr →</p>
+        </div>
+      </a>
+
+    </div>
+
+    <!-- TAGS DÉPARTEMENTS -->
+    <div class="flex items-center gap-3 flex-wrap mb-8">
+      <span class="text-sm text-gray-500">Filtrer par département :</span>
+      <div class="dept-bar">
+        <span class="dept-tag dept-73">73 — Savoie</span>
+        <span class="dept-tag dept-74">74 — Haute-Savoie</span>
+        <span class="dept-tag dept-38">38 — Isère</span>
+        <span class="dept-tag dept-01">01 — Ain</span>
       </div>
+      <span class="text-xs text-gray-400 italic">→ utilisez la recherche dans le calendrier ci-dessous</span>
+    </div>
 
-      <div class="space-y-4" id="stages-list">
-
-        <!-- STAGE 1 — 74 -->
-        <div class="stage-card stage-item dept-74 border border-gray-200 dark:border-gray-800 rounded-2xl p-5" data-dept="74">
-          <div class="flex items-start justify-between gap-4 flex-wrap">
-            <div>
-              <span class="badge bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 mb-2 inline-block">74 — Haute-Savoie</span>
-              <h3 class="font-bold text-lg">Marc Bachraty</h3>
-              <p class="text-gray-500 text-sm">Cranves-Sales (74)</p>
-            </div>
-            <div class="text-right flex-shrink-0">
-              <p class="text-red-500 font-bold text-sm">Sam. 11 avril 2026</p>
-              <span class="badge bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 mt-1 inline-block">FFAAA</span>
-            </div>
-          </div>
-          <p class="text-gray-600 dark:text-gray-400 text-sm mt-3">Stage régional toutes fédérations. Renseignements auprès de l'organisateur.</p>
-          <a href="https://stages-aikido.fr/region-stages-aikido-auvergne-rhone-alpes"
-             target="_blank"
-             class="text-xs text-red-500 hover:text-red-400 transition-colors mt-2 inline-block">
-            Voir sur stages-aikido.fr →
-          </a>
+    <!-- IFRAME CALENDRIER AURA -->
+    <div class="border border-gray-200 dark:border-gray-800 rounded-2xl overflow-hidden mb-16">
+      <div class="bg-gray-50 dark:bg-gray-900 px-4 py-3 flex items-center justify-between flex-wrap gap-2">
+        <div class="flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-red-500 inline-block"></span>
+          <span class="text-sm font-medium">Stages Aïkido — Auvergne-Rhône-Alpes</span>
+          <span class="text-xs text-gray-400 ml-2">mis à jour en temps réel</span>
         </div>
-
-        <!-- STAGE 2 — 73 -->
-        <div class="stage-card stage-item dept-73 border border-gray-200 dark:border-gray-800 rounded-2xl p-5" data-dept="73">
-          <div class="flex items-start justify-between gap-4 flex-wrap">
-            <div>
-              <span class="badge bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 mb-2 inline-block">73 — Savoie</span>
-              <h3 class="font-bold text-lg">Stage Ligue AURA</h3>
-              <p class="text-gray-500 text-sm">Chambéry (73)</p>
-            </div>
-            <div class="text-right flex-shrink-0">
-              <p class="text-red-500 font-bold text-sm">À venir</p>
-              <span class="badge bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 mt-1 inline-block">FFAB</span>
-            </div>
-          </div>
-          <p class="text-gray-600 dark:text-gray-400 text-sm mt-3">Stage de la Ligue Auvergne-Rhône-Alpes. Ouvert à tous niveaux. Passeport et certificat médical obligatoires.</p>
-          <a href="https://www.ffab-aikido-ligue-aura.org/stages-evenements-nationaux"
-             target="_blank"
-             class="text-xs text-red-500 hover:text-red-400 transition-colors mt-2 inline-block">
-            Calendrier Ligue AURA →
-          </a>
-        </div>
-
-        <!-- CARTE AJOUTER -->
-        <div class="stage-card stage-item border-2 border-dashed border-gray-300 dark:border-gray-700 rounded-2xl p-5 flex flex-col md:flex-row items-center justify-between gap-4" data-dept="all">
-          <div class="text-center md:text-left">
-            <p class="font-semibold text-gray-600 dark:text-gray-400 mb-1">Ajouter un stage</p>
-            <p class="text-gray-500 text-xs">Vous organisez un stage en Savoie ou département voisin ?</p>
-          </div>
-          <a href="contact.html"
-             class="flex-shrink-0 text-sm px-5 py-2 rounded-full border border-red-500 text-red-500 hover:bg-red-500 hover:text-white transition-colors">
-            Nous contacter
-          </a>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- ═══════════ CALENDRIER RÉGIONAL ═══════════ -->
-    <section id="calendrier" class="mb-20">
-      <div class="flex items-baseline gap-4 mb-4">
-        <h2 class="text-3xl font-bold">Calendrier régional</h2>
-        <span class="text-gray-500 text-sm">— Auvergne-Rhône-Alpes</span>
-      </div>
-      <p class="text-gray-600 dark:text-gray-400 text-sm mb-8">
-        Tous les stages d'aïkido en Auvergne-Rhône-Alpes (Savoie, Haute-Savoie, Isère, Ain et toute la région),
-        toutes fédérations confondues — source : stages-aikido.fr.
-      </p>
-
-      <!-- Boutons accès direct -->
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-
         <a href="https://stages-aikido.fr/region-stages-aikido-auvergne-rhone-alpes"
            target="_blank"
-           class="flex items-center gap-4 p-5 rounded-2xl border-2 border-red-300 dark:border-red-800 bg-red-50 dark:bg-red-950 hover:bg-red-100 dark:hover:bg-red-900 transition-all hover:-translate-y-1">
-          <div class="w-12 h-12 rounded-full bg-red-600 flex items-center justify-center flex-shrink-0">
-            <span class="text-white font-bold text-xs">AuRA</span>
-          </div>
-          <div>
-            <p class="font-bold text-red-700 dark:text-red-300">Auvergne-Rhône-Alpes</p>
-            <p class="text-xs text-red-600 dark:text-red-400 mt-0.5">Savoie · Haute-Savoie · Isère · Ain et toute la région</p>
-            <p class="text-xs text-red-500 mt-2 font-medium">Voir tous les stages de la région →</p>
-          </div>
+           class="text-xs text-red-500 hover:text-red-400 transition-colors font-medium">
+          Ouvrir en plein écran →
         </a>
-
-        <a href="https://stages-aikido.fr/calendrier-stages-aikido-france"
-           target="_blank"
-           class="flex items-center gap-4 p-5 rounded-2xl border-2 border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 hover:bg-gray-100 dark:hover:bg-gray-800 transition-all hover:-translate-y-1">
-          <div class="w-12 h-12 rounded-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center flex-shrink-0 text-xl">
-            📅
-          </div>
-          <div>
-            <p class="font-bold text-gray-700 dark:text-gray-300">Calendrier national complet</p>
-            <p class="text-xs text-gray-500 mt-0.5">Toutes régions · Toutes fédérations</p>
-            <p class="text-xs text-gray-400 mt-2 font-medium">stages-aikido.fr →</p>
-          </div>
-        </a>
-
       </div>
-
-      <!-- Aperçu iframe région AuRA -->
-      <div class="border border-gray-200 dark:border-gray-800 rounded-2xl overflow-hidden">
-        <div class="bg-gray-50 dark:bg-gray-900 px-4 py-3 flex items-center justify-between flex-wrap gap-2">
-          <div class="flex items-center gap-2">
-            <span class="w-2 h-2 rounded-full bg-red-500"></span>
-            <span class="text-sm font-medium">Stages Aïkido — Auvergne-Rhône-Alpes</span>
-          </div>
-          <a href="https://stages-aikido.fr/region-stages-aikido-auvergne-rhone-alpes"
-             target="_blank"
-             class="text-xs text-red-500 hover:text-red-400 transition-colors font-medium">
-            Ouvrir en plein écran →
-          </a>
-        </div>
-        <div style="position:relative; padding-bottom:85%; height:0; overflow:hidden;">
-          <iframe
-            style="position:absolute; top:0; left:0; width:100%; height:100%; border:0;"
-            src="https://stages-aikido.fr/region-stages-aikido-auvergne-rhone-alpes"
-            title="Stages Aikido Auvergne-Rhône-Alpes"
-            loading="lazy"
-            sandbox="allow-scripts allow-same-origin allow-popups allow-forms allow-top-navigation">
-          </iframe>
-        </div>
+      <div style="position:relative; padding-bottom:90%; height:0; overflow:hidden;">
+        <iframe
+          style="position:absolute; top:0; left:0; width:100%; height:100%; border:0;"
+          src="https://stages-aikido.fr/region-stages-aikido-auvergne-rhone-alpes"
+          title="Stages Aikido Auvergne-Rhône-Alpes"
+          loading="lazy"
+          sandbox="allow-scripts allow-same-origin allow-popups allow-forms allow-top-navigation">
+        </iframe>
       </div>
-      <p class="text-xs text-gray-500 mt-3 text-center italic">
-        Si le calendrier ne s'affiche pas,
-        <a href="https://stages-aikido.fr/region-stages-aikido-auvergne-rhone-alpes"
-           target="_blank" class="text-red-500 hover:underline">ouvrez-le directement ici</a>.
-      </p>
-    </section>
+    </div>
 
-    <!-- ═══════════ RESSOURCES ═══════════ -->
+    <!-- RESSOURCES -->
     <section id="ressources">
       <div class="flex items-baseline gap-4 mb-8">
-        <h2 class="text-3xl font-bold">Ressources</h2>
+        <h2 class="text-2xl font-bold">Ressources</h2>
         <span class="text-gray-500 text-sm">— Liens utiles</span>
       </div>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
 
         <a href="https://stages-aikido.fr/region-stages-aikido-auvergne-rhone-alpes"
            target="_blank"
-           class="stage-card dept-74 border border-gray-200 dark:border-gray-800 rounded-2xl p-5 block">
+           class="resource-card border border-gray-200 dark:border-gray-800 rounded-2xl p-5 block"
+           style="border-left: 4px solid #22c55e;">
           <div class="text-2xl mb-3">🗺️</div>
           <h3 class="font-bold mb-1">Stages AuRA</h3>
-          <p class="text-gray-500 text-sm">Tous les stages d'aïkido en Auvergne-Rhône-Alpes sur stages-aikido.fr.</p>
-          <p class="text-green-500 text-xs mt-3 font-medium">stages-aikido.fr/auvergne-rhone-alpes →</p>
+          <p class="text-gray-500 text-sm">Tous les stages d'aïkido en Auvergne-Rhône-Alpes, toutes fédérations.</p>
+          <p class="text-green-500 text-xs mt-3 font-medium">stages-aikido.fr →</p>
         </a>
 
         <a href="https://www.ffab-aikido-ligue-aura.org/stages-evenements-nationaux"
            target="_blank"
-           class="stage-card dept-73 border border-gray-200 dark:border-gray-800 rounded-2xl p-5 block">
+           class="resource-card border border-gray-200 dark:border-gray-800 rounded-2xl p-5 block"
+           style="border-left: 4px solid #3b82f6;">
           <div class="text-2xl mb-3">🥋</div>
           <h3 class="font-bold mb-1">Ligue AURA — FFAB</h3>
           <p class="text-gray-500 text-sm">Calendrier officiel de la Ligue Auvergne-Rhône-Alpes d'Aïkido et de Budo.</p>
@@ -271,10 +170,11 @@
 
         <a href="https://stages-aikido.fr/stages/ajouter"
            target="_blank"
-           class="stage-card dept-38 border border-gray-200 dark:border-gray-800 rounded-2xl p-5 block">
+           class="resource-card border border-gray-200 dark:border-gray-800 rounded-2xl p-5 block"
+           style="border-left: 4px solid #f97316;">
           <div class="text-2xl mb-3">➕</div>
           <h3 class="font-bold mb-1">Publier un stage</h3>
-          <p class="text-gray-500 text-sm">Ajoutez gratuitement votre stage sur stages-aikido.fr pour le diffuser à tous les pratiquants.</p>
+          <p class="text-gray-500 text-sm">Ajoutez gratuitement votre stage sur stages-aikido.fr pour le diffuser à toute la communauté.</p>
           <p class="text-orange-500 text-xs mt-3 font-medium">Ajouter un stage →</p>
         </a>
 
@@ -288,19 +188,5 @@
   </footer>
 
   <script src="js/theme.js"></script>
-  <script>
-  function filterStages(dept, btn) {
-    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    document.querySelectorAll('.stage-item').forEach(card => {
-      const cardDept = card.dataset.dept;
-      if (dept === 'all' || cardDept === dept || cardDept === 'all') {
-        card.classList.remove('hidden-stage');
-      } else {
-        card.classList.add('hidden-stage');
-      }
-    });
-  }
-  </script>
 </body>
 </html>

@@ -21,6 +21,17 @@ if (toggle) {
     updateIcon();
   });
 }
+const burgerBtn = document.getElementById("burger-btn");
+const burgerMenu = document.getElementById("burger-menu");
+if (burgerBtn && burgerMenu) {
+  burgerBtn.addEventListener("click", () =>
+    burgerMenu.classList.toggle("hidden"),
+  );
+  document.addEventListener("click", (e) => {
+    if (!burgerBtn.contains(e.target) && !burgerMenu.contains(e.target))
+      burgerMenu.classList.add("hidden");
+  });
+}
 
 // ─── Formulaire contact ───────────────────────────
 const btnEnvoyer = document.getElementById("btn-envoyer");

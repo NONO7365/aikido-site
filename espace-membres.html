@@ -1,338 +1,584 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr" class="dark">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Aïkido — Espace membres</title>
-  <link rel="stylesheet" href="dist/output.css" />
-  <style>
-    html { scroll-behavior: smooth; }
-    .doc-card { transition: all 0.2s; }
-    .doc-card:hover { transform: translateY(-2px); border-color: #dc2626; }
-    .member-card { transition: all 0.2s; }
-    .member-card:hover { border-color: #dc2626; }
-  </style>
-</head>
-<body class="bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100 min-h-screen transition-colors duration-300">
-
-  <!-- NAV -->
-  <nav class="border-b border-gray-200 dark:border-gray-800 px-6 py-4 flex items-center justify-between relative">
-    <a href="index.html" class="text-xl font-bold tracking-wide z-10">合気道 <span class="text-red-600">Aïkido</span></a>
-    <ul class="hidden md:flex gap-6 text-sm font-medium">
-      <li><a href="index.html"                class="hover:text-red-500 transition-colors">Accueil</a></li>
-      <li><a href="techniques-sans-arme.html" class="hover:text-red-500 transition-colors">Sans arme</a></li>
-      <li><a href="techniques-avec-arme.html" class="hover:text-red-500 transition-colors">Avec arme</a></li>
-      <li><a href="stages.html"               class="hover:text-red-500 transition-colors">Stages</a></li>
-      <li><a href="galerie.html"              class="hover:text-red-500 transition-colors">Galerie</a></li>
-      <li><a href="contact.html"              class="hover:text-red-500 transition-colors">Contact</a></li>
-    </ul>
-    <div class="flex items-center gap-3 z-10">
-      <button id="theme-toggle" class="p-2 rounded-full border border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
-        <span id="theme-icon">☀️</span>
-      </button>
-      <button id="burger-btn" class="md:hidden p-2 rounded-lg border border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
-        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-          <line x1="2" y1="5"  x2="18" y2="5"/>
-          <line x1="2" y1="10" x2="18" y2="10"/>
-          <line x1="2" y1="15" x2="18" y2="15"/>
-        </svg>
-      </button>
-    </div>
-    <div id="burger-menu" class="hidden md:hidden absolute top-full left-0 right-0 bg-white dark:bg-gray-950 border-b border-gray-200 dark:border-gray-800 shadow-lg z-50 px-6 py-4">
-      <ul class="flex flex-col gap-4 text-sm font-medium">
-        <li><a href="index.html"                class="block hover:text-red-500 transition-colors py-1">Accueil</a></li>
-        <li><a href="techniques-sans-arme.html" class="block hover:text-red-500 transition-colors py-1">Sans arme</a></li>
-        <li><a href="techniques-avec-arme.html" class="block hover:text-red-500 transition-colors py-1">Avec arme</a></li>
-        <li><a href="stages.html"               class="block hover:text-red-500 transition-colors py-1">Stages</a></li>
-        <li><a href="galerie.html"              class="block hover:text-red-500 transition-colors py-1">Galerie</a></li>
-        <li><a href="contact.html"              class="block hover:text-red-500 transition-colors py-1">Contact</a></li>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Aïkido — Espace membres</title>
+    <link rel="stylesheet" href="dist/output.css" />
+    <style>
+      html {
+        scroll-behavior: smooth;
+      }
+      .doc-card {
+        transition: all 0.2s;
+      }
+      .doc-card:hover {
+        transform: translateY(-2px);
+        border-color: #dc2626;
+      }
+      .member-card {
+        transition: all 0.2s;
+      }
+      .member-card:hover {
+        border-color: #dc2626;
+      }
+    </style>
+  </head>
+  <body
+    class="bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100 min-h-screen transition-colors duration-300"
+  >
+    <!-- NAV -->
+    <nav
+      class="border-b border-gray-200 dark:border-gray-800 px-6 py-4 flex items-center justify-between relative"
+    >
+      <a href="index.html" class="text-xl font-bold tracking-wide z-10"
+        >合気道 <span class="text-red-600">Aïkido</span></a
+      >
+      <ul class="hidden md:flex gap-6 text-sm font-medium">
+        <li>
+          <a href="index.html" class="hover:text-red-500 transition-colors"
+            >Accueil</a
+          >
+        </li>
+        <li>
+          <a
+            href="techniques-sans-arme.html"
+            class="hover:text-red-500 transition-colors"
+            >Sans arme</a
+          >
+        </li>
+        <li>
+          <a
+            href="techniques-avec-arme.html"
+            class="hover:text-red-500 transition-colors"
+            >Avec arme</a
+          >
+        </li>
+        <li>
+          <a href="stages.html" class="hover:text-red-500 transition-colors"
+            >Stages</a
+          >
+        </li>
+        <li>
+          <a href="galerie.html" class="hover:text-red-500 transition-colors"
+            >Galerie</a
+          >
+        </li>
+        <li>
+          <a href="contact.html" class="hover:text-red-500 transition-colors"
+            >Contact</a
+          >
+        </li>
       </ul>
-    </div>
-  </nav>
-
-  <!-- ÉCRAN DE CONNEXION -->
-  <div id="login-screen" class="min-h-screen flex items-center justify-center px-6">
-    <div class="w-full max-w-md">
-      <div class="text-center mb-8">
-        <div class="w-16 h-16 rounded-full bg-red-600 flex items-center justify-center mx-auto mb-4">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round">
-            <rect x="3" y="11" width="18" height="11" rx="2"/>
-            <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+      <div class="flex items-center gap-3 z-10">
+        <button
+          id="theme-toggle"
+          class="p-2 rounded-full border border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+        >
+          <span id="theme-icon">☀️</span>
+        </button>
+        <button
+          id="burger-btn"
+          class="md:hidden p-2 rounded-lg border border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+        >
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 20 20"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+          >
+            <line x1="2" y1="5" x2="18" y2="5" />
+            <line x1="2" y1="10" x2="18" y2="10" />
+            <line x1="2" y1="15" x2="18" y2="15" />
           </svg>
-        </div>
-        <h1 class="text-2xl font-bold mb-1">Espace réservé</h1>
-        <p class="text-gray-500 text-sm">Encadrants et membres du bureau</p>
+        </button>
       </div>
+      <div
+        id="burger-menu"
+        class="hidden md:hidden absolute top-full left-0 right-0 bg-white dark:bg-gray-950 border-b border-gray-200 dark:border-gray-800 shadow-lg z-50 px-6 py-4"
+      >
+        <ul class="flex flex-col gap-4 text-sm font-medium">
+          <li>
+            <a
+              href="index.html"
+              class="block hover:text-red-500 transition-colors py-1"
+              >Accueil</a
+            >
+          </li>
+          <li>
+            <a
+              href="techniques-sans-arme.html"
+              class="block hover:text-red-500 transition-colors py-1"
+              >Sans arme</a
+            >
+          </li>
+          <li>
+            <a
+              href="techniques-avec-arme.html"
+              class="block hover:text-red-500 transition-colors py-1"
+              >Avec arme</a
+            >
+          </li>
+          <li>
+            <a
+              href="stages.html"
+              class="block hover:text-red-500 transition-colors py-1"
+              >Stages</a
+            >
+          </li>
+          <li>
+            <a
+              href="galerie.html"
+              class="block hover:text-red-500 transition-colors py-1"
+              >Galerie</a
+            >
+          </li>
+          <li>
+            <a
+              href="contact.html"
+              class="block hover:text-red-500 transition-colors py-1"
+              >Contact</a
+            >
+          </li>
+        </ul>
+      </div>
+    </nav>
 
-      <div class="border border-gray-200 dark:border-gray-800 rounded-2xl p-8 bg-gray-50 dark:bg-gray-900">
-        <div class="mb-5">
-          <label class="block text-sm font-medium mb-2" for="login-user">Identifiant</label>
-          <input id="login-user" type="text" placeholder="Votre identifiant"
-            class="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-950 focus:outline-none focus:border-red-500 transition-colors text-sm"
-            onkeydown="if(event.key==='Enter') doLogin()"/>
+    <!-- ÉCRAN DE CONNEXION -->
+    <div
+      id="login-screen"
+      class="min-h-screen flex items-center justify-center px-6"
+    >
+      <div class="w-full max-w-md">
+        <div class="text-center mb-8">
+          <div
+            class="w-16 h-16 rounded-full bg-red-600 flex items-center justify-center mx-auto mb-4"
+          >
+            <svg
+              width="28"
+              height="28"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="white"
+              stroke-width="2"
+              stroke-linecap="round"
+            >
+              <rect x="3" y="11" width="18" height="11" rx="2" />
+              <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+            </svg>
+          </div>
+          <h1 class="text-2xl font-bold mb-1">Espace réservé</h1>
+          <p class="text-gray-500 text-sm">Encadrants et membres du bureau</p>
         </div>
-        <div class="mb-6">
-          <label class="block text-sm font-medium mb-2" for="login-pass">Mot de passe</label>
-          <input id="login-pass" type="password" placeholder="Votre mot de passe"
-            class="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-950 focus:outline-none focus:border-red-500 transition-colors text-sm"
-            onkeydown="if(event.key==='Enter') doLogin()"/>
+
+        <div
+          class="border border-gray-200 dark:border-gray-800 rounded-2xl p-8 bg-gray-50 dark:bg-gray-900"
+        >
+          <div class="mb-5">
+            <label class="block text-sm font-medium mb-2" for="login-user"
+              >Identifiant</label
+            >
+            <input
+              id="login-user"
+              type="text"
+              placeholder="Votre identifiant"
+              class="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-950 focus:outline-none focus:border-red-500 transition-colors text-sm"
+              onkeydown="if (event.key === 'Enter') doLogin();"
+            />
+          </div>
+          <div class="mb-6">
+            <label class="block text-sm font-medium mb-2" for="login-pass"
+              >Mot de passe</label
+            >
+            <input
+              id="login-pass"
+              type="password"
+              placeholder="Votre mot de passe"
+              class="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-950 focus:outline-none focus:border-red-500 transition-colors text-sm"
+              onkeydown="if (event.key === 'Enter') doLogin();"
+            />
+          </div>
+          <p id="login-error" class="text-red-500 text-sm mb-4 hidden">
+            Identifiant ou mot de passe incorrect.
+          </p>
+          <button
+            onclick="doLogin()"
+            class="w-full bg-red-600 hover:bg-red-700 text-white font-medium py-3 rounded-xl transition-colors"
+          >
+            Se connecter
+          </button>
         </div>
-        <p id="login-error" class="text-red-500 text-sm mb-4 hidden">Identifiant ou mot de passe incorrect.</p>
-        <button onclick="doLogin()"
-          class="w-full bg-red-600 hover:bg-red-700 text-white font-medium py-3 rounded-xl transition-colors">
-          Se connecter
+
+        <p class="text-center text-xs text-gray-400 mt-6">
+          Accès réservé aux encadrants et membres du bureau.<br />
+          <a href="contact.html" class="hover:text-red-500 transition-colors"
+            >Demander un accès →</a
+          >
+        </p>
+      </div>
+    </div>
+
+    <!-- ESPACE MEMBRES (caché jusqu'à connexion) -->
+    <div id="membres-screen" class="hidden max-w-5xl mx-auto px-6 py-16">
+      <!-- EN-TÊTE -->
+      <div class="flex items-center justify-between mb-10 flex-wrap gap-4">
+        <div>
+          <p
+            class="text-red-500 text-sm font-semibold tracking-widest uppercase mb-1"
+          >
+            Espace privé
+          </p>
+          <h1 class="text-3xl font-bold">
+            Bonjour, <span id="welcome-name" class="text-red-500"></span> 👋
+          </h1>
+          <p class="text-gray-500 text-sm mt-1">
+            Encadrants et membres du bureau
+          </p>
+        </div>
+        <button
+          onclick="doLogout()"
+          class="text-sm px-5 py-2 rounded-full border border-gray-300 dark:border-gray-700 hover:border-red-500 hover:text-red-500 transition-colors flex items-center gap-2"
+        >
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+            <polyline points="16 17 21 12 16 7" />
+            <line x1="21" y1="12" x2="9" y2="12" />
+          </svg>
+          Déconnexion
         </button>
       </div>
 
-      <p class="text-center text-xs text-gray-400 mt-6">
-        Accès réservé aux encadrants et membres du bureau.<br/>
-        <a href="contact.html" class="hover:text-red-500 transition-colors">Demander un accès →</a>
-      </p>
-    </div>
-  </div>
+      <!-- INFORMATIONS INTERNES -->
+      <section class="mb-14">
+        <h2 class="text-2xl font-bold mb-6">Informations internes</h2>
 
-  <!-- ESPACE MEMBRES (caché jusqu'à connexion) -->
-  <div id="membres-screen" class="hidden max-w-5xl mx-auto px-6 py-16">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-6">
+          <!-- Planning -->
+          <div
+            class="member-card border border-gray-200 dark:border-gray-800 rounded-2xl p-6"
+          >
+            <div class="flex items-center gap-3 mb-4">
+              <div
+                class="w-10 h-10 rounded-xl bg-blue-100 dark:bg-blue-900 flex items-center justify-center text-xl"
+              >
+                📅
+              </div>
+              <h3 class="font-bold">Planning des cours</h3>
+            </div>
+            <div class="space-y-2 text-sm">
+              <div
+                class="flex justify-between py-2 border-b border-gray-100 dark:border-gray-800"
+              >
+                <span class="text-gray-600 dark:text-gray-400">Lundi</span>
+                <span class="font-medium">18h30 – 20h00</span>
+              </div>
+              <div
+                class="flex justify-between py-2 border-b border-gray-100 dark:border-gray-800"
+              >
+                <span class="text-gray-600 dark:text-gray-400">Mercredi</span>
+                <span class="font-medium">19h00 – 20h30</span>
+              </div>
+              <div class="flex justify-between py-2">
+                <span class="text-gray-600 dark:text-gray-400">Samedi</span>
+                <span class="font-medium">10h00 – 12h00</span>
+              </div>
+            </div>
+            <p class="text-xs text-gray-400 mt-4 italic">
+              Modifiez ces horaires directement dans le fichier HTML.
+            </p>
+          </div>
 
-    <!-- EN-TÊTE -->
-    <div class="flex items-center justify-between mb-10 flex-wrap gap-4">
-      <div>
-        <p class="text-red-500 text-sm font-semibold tracking-widest uppercase mb-1">Espace privé</p>
-        <h1 class="text-3xl font-bold">Bonjour, <span id="welcome-name" class="text-red-500"></span> 👋</h1>
-        <p class="text-gray-500 text-sm mt-1">Encadrants et membres du bureau</p>
-      </div>
-      <button onclick="doLogout()"
-        class="text-sm px-5 py-2 rounded-full border border-gray-300 dark:border-gray-700 hover:border-red-500 hover:text-red-500 transition-colors flex items-center gap-2">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
-        Déconnexion
-      </button>
-    </div>
+          <!-- Contacts bureau -->
+          <div
+            class="member-card border border-gray-200 dark:border-gray-800 rounded-2xl p-6"
+          >
+            <div class="flex items-center gap-3 mb-4">
+              <div
+                class="w-10 h-10 rounded-xl bg-green-100 dark:bg-green-900 flex items-center justify-center text-xl"
+              >
+                👥
+              </div>
+              <h3 class="font-bold">Contacts du bureau</h3>
+            </div>
+            <div class="space-y-3 text-sm">
+              <div class="flex flex-col">
+                <span class="font-semibold">Président(e)</span>
+                <span class="text-gray-500">Nom Prénom — 06 XX XX XX XX</span>
+              </div>
+              <div class="flex flex-col">
+                <span class="font-semibold">Secrétaire</span>
+                <span class="text-gray-500">Nom Prénom — 06 XX XX XX XX</span>
+              </div>
+              <div class="flex flex-col">
+                <span class="font-semibold">Trésorier(e)</span>
+                <span class="text-gray-500">Nom Prénom — 06 XX XX XX XX</span>
+              </div>
+              <div class="flex flex-col">
+                <span class="font-semibold">Enseignant principal</span>
+                <span class="text-gray-500">Nom Prénom — 06 XX XX XX XX</span>
+              </div>
+            </div>
+          </div>
+        </div>
 
-    <!-- INFORMATIONS INTERNES -->
-    <section class="mb-14">
-      <h2 class="text-2xl font-bold mb-6">Informations internes</h2>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-6">
-
-        <!-- Planning -->
-        <div class="member-card border border-gray-200 dark:border-gray-800 rounded-2xl p-6">
+        <!-- Infos pratiques -->
+        <div
+          class="member-card border border-gray-200 dark:border-gray-800 rounded-2xl p-6"
+        >
           <div class="flex items-center gap-3 mb-4">
-            <div class="w-10 h-10 rounded-xl bg-blue-100 dark:bg-blue-900 flex items-center justify-center text-xl">📅</div>
-            <h3 class="font-bold">Planning des cours</h3>
+            <div
+              class="w-10 h-10 rounded-xl bg-orange-100 dark:bg-orange-900 flex items-center justify-center text-xl"
+            >
+              📌
+            </div>
+            <h3 class="font-bold">Infos pratiques</h3>
           </div>
-          <div class="space-y-2 text-sm">
-            <div class="flex justify-between py-2 border-b border-gray-100 dark:border-gray-800">
-              <span class="text-gray-600 dark:text-gray-400">Lundi</span>
-              <span class="font-medium">18h30 – 20h00</span>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+            <div>
+              <p class="font-semibold mb-1">Dojo</p>
+              <p class="text-gray-500">
+                Adresse complète<br />Code d'accès : XXXX
+              </p>
             </div>
-            <div class="flex justify-between py-2 border-b border-gray-100 dark:border-gray-800">
-              <span class="text-gray-600 dark:text-gray-400">Mercredi</span>
-              <span class="font-medium">19h00 – 20h30</span>
+            <div>
+              <p class="font-semibold mb-1">Matériel</p>
+              <p class="text-gray-500">
+                Rangement bokken : armoire A<br />Jo : rack mural gauche
+              </p>
             </div>
-            <div class="flex justify-between py-2">
-              <span class="text-gray-600 dark:text-gray-400">Samedi</span>
-              <span class="font-medium">10h00 – 12h00</span>
-            </div>
-          </div>
-          <p class="text-xs text-gray-400 mt-4 italic">Modifiez ces horaires directement dans le fichier HTML.</p>
-        </div>
-
-        <!-- Contacts bureau -->
-        <div class="member-card border border-gray-200 dark:border-gray-800 rounded-2xl p-6">
-          <div class="flex items-center gap-3 mb-4">
-            <div class="w-10 h-10 rounded-xl bg-green-100 dark:bg-green-900 flex items-center justify-center text-xl">👥</div>
-            <h3 class="font-bold">Contacts du bureau</h3>
-          </div>
-          <div class="space-y-3 text-sm">
-            <div class="flex flex-col">
-              <span class="font-semibold">Président(e)</span>
-              <span class="text-gray-500">Nom Prénom — 06 XX XX XX XX</span>
-            </div>
-            <div class="flex flex-col">
-              <span class="font-semibold">Secrétaire</span>
-              <span class="text-gray-500">Nom Prénom — 06 XX XX XX XX</span>
-            </div>
-            <div class="flex flex-col">
-              <span class="font-semibold">Trésorier(e)</span>
-              <span class="text-gray-500">Nom Prénom — 06 XX XX XX XX</span>
-            </div>
-            <div class="flex flex-col">
-              <span class="font-semibold">Enseignant principal</span>
-              <span class="text-gray-500">Nom Prénom — 06 XX XX XX XX</span>
+            <div>
+              <p class="font-semibold mb-1">Urgences</p>
+              <p class="text-gray-500">
+                Trousse de secours : vestiaire<br />Défibrillateur : couloir
+                entrée
+              </p>
             </div>
           </div>
         </div>
+      </section>
 
-      </div>
-
-      <!-- Infos pratiques -->
-      <div class="member-card border border-gray-200 dark:border-gray-800 rounded-2xl p-6">
-        <div class="flex items-center gap-3 mb-4">
-          <div class="w-10 h-10 rounded-xl bg-orange-100 dark:bg-orange-900 flex items-center justify-center text-xl">📌</div>
-          <h3 class="font-bold">Infos pratiques</h3>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
-          <div>
-            <p class="font-semibold mb-1">Dojo</p>
-            <p class="text-gray-500">Adresse complète<br/>Code d'accès : XXXX</p>
-          </div>
-          <div>
-            <p class="font-semibold mb-1">Matériel</p>
-            <p class="text-gray-500">Rangement bokken : armoire A<br/>Jo : rack mural gauche</p>
-          </div>
-          <div>
-            <p class="font-semibold mb-1">Urgences</p>
-            <p class="text-gray-500">Trousse de secours : vestiaire<br/>Défibrillateur : couloir entrée</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- DOCUMENTS -->
-    <section class="mb-14">
-      <div class="flex items-center justify-between mb-6 flex-wrap gap-4">
-        <h2 class="text-2xl font-bold">Documents</h2>
-        <p class="text-xs text-gray-400 italic">Hébergés sur Google Drive — connexion Google requise</p>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-
-        <!-- PV AG -->
-        <a href="LIEN_GOOGLE_DRIVE_PV_AG" target="_blank"
-           class="doc-card border border-gray-200 dark:border-gray-800 rounded-2xl p-5 flex items-start gap-4">
-          <div class="w-10 h-10 rounded-xl bg-red-100 dark:bg-red-900 flex items-center justify-center text-xl flex-shrink-0">📄</div>
-          <div>
-            <p class="font-semibold text-sm">PV Assemblée Générale</p>
-            <p class="text-gray-500 text-xs mt-1">Dernière AG — saison en cours</p>
-            <p class="text-red-500 text-xs mt-2 font-medium">Ouvrir sur Drive →</p>
-          </div>
-        </a>
-
-        <!-- Bilan financier -->
-        <a href="LIEN_GOOGLE_DRIVE_BILAN" target="_blank"
-           class="doc-card border border-gray-200 dark:border-gray-800 rounded-2xl p-5 flex items-start gap-4">
-          <div class="w-10 h-10 rounded-xl bg-green-100 dark:bg-green-900 flex items-center justify-center text-xl flex-shrink-0">💰</div>
-          <div>
-            <p class="font-semibold text-sm">Bilan financier</p>
-            <p class="text-gray-500 text-xs mt-1">Compte de résultat — saison en cours</p>
-            <p class="text-red-500 text-xs mt-2 font-medium">Ouvrir sur Drive →</p>
-          </div>
-        </a>
-
-        <!-- Convocations -->
-        <a href="LIEN_GOOGLE_DRIVE_CONVOCATIONS" target="_blank"
-           class="doc-card border border-gray-200 dark:border-gray-800 rounded-2xl p-5 flex items-start gap-4">
-          <div class="w-10 h-10 rounded-xl bg-blue-100 dark:bg-blue-900 flex items-center justify-center text-xl flex-shrink-0">📬</div>
-          <div>
-            <p class="font-semibold text-sm">Convocations</p>
-            <p class="text-gray-500 text-xs mt-1">Réunions et assemblées</p>
-            <p class="text-red-500 text-xs mt-2 font-medium">Ouvrir sur Drive →</p>
-          </div>
-        </a>
-
-        <!-- Règlement intérieur -->
-        <a href="LIEN_GOOGLE_DRIVE_REGLEMENT" target="_blank"
-           class="doc-card border border-gray-200 dark:border-gray-800 rounded-2xl p-5 flex items-start gap-4">
-          <div class="w-10 h-10 rounded-xl bg-purple-100 dark:bg-purple-900 flex items-center justify-center text-xl flex-shrink-0">📋</div>
-          <div>
-            <p class="font-semibold text-sm">Règlement intérieur</p>
-            <p class="text-gray-500 text-xs mt-1">Version en vigueur</p>
-            <p class="text-red-500 text-xs mt-2 font-medium">Ouvrir sur Drive →</p>
-          </div>
-        </a>
-
-        <!-- Liste des licenciés -->
-        <a href="LIEN_GOOGLE_DRIVE_LICENCIES" target="_blank"
-           class="doc-card border border-gray-200 dark:border-gray-800 rounded-2xl p-5 flex items-start gap-4">
-          <div class="w-10 h-10 rounded-xl bg-yellow-100 dark:bg-yellow-900 flex items-center justify-center text-xl flex-shrink-0">🥋</div>
-          <div>
-            <p class="font-semibold text-sm">Liste des licenciés</p>
-            <p class="text-gray-500 text-xs mt-1">Saison en cours — confidentiel</p>
-            <p class="text-red-500 text-xs mt-2 font-medium">Ouvrir sur Drive →</p>
-          </div>
-        </a>
-
-        <!-- Ajouter un document -->
-        <div class="doc-card border-2 border-dashed border-gray-300 dark:border-gray-700 rounded-2xl p-5 flex items-center justify-center text-center">
-          <div>
-            <p class="text-2xl mb-2">➕</p>
-            <p class="text-gray-500 text-sm font-medium">Ajouter un document</p>
-            <p class="text-gray-400 text-xs mt-1">Ajoutez le lien Drive dans le fichier HTML</p>
-          </div>
+      <!-- DOCUMENTS -->
+      <section class="mb-14">
+        <div class="flex items-center justify-between mb-6 flex-wrap gap-4">
+          <h2 class="text-2xl font-bold">Documents</h2>
+          <p class="text-xs text-gray-400 italic">
+            Hébergés sur Google Drive — connexion Google requise
+          </p>
         </div>
 
-      </div>
-    </section>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <!-- PV AG -->
+          <a
+            href="https://drive.google.com/drive/u/0/folders/1ZluOjblKDg4Ebaw53kQjzLrVT1Lcc4EE"
+            target="_blank"
+            class="doc-card border border-gray-200 dark:border-gray-800 rounded-2xl p-5 flex items-start gap-4"
+          >
+            <div
+              class="w-10 h-10 rounded-xl bg-red-100 dark:bg-red-900 flex items-center justify-center text-xl flex-shrink-0"
+            >
+              📄
+            </div>
+            <div>
+              <p class="font-semibold text-sm">PV Assemblée Générale</p>
+              <p class="text-gray-500 text-xs mt-1">
+                Dernière AG — saison en cours
+              </p>
+              <p class="text-red-500 text-xs mt-2 font-medium">
+                Ouvrir sur Drive →
+              </p>
+            </div>
+          </a>
 
-    <!-- NOTE SÉCURITÉ -->
-    <div class="p-4 rounded-xl border border-yellow-200 dark:border-yellow-800 bg-yellow-50 dark:bg-yellow-950 text-yellow-800 dark:text-yellow-300 text-sm flex gap-3 items-start">
-      <span class="text-lg flex-shrink-0">⚠️</span>
-      <div>
-        <p class="font-semibold mb-1">Rappel sécurité</p>
-        <p class="text-xs">Cet espace est protégé par mot de passe JavaScript. Ne pas y stocker de données bancaires ou personnelles sensibles. Les documents confidentiels restent sur Google Drive avec accès restreint.</p>
+          <!-- Bilan financier -->
+          <a
+            href="LIEN_GOOGLE_DRIVE_BILAN"
+            target="_blank"
+            class="doc-card border border-gray-200 dark:border-gray-800 rounded-2xl p-5 flex items-start gap-4"
+          >
+            <div
+              class="w-10 h-10 rounded-xl bg-green-100 dark:bg-green-900 flex items-center justify-center text-xl flex-shrink-0"
+            >
+              💰
+            </div>
+            <div>
+              <p class="font-semibold text-sm">Bilan financier</p>
+              <p class="text-gray-500 text-xs mt-1">
+                Compte de résultat — saison en cours
+              </p>
+              <p class="text-red-500 text-xs mt-2 font-medium">
+                Ouvrir sur Drive →
+              </p>
+            </div>
+          </a>
+
+          <!-- Convocations -->
+          <a
+            href="LIEN_GOOGLE_DRIVE_CONVOCATIONS"
+            target="_blank"
+            class="doc-card border border-gray-200 dark:border-gray-800 rounded-2xl p-5 flex items-start gap-4"
+          >
+            <div
+              class="w-10 h-10 rounded-xl bg-blue-100 dark:bg-blue-900 flex items-center justify-center text-xl flex-shrink-0"
+            >
+              📬
+            </div>
+            <div>
+              <p class="font-semibold text-sm">Convocations</p>
+              <p class="text-gray-500 text-xs mt-1">Réunions et assemblées</p>
+              <p class="text-red-500 text-xs mt-2 font-medium">
+                Ouvrir sur Drive →
+              </p>
+            </div>
+          </a>
+
+          <!-- Règlement intérieur -->
+          <a
+            href="LIEN_GOOGLE_DRIVE_REGLEMENT"
+            target="_blank"
+            class="doc-card border border-gray-200 dark:border-gray-800 rounded-2xl p-5 flex items-start gap-4"
+          >
+            <div
+              class="w-10 h-10 rounded-xl bg-purple-100 dark:bg-purple-900 flex items-center justify-center text-xl flex-shrink-0"
+            >
+              📋
+            </div>
+            <div>
+              <p class="font-semibold text-sm">Règlement intérieur</p>
+              <p class="text-gray-500 text-xs mt-1">Version en vigueur</p>
+              <p class="text-red-500 text-xs mt-2 font-medium">
+                Ouvrir sur Drive →
+              </p>
+            </div>
+          </a>
+
+          <!-- Liste des licenciés -->
+          <a
+            href="LIEN_GOOGLE_DRIVE_LICENCIES"
+            target="_blank"
+            class="doc-card border border-gray-200 dark:border-gray-800 rounded-2xl p-5 flex items-start gap-4"
+          >
+            <div
+              class="w-10 h-10 rounded-xl bg-yellow-100 dark:bg-yellow-900 flex items-center justify-center text-xl flex-shrink-0"
+            >
+              🥋
+            </div>
+            <div>
+              <p class="font-semibold text-sm">Liste des licenciés</p>
+              <p class="text-gray-500 text-xs mt-1">
+                Saison en cours — confidentiel
+              </p>
+              <p class="text-red-500 text-xs mt-2 font-medium">
+                Ouvrir sur Drive →
+              </p>
+            </div>
+          </a>
+
+          <!-- Ajouter un document -->
+          <div
+            class="doc-card border-2 border-dashed border-gray-300 dark:border-gray-700 rounded-2xl p-5 flex items-center justify-center text-center"
+          >
+            <div>
+              <p class="text-2xl mb-2">➕</p>
+              <p class="text-gray-500 text-sm font-medium">
+                Ajouter un document
+              </p>
+              <p class="text-gray-400 text-xs mt-1">
+                Ajoutez le lien Drive dans le fichier HTML
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- NOTE SÉCURITÉ -->
+      <div
+        class="p-4 rounded-xl border border-yellow-200 dark:border-yellow-800 bg-yellow-50 dark:bg-yellow-950 text-yellow-800 dark:text-yellow-300 text-sm flex gap-3 items-start"
+      >
+        <span class="text-lg flex-shrink-0">⚠️</span>
+        <div>
+          <p class="font-semibold mb-1">Rappel sécurité</p>
+          <p class="text-xs">
+            Cet espace est protégé par mot de passe JavaScript. Ne pas y stocker
+            de données bancaires ou personnelles sensibles. Les documents
+            confidentiels restent sur Google Drive avec accès restreint.
+          </p>
+        </div>
       </div>
     </div>
 
-  </div>
+    <footer
+      class="border-t border-gray-200 dark:border-gray-800 text-center text-sm text-gray-500 py-6 mt-8"
+    >
+      © 2025 Aïkido Dojo — Tous droits réservés
+    </footer>
 
-  <footer class="border-t border-gray-200 dark:border-gray-800 text-center text-sm text-gray-500 py-6 mt-8">
-    © 2025 Aïkido Dojo — Tous droits réservés
-  </footer>
+    <script src="js/theme.js"></script>
+    <script>
+      // ── Comptes autorisés ──────────────────────────────────────────────
+      // Format : { user: 'identifiant', pass: 'motdepasse', name: 'Prénom' }
+      // Modifiez cette liste pour ajouter / supprimer des membres
+      const USERS = [
+        { user: "president", pass: "aikido2025!", name: "Président" },
+        { user: "secretaire", pass: "dojo2025!", name: "Secrétaire" },
+        { user: "tresorier", pass: "bureau2025!", name: "Trésorier" },
+        { user: "sensei", pass: "sensei2025!", name: "Sensei" },
+      ];
 
-  <script src="js/theme.js"></script>
-  <script>
-  // ── Comptes autorisés ──────────────────────────────────────────────
-  // Format : { user: 'identifiant', pass: 'motdepasse', name: 'Prénom' }
-  // Modifiez cette liste pour ajouter / supprimer des membres
-  const USERS = [
-    { user: 'president',   pass: 'aikido2025!',  name: 'Président' },
-    { user: 'secretaire',  pass: 'dojo2025!',    name: 'Secrétaire' },
-    { user: 'tresorier',   pass: 'bureau2025!',  name: 'Trésorier' },
-    { user: 'sensei',      pass: 'sensei2025!',  name: 'Sensei' },
-  ];
+      // ── Clé de session ─────────────────────────────────────────────────
+      const SESSION_KEY = "aikido_membre";
 
-  // ── Clé de session ─────────────────────────────────────────────────
-  const SESSION_KEY = 'aikido_membre';
+      // ── Vérification au chargement ─────────────────────────────────────
+      window.addEventListener("DOMContentLoaded", () => {
+        const saved = sessionStorage.getItem(SESSION_KEY);
+        if (saved) showMembres(saved);
+      });
 
-  // ── Vérification au chargement ─────────────────────────────────────
-  window.addEventListener('DOMContentLoaded', () => {
-    const saved = sessionStorage.getItem(SESSION_KEY);
-    if (saved) showMembres(saved);
-  });
+      // ── Connexion ──────────────────────────────────────────────────────
+      function doLogin() {
+        const user = document
+          .getElementById("login-user")
+          .value.trim()
+          .toLowerCase();
+        const pass = document.getElementById("login-pass").value;
+        const error = document.getElementById("login-error");
 
-  // ── Connexion ──────────────────────────────────────────────────────
-  function doLogin() {
-    const user = document.getElementById('login-user').value.trim().toLowerCase();
-    const pass = document.getElementById('login-pass').value;
-    const error = document.getElementById('login-error');
+        const found = USERS.find((u) => u.user === user && u.pass === pass);
+        if (found) {
+          sessionStorage.setItem(SESSION_KEY, found.name);
+          error.classList.add("hidden");
+          showMembres(found.name);
+        } else {
+          error.classList.remove("hidden");
+          document.getElementById("login-pass").value = "";
+          document.getElementById("login-pass").focus();
+        }
+      }
 
-    const found = USERS.find(u => u.user === user && u.pass === pass);
-    if (found) {
-      sessionStorage.setItem(SESSION_KEY, found.name);
-      error.classList.add('hidden');
-      showMembres(found.name);
-    } else {
-      error.classList.remove('hidden');
-      document.getElementById('login-pass').value = '';
-      document.getElementById('login-pass').focus();
-    }
-  }
+      // ── Affichage espace membres ───────────────────────────────────────
+      function showMembres(name) {
+        document.getElementById("login-screen").classList.add("hidden");
+        document.getElementById("membres-screen").classList.remove("hidden");
+        document.getElementById("welcome-name").textContent = name;
+      }
 
-  // ── Affichage espace membres ───────────────────────────────────────
-  function showMembres(name) {
-    document.getElementById('login-screen').classList.add('hidden');
-    document.getElementById('membres-screen').classList.remove('hidden');
-    document.getElementById('welcome-name').textContent = name;
-  }
-
-  // ── Déconnexion ────────────────────────────────────────────────────
-  function doLogout() {
-    sessionStorage.removeItem(SESSION_KEY);
-    document.getElementById('membres-screen').classList.add('hidden');
-    document.getElementById('login-screen').classList.remove('hidden');
-    document.getElementById('login-user').value = '';
-    document.getElementById('login-pass').value = '';
-  }
-  </script>
-</body>
+      // ── Déconnexion ────────────────────────────────────────────────────
+      function doLogout() {
+        sessionStorage.removeItem(SESSION_KEY);
+        document.getElementById("membres-screen").classList.add("hidden");
+        document.getElementById("login-screen").classList.remove("hidden");
+        document.getElementById("login-user").value = "";
+        document.getElementById("login-pass").value = "";
+      }
+    </script>
+  </body>
 </html>

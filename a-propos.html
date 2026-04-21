@@ -9,39 +9,132 @@
   <body
     class="bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100 min-h-screen transition-colors duration-300"
   >
-<nav class="border-b border-gray-200 dark:border-gray-800 px-6 py-4 flex items-center justify-between relative">
-  <a href="index.html" class="text-xl font-bold tracking-wide z-10">合気道 <span class="text-red-600">Aïkido</span></a>
-  <ul class="hidden md:flex gap-6 text-sm font-medium">
-    <li><a href="index.html"                class="hover:text-red-500 transition-colors">Accueil</a></li>
-    <li><a href="techniques-sans-arme.html" class="hover:text-red-500 transition-colors">Sans arme</a></li>
-    <li><a href="techniques-avec-arme.html" class="hover:text-red-500 transition-colors">Avec arme</a></li>
-     <li><a href="galerie.html"             class="hover:text-red-500 transition-colors py-1">Galerie</a></li>
-    <li><a href="contact.html"              class="hover:text-red-500 transition-colors">Contact</a></li>
-    <li><a href="a-propos.html"             class="hover:text-red-500 transition-colors">À propos</a></li>
-  </ul>
-  <div class="flex items-center gap-3 z-10">
-    <button id="theme-toggle" class="p-2 rounded-full border border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
-      <span id="theme-icon">☀️</span>
-    </button>
-    <button id="burger-btn" class="md:hidden p-2 rounded-lg border border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
-      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-        <line x1="2" y1="5"  x2="18" y2="5"/>
-        <line x1="2" y1="10" x2="18" y2="10"/>
-        <line x1="2" y1="15" x2="18" y2="15"/>
-      </svg>
-    </button>
-  </div>
-  <div id="burger-menu" class="hidden md:hidden absolute top-full left-0 right-0 bg-white dark:bg-gray-950 border-b border-gray-200 dark:border-gray-800 shadow-lg z-50 px-6 py-4">
-    <ul class="flex flex-col gap-4 text-sm font-medium">
-      <li><a href="index.html"                class="block hover:text-red-500 transition-colors py-1">Accueil</a></li>
-      <li><a href="techniques-sans-arme.html" class="block hover:text-red-500 transition-colors py-1">Sans arme</a></li>
-      <li><a href="techniques-avec-arme.html" class="block hover:text-red-500 transition-colors py-1">Avec arme</a></li>
-       <li><a href="galerie.html"             class="block hover:text-red-500 transition-colors py-1">Galerie</a></li>
-      <li><a href="contact.html"              class="block hover:text-red-500 transition-colors py-1">Contact</a></li>
-      <li><a href="a-propos.html"             class="block hover:text-red-500 transition-colors py-1">À propos</a></li>
-    </ul>
-  </div>
-</nav>
+    <nav
+      class="border-b border-gray-200 dark:border-gray-800 px-6 py-4 flex items-center justify-between relative"
+    >
+      <a href="index.html" class="text-xl font-bold tracking-wide z-10"
+        >合気道 <span class="text-red-600">Aïkido</span></a
+      >
+      <ul class="hidden md:flex gap-6 text-sm font-medium">
+        <li>
+          <a href="index.html" class="hover:text-red-500 transition-colors"
+            >Accueil</a
+          >
+        </li>
+        <li>
+          <a
+            href="techniques-sans-arme.html"
+            class="hover:text-red-500 transition-colors"
+            >Sans arme</a
+          >
+        </li>
+        <li>
+          <a
+            href="techniques-avec-arme.html"
+            class="hover:text-red-500 transition-colors"
+            >Avec arme</a
+          >
+        </li>
+        <li>
+          <a href="stages.html" class="hover:text-red-500 transition-colors"
+            >Stages</a
+          >
+        </li>
+        <li>
+          <a
+            href="galerie.html"
+            class="hover:text-red-500 transition-colors py-1"
+            >Galerie</a
+          >
+        </li>
+        <li>
+          <a href="contact.html" class="hover:text-red-500 transition-colors"
+            >Contact</a
+          >
+        </li>
+        <li>
+          <a href="a-propos.html" class="block text-red-500 py-1">À propos</a>
+        </li>
+      </ul>
+      <div class="flex items-center gap-3 z-10">
+        <button
+          id="theme-toggle"
+          class="p-2 rounded-full border border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+        >
+          <span id="theme-icon">☀️</span>
+        </button>
+        <button
+          id="burger-btn"
+          class="md:hidden p-2 rounded-lg border border-gray-300 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+        >
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 20 20"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+          >
+            <line x1="2" y1="5" x2="18" y2="5" />
+            <line x1="2" y1="10" x2="18" y2="10" />
+            <line x1="2" y1="15" x2="18" y2="15" />
+          </svg>
+        </button>
+      </div>
+      <div
+        id="burger-menu"
+        class="hidden md:hidden absolute top-full left-0 right-0 bg-white dark:bg-gray-950 border-b border-gray-200 dark:border-gray-800 shadow-lg z-50 px-6 py-4"
+      >
+        <ul class="flex flex-col gap-4 text-sm font-medium">
+          <li>
+            <a
+              href="index.html"
+              class="block hover:text-red-500 transition-colors py-1"
+              >Accueil</a
+            >
+          </li>
+          <li>
+            <a
+              href="techniques-sans-arme.html"
+              class="block hover:text-red-500 transition-colors py-1"
+              >Sans arme</a
+            >
+          </li>
+          <li>
+            <a
+              href="techniques-avec-arme.html"
+              class="block hover:text-red-500 transition-colors py-1"
+              >Avec arme</a
+            >
+          </li>
+          <li>
+            <a
+              href="stages.html"
+              class="block hover:text-red-500 transition-colors py-1"
+              >Stages</a
+            >
+          </li>
+          <li>
+            <a
+              href="galerie.html"
+              class="block hover:text-red-500 transition-colors py-1"
+              >Galerie</a
+            >
+          </li>
+          <li>
+            <a
+              href="contact.html"
+              class="block hover:text-red-500 transition-colors py-1"
+              >Contact</a
+            >
+          </li>
+          <li>
+            <a href="a-propos.html" class="block text-red-500 py-1">À propos</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
 
     <main class="max-w-4xl mx-auto px-6 py-16">
       <!-- EN-TÊTE -->
@@ -64,104 +157,12 @@
       >
         <!-- Portrait SVG du fondateur -->
         <div class="flex-shrink-0 flex flex-col items-center gap-3">
-          <svg
-            viewBox="0 0 120 140"
-            width="120"
-            height="140"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <!-- Corps -->
-            <circle
-              cx="60"
-              cy="28"
-              r="18"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-            />
-            <!-- Barbe -->
-            <path
-              d="M 46 36 Q 60 52 74 36"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1.5"
-            />
-            <!-- Kimono -->
-            <path
-              d="M 60 46 L 40 100 L 80 100 Z"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-            />
-            <line
-              x1="60"
-              y1="46"
-              x2="60"
-              y2="100"
-              stroke="currentColor"
-              stroke-width="1"
-              opacity="0.4"
-            />
-            <!-- Bras en méditation -->
-            <line
-              x1="40"
-              y1="65"
-              x2="20"
-              y2="80"
-              stroke="currentColor"
-              stroke-width="2"
-            />
-            <line
-              x1="80"
-              y1="65"
-              x2="100"
-              y2="80"
-              stroke="currentColor"
-              stroke-width="2"
-            />
-            <circle
-              cx="20"
-              cy="82"
-              r="4"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1.5"
-            />
-            <circle
-              cx="100"
-              cy="82"
-              r="4"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1.5"
-            />
-            <!-- Jambes -->
-            <line
-              x1="48"
-              y1="100"
-              x2="42"
-              y2="132"
-              stroke="currentColor"
-              stroke-width="2"
-            />
-            <line
-              x1="72"
-              y1="100"
-              x2="78"
-              y2="132"
-              stroke="currentColor"
-              stroke-width="2"
-            />
-            <!-- Ceinture -->
-            <line
-              x1="40"
-              y1="78"
-              x2="80"
-              y2="78"
-              stroke="currentColor"
-              stroke-width="2.5"
-            />
-          </svg>
+
+          <img
+            src="assets/images/Morihei.webp"
+            alt="Morihei Ueshiba"
+            class="w-32 h-40 object-cover rounded-lg border border-gray-200 dark:border-gray-800"
+          />
           <p class="text-xs text-gray-500 text-center">
             Morihei Ueshiba<br />1883 – 1969
           </p>
@@ -335,9 +336,12 @@
     <footer
       class="border-t border-gray-200 dark:border-gray-800 text-center text-sm text-gray-500 py-6"
     >
-    <a href="espace-membres.html" class="text-gray-400 hover:text-gray-500 transition-colors text-xs">
-  Espace membres
-</a>
+      <a
+        href="espace-membres.html"
+        class="text-gray-400 hover:text-gray-500 transition-colors text-xs"
+      >
+        Espace membres
+      </a>
       © 2025 Aïkido Dojo — Tous droits réservés
     </footer>
 
